@@ -1,0 +1,15 @@
+.card-module {
+    @apply bg-white rounded-xl shadow-md transition border p-6 flex flex-col space-y-3;
+}
+.card-module .icon {
+    @apply text-3xl;
+}
+.card-module .title {
+    @apply text-xl font-semibold;
+}
+.card-module .desc {
+    @apply text-sm text-gray-600;
+}
+.card-module .link {
+    @apply mt-2 text-sm hover:underline;
+}
