@@ -1,15 +1,57 @@
+/* MODULES DASHBOARD */
 .card-module {
-    @apply bg-white rounded-xl shadow-md transition border p-6 flex flex-col space-y-3;
+  @apply bg-white rounded-2xl shadow hover:shadow-lg border border-gray-200 p-6 transition duration-200 flex flex-col gap-3;
 }
 .card-module .icon {
-    @apply text-3xl;
+  @apply text-4xl opacity-80;
 }
 .card-module .title {
-    @apply text-xl font-semibold;
+  @apply text-lg font-semibold text-gray-800;
 }
 .card-module .desc {
-    @apply text-sm text-gray-600;
+  @apply text-sm text-gray-600 leading-relaxed;
 }
 .card-module .link {
-    @apply mt-2 text-sm hover:underline;
+  @apply mt-2 text-sm text-blue-600 font-medium hover:underline;
+}
+
+/* TABS */
+.tab-btn {
+  @apply relative px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 transition;
+}
+.tab-btn::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300;
+}
+.tab-btn:hover::after {
+  @apply w-full;
+}
+.active-tab {
+  @apply text-blue-600 font-semibold;
+}
+.active-tab::after {
+  @apply w-full;
+}
+.tab-content {
+  @apply hidden;
+}
+.tab-content.block {
+  @apply block;
+}
+
+/* TABLES */
+.styled-table {
+  @apply w-full text-left border-separate border-spacing-y-2 mt-4;
+}
+.styled-table thead {
+  @apply bg-white text-gray-700 uppercase text-xs;
+}
+.styled-table th {
+  @apply py-3 px-4 font-semibold;
+}
+.styled-table td {
+  @apply bg-white px-4 py-3 text-sm text-gray-800 shadow-sm rounded-md;
+}
+.styled-table tr:hover td {
+  @apply bg-blue-50;
 }
