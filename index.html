@@ -1,75 +1,101 @@
 <!DOCTYPE html>
-<html lang="fr" class="bg-gray-50">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Habiba Medics</title>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                },
-            },
-        };
-    </script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Habiba Medics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="font-sans text-gray-800">
-    <header class="bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-semibold text-blue-600">🩺 Habiba Medics</h1>
-            <span class="text-sm text-gray-500">Application de gestion infirmière</span>
-        </div>
-    </header>
+<body class="font-sans bg-gray-50 text-gray-800">
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">🩺 Habiba Medics</h1>
+      <span class="text-sm text-gray-500">Gestion des soins à domicile</span>
+    </div>
+  </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <h2 class="text-3xl font-semibold mb-8 text-center">Tableau de bord</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Modules -->
-            <div class="card-module border-blue-200 hover:border-blue-400">
-                <span class="icon text-blue-500">👤</span>
-                <h3 class="title">Patients</h3>
-                <p class="desc">Gérer les informations personnelles des patients.</p>
-                <a href="#" class="link text-blue-600">Accéder</a>
-            </div>
+  <main class="max-w-7xl mx-auto px-4 py-10">
+    <div class="mb-6 flex space-x-4">
+      <button onclick="openTab('patients')" class="tab-btn active-tab">Patients</button>
+      <button onclick="openTab('soins')" class="tab-btn">Soins</button>
+      <button onclick="openTab('planning')" class="tab-btn">Planning</button>
+      <button onclick="openTab('inventaire')" class="tab-btn">Inventaire</button>
+    </div>
 
-            <div class="card-module border-green-200 hover:border-green-400">
-                <span class="icon text-green-500">💉</span>
-                <h3 class="title">Soins</h3>
-                <p class="desc">Suivi des soins administrés et à venir.</p>
-                <a href="#" class="link text-green-600">Accéder</a>
-            </div>
+    <div id="patients" class="tab-content block">
+      <h2 class="text-xl font-semibold mb-4">Liste des patients</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Durand</td><td>Sophie</td><td>12/03/1985</td><td>06 12 34 56 78</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-            <div class="card-module border-yellow-200 hover:border-yellow-400">
-                <span class="icon text-yellow-500">📅</span>
-                <h3 class="title">Planning</h3>
-                <p class="desc">Planification des visites et interventions.</p>
-                <a href="#" class="link text-yellow-600">Accéder</a>
-            </div>
+    <div id="soins" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Suivi des soins</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Type de soin</th>
+            <th>Date</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sophie Durand</td><td>Pansement</td><td>20/07/2025</td><td>En cours</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-            <div class="card-module border-red-200 hover:border-red-400">
-                <span class="icon text-red-500">📦</span>
-                <h3 class="title">Inventaire</h3>
-                <p class="desc">Stock des fournitures médicales.</p>
-                <a href="#" class="link text-red-600">Accéder</a>
-            </div>
-        </div>
-    </main>
+    <div id="planning" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Planning</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Patient</th>
+            <th>Type de soin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>20/07/2025</td><td>10:00</td><td>Sophie Durand</td><td>Pansement</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <footer class="text-center py-6 text-sm text-gray-400">
-        &copy; 2025 Habiba Medics. Tous droits réservés.
-    </footer>
+    <div id="inventaire" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Inventaire médical</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Date d'expiration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Gants stériles</td><td>120</td><td>12/2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 
-    <!-- Custom JS -->
-    <script src="js/main.js"></script>
+  <footer class="text-center py-6 text-sm text-gray-400">
+    &copy; 2025 Habiba Medics. Tous droits réservés.
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
