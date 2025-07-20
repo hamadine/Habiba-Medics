@@ -17,79 +17,73 @@
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-10">
-    <div class="mb-6 flex space-x-4">
-      <button onclick="openTab('patients')" class="tab-btn active-tab">Patients</button>
-      <button onclick="openTab('soins')" class="tab-btn">Soins</button>
-      <button onclick="openTab('planning')" class="tab-btn">Planning</button>
-      <button onclick="openTab('inventaire')" class="tab-btn">Inventaire</button>
+    <!-- Onglets -->
+    <div class="mb-6 flex space-x-4 border-b border-gray-200 pb-2">
+      <button class="tab-btn active-tab">Patients</button>
+      <button class="tab-btn">Soins</button>
+      <button class="tab-btn">Planning</button>
+      <button class="tab-btn">Inventaire</button>
     </div>
 
-    <div id="patients" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Liste des patients</h2>
+    <!-- Patients -->
+    <section id="patients" class="tab-content block">
+      <h2 class="text-xl font-semibold mb-4">Patients</h2>
       <table class="styled-table">
         <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Date de naissance</th>
-            <th>Contact</th>
-          </tr>
+          <tr><th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th></tr>
         </thead>
         <tbody>
-          <tr><td>Durand</td><td>Sophie</td><td>12/03/1985</td><td>06 12 34 56 78</td></tr>
+          <tr><td>Durand</td><td>Sophie</td><td>1985-03-12</td><td>06 12 34 56 78</td></tr>
+          <tr><td>Martin</td><td>Jean</td><td>1972-07-23</td><td>06 11 11 11 11</td></tr>
+          <tr><td>Nguyen</td><td>Linh</td><td>1990-01-08</td><td>06 99 88 77 66</td></tr>
         </tbody>
       </table>
-    </div>
+    </section>
 
-    <div id="soins" class="tab-content hidden">
-      <h2 class="text-xl font-semibold mb-4">Suivi des soins</h2>
+    <!-- Soins -->
+    <section id="soins" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Soins</h2>
       <table class="styled-table">
         <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Type de soin</th>
-            <th>Date</th>
-            <th>Statut</th>
-          </tr>
+          <tr><th>Patient</th><th>Soin</th><th>Date</th><th>Statut</th></tr>
         </thead>
         <tbody>
-          <tr><td>Sophie Durand</td><td>Pansement</td><td>20/07/2025</td><td>En cours</td></tr>
+          <tr><td>Sophie Durand</td><td>Pansement</td><td>2025-07-20</td><td>En cours</td></tr>
+          <tr><td>Jean Martin</td><td>Injection</td><td>2025-07-21</td><td>À faire</td></tr>
+          <tr><td>Linh Nguyen</td><td>Prise tension</td><td>2025-07-22</td><td>Fait</td></tr>
         </tbody>
       </table>
-    </div>
+    </section>
 
-    <div id="planning" class="tab-content hidden">
+    <!-- Planning -->
+    <section id="planning" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Planning</h2>
       <table class="styled-table">
         <thead>
-          <tr>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Patient</th>
-            <th>Type de soin</th>
-          </tr>
+          <tr><th>Date</th><th>Heure</th><th>Patient</th><th>Intervention</th></tr>
         </thead>
         <tbody>
-          <tr><td>20/07/2025</td><td>10:00</td><td>Sophie Durand</td><td>Pansement</td></tr>
+          <tr><td>2025-07-20</td><td>09:00</td><td>Sophie Durand</td><td>Pansement</td></tr>
+          <tr><td>2025-07-21</td><td>11:00</td><td>Jean Martin</td><td>Injection</td></tr>
+          <tr><td>2025-07-22</td><td>15:30</td><td>Linh Nguyen</td><td>Prise tension</td></tr>
         </tbody>
       </table>
-    </div>
+    </section>
 
-    <div id="inventaire" class="tab-content hidden">
-      <h2 class="text-xl font-semibold mb-4">Inventaire médical</h2>
+    <!-- Inventaire -->
+    <section id="inventaire" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Inventaire</h2>
       <table class="styled-table">
         <thead>
-          <tr>
-            <th>Produit</th>
-            <th>Quantité</th>
-            <th>Date d'expiration</th>
-          </tr>
+          <tr><th>Article</th><th>Quantité</th><th>Expiration</th><th>Seuil</th></tr>
         </thead>
         <tbody>
-          <tr><td>Gants stériles</td><td>120</td><td>12/2026</td></tr>
+          <tr><td>Gants stériles</td><td>120</td><td>12/2026</td><td>30</td></tr>
+          <tr><td>Seringues</td><td>300</td><td>05/2026</td><td>50</td></tr>
+          <tr><td>Désinfectant</td><td>75</td><td>08/2025</td><td>20</td></tr>
         </tbody>
       </table>
-    </div>
+    </section>
   </main>
 
   <footer class="text-center py-6 text-sm text-gray-400">
