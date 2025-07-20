@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-gray-50">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habiba Medics</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+            },
+        };
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="font-sans text-gray-800">
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-semibold text-blue-600">🩺 Habiba Medics</h1>
+            <span class="text-sm text-gray-500">Application de gestion infirmière</span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <h2 class="text-3xl font-semibold mb-8 text-center">Tableau de bord</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Modules -->
+            <div class="card-module border-blue-200 hover:border-blue-400">
+                <span class="icon text-blue-500">👤</span>
+                <h3 class="title">Patients</h3>
+                <p class="desc">Gérer les informations personnelles des patients.</p>
+                <a href="#" class="link text-blue-600">Accéder</a>
+            </div>
+
+            <div class="card-module border-green-200 hover:border-green-400">
+                <span class="icon text-green-500">💉</span>
+                <h3 class="title">Soins</h3>
+                <p class="desc">Suivi des soins administrés et à venir.</p>
+                <a href="#" class="link text-green-600">Accéder</a>
+            </div>
+
+            <div class="card-module border-yellow-200 hover:border-yellow-400">
+                <span class="icon text-yellow-500">📅</span>
+                <h3 class="title">Planning</h3>
+                <p class="desc">Planification des visites et interventions.</p>
+                <a href="#" class="link text-yellow-600">Accéder</a>
+            </div>
+
+            <div class="card-module border-red-200 hover:border-red-400">
+                <span class="icon text-red-500">📦</span>
+                <h3 class="title">Inventaire</h3>
+                <p class="desc">Stock des fournitures médicales.</p>
+                <a href="#" class="link text-red-600">Accéder</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-sm text-gray-400">
+        &copy; 2025 Habiba Medics. Tous droits réservés.
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
