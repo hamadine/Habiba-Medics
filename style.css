@@ -241,3 +241,22 @@ body.dark {
 button.active-tab {
   @apply font-bold shadow;
 }
+.animated-habiba {
+  display: inline-block;
+  animation: habibaGlow 2s infinite ease-in-out;
+  background: linear-gradient(90deg, #0d9488, #22d3ee, #0d9488);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes habibaGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    text-shadow: 0 0 4px rgba(13,148,136,0.6);
+  }
+  50% {
+    background-position: 100% 50%;
+    text-shadow: 0 0 12px rgba(34,211,238,0.8);
+  }
+}
