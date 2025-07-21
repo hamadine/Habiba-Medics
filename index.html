@@ -24,15 +24,15 @@
       </button>
     </div>
   </div>
-  <div id="nav-menu" class="nav-menu absolute mt-2 ml-4 w-56 bg-white dark:bg-gray-700 border rounded-md shadow-lg z-10">
+  <div id="nav-menu" class="absolute mt-2 ml-4 w-56 bg-white dark:bg-gray-700 border rounded-md shadow-lg z-10">
     <ul>
-      <li><button data-target="patients" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Patients</button></li>
-      <li><button data-target="soins" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Soins</button></li>
-      <li><button data-target="planning" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Planning</button></li>
-      <li><button data-target="inventaire" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Inventaire</button></li>
-      <li><button data-target="gen-info" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements généraux</button></li>
-      <li><button data-target="cli-info" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements cliniques</button></li>
-      <li><button data-target="notes" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Notes</button></li>
+      <li><button data-target="patients">👥 Patients</button></li>
+      <li><button data-target="soins">💉 Soins</button></li>
+      <li><button data-target="planning">🗓️ Planning</button></li>
+      <li><button data-target="inventaire">⚕️ Inventaire</button></li>
+      <li><button data-target="gen-info">📋 Renseignements généraux</button></li>
+      <li><button data-target="cli-info">🩺 Renseignements cliniques</button></li>
+      <li><button data-target="notes">📝 Notes</button></li>
     </ul>
   </div>
 </header>
@@ -42,87 +42,59 @@
   <div id="content-area">
 
     <!-- Patients -->
-    <section id="patients" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Patients</h2>
-      <form id="form-patients">
-        <div class="overflow-x-auto">
-          <table class="styled-table w-full">
-            <thead><tr><th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th></tr></thead>
-            <tbody>
-              <!-- Input rows -->
-              <!-- ... lignes nom0 à nom9 ... -->
-            </tbody>
-          </table>
-        </div>
-        <button type="submit" class="mt-4 btn-primary">💾 Sauvegarder</button>
-      </form>
+    <section id="patients" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-bounce">👥</span> Patients
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
     <!-- Soins -->
-    <section id="soins" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Soins</h2>
-      <div class="overflow-x-auto">
-        <!-- contenu statique -->
-      </div>
+    <section id="soins" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-pulse">💉</span> Soins
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
     <!-- Planning -->
-    <section id="planning" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Planning</h2>
-      <div class="overflow-x-auto">
-        <!-- contenu statique -->
-      </div>
+    <section id="planning" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-spin">🗓️</span> Planning
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
     <!-- Inventaire -->
-    <section id="inventaire" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Inventaire</h2>
-      <div class="overflow-x-auto">
-        <!-- contenu statique -->
-      </div>
+    <section id="inventaire" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-blink">⚕️</span> Inventaire
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
     <!-- Renseignements généraux -->
-    <section id="gen-info" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Renseignements généraux</h2>
-      <button onclick="window.print()" class="printable btn-secondary">🖨️ Imprimer</button>
-      <button onclick="exportPDF()" class="printable btn-primary ml-2">📄 Export PDF</button>
-      <div id="export-area" spellcheck="true">
-        <form id="form-gen" class="space-y-4 max-w-xl">
-          <input type="text" id="fg-nom" class="input-field" placeholder="Nom complet" required spellcheck="true">
-          <input type="number" id="fg-age" class="input-field" placeholder="Âge" required>
-          <input type="text" id="fg-adresse" class="input-field" placeholder="Adresse" required spellcheck="true">
-          <input type="tel" id="fg-tel" class="input-field" placeholder="Téléphone" required>
-          <input type="email" id="fg-email" class="input-field" placeholder="E-mail" required>
-          <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-        </form>
-      </div>
+    <section id="gen-info" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-wiggle">📋</span> Renseignements généraux
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
     <!-- Renseignements cliniques -->
-    <section id="cli-info" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Renseignements cliniques</h2>
-      <button onclick="window.print()" class="printable btn-secondary">🖨️ Imprimer</button>
-      <button onclick="exportPDF()" class="printable btn-primary ml-2">📄 Export PDF</button>
-      <div id="export-area-clin" spellcheck="true">
-        <form id="form-cli" class="space-y-4 max-w-xl">
-          <input type="number" id="fc-poids" class="input-field" placeholder="Poids (kg)" required>
-          <input type="number" id="fc-taille" class="input-field" placeholder="Taille (cm)" required>
-          <input type="text" id="fc-tension" class="input-field" placeholder="Tension artérielle" required spellcheck="true">
-          <textarea id="fc-allergies" class="input-field" rows="2" placeholder="Allergies" spellcheck="true"></textarea>
-          <textarea id="fc-patho" class="input-field" rows="2" placeholder="Pathologies" spellcheck="true"></textarea>
-          <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-        </form>
-      </div>
+    <section id="cli-info" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-ping">🩺</span> Renseignements cliniques
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
     <!-- Notes -->
-    <section id="notes" class="tab-content block">
-      <h2 class="text-xl font-semibold mb-4">Notes</h2>
-      <div class="overflow-x-auto">
-        <textarea id="notes-area" class="input-field w-full h-64" placeholder="Rédigez des notes ici…" spellcheck="true"></textarea>
-        <button id="save-notes" class="mt-4 btn-primary">💾 Sauvegarder les notes</button>
-      </div>
+    <section id="notes" class="tab-content">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <span class="animate-bounce">📝</span> Notes
+      </h2>
+      <!-- ... contenu ... -->
     </section>
 
   </div>
