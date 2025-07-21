@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Habiba Medics</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
-  <header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-blue-600">🩺 Habiba Medics</h1>
-      <span class="text-sm text-gray-500">Gestion des soins à domicile</span>
-    </div>
-  </header>
+<body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
 
-  <main class="max-w-7xl mx-auto px-4 py-10">
-    <!-- Onglets -->
-    <div class="mb-6 flex space-x-4 border-b border-gray-200 pb-2">
-      <button class="tab-btn active-tab">Patients</button>
-      <button class="tab-btn">Soins</button>
-      <button class="tab-btn">Planning</button>
-      <button class="tab-btn">Inventaire</button>
+<header class="bg-white dark:bg-gray-800 shadow">
+  <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">🩺 Habiba Medics</h1>
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">🌙</button>
+      <button id="nav-toggle" class="nav-btn inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+        Menu des sections
+        <svg class="ml-2 h-5 w-5 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
     </div>
+  </div>
+  <div id="nav-menu" class="nav-menu absolute mt-2 ml-4 w-56 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg hidden z-10">
+    <ul>
+      <li><button data-target="patients" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Patients</button></li>
+      <li><button data-target="soins" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Soins</button></li>
+      <li><button data-target="planning" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Planning</button></li>
+      <li><button data-target="inventaire" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Inventaire</button></li>
+      <li><button data-target="gen-info" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements généraux</button></li>
+      <li><button data-target="cli-info" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements cliniques</button></li>
+    </ul>
+  </div>
+</header>
 
+<main class="max-w-7xl mx-auto px-4 py-10">
+  <div id="notification" class="fixed top-4 right-4 px-4 py-2 rounded shadow hidden"></div>
+  <div id="content-area">
     <!-- Patients -->
     <section id="patients" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Patients</h2>
-      <table class="styled-table">
-        <thead>
-          <tr><th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th></tr>
-        </thead>
+      <table class="styled-table w-full">
+        <thead><tr><th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th></tr></thead>
         <tbody>
-          <tr><td>Durand</td><td>Sophie</td><td>1985-03-12</td><td>06 12 34 56 78</td></tr>
-          <tr><td>Martin</td><td>Jean</td><td>1972-07-23</td><td>06 11 11 11 11</td></tr>
-          <tr><td>Nguyen</td><td>Linh</td><td>1990-01-08</td><td>06 99 88 77 66</td></tr>
+          <!-- 10 lignes placeholder -->
+          ${[...Array(10)].map(() => `
+            <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>`).join('')}
         </tbody>
       </table>
     </section>
@@ -43,53 +55,73 @@
     <!-- Soins -->
     <section id="soins" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Soins</h2>
-      <table class="styled-table">
-        <thead>
-          <tr><th>Patient</th><th>Soin</th><th>Date</th><th>Statut</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Sophie Durand</td><td>Pansement</td><td>2025-07-20</td><td>En cours</td></tr>
-          <tr><td>Jean Martin</td><td>Injection</td><td>2025-07-21</td><td>À faire</td></tr>
-          <tr><td>Linh Nguyen</td><td>Prise tension</td><td>2025-07-22</td><td>Fait</td></tr>
-        </tbody>
+      <table class="styled-table w-full">
+        <thead><tr><th>Patient</th><th>Soin</th><th>Date</th><th>Statut</th></tr></thead>
+        <tbody>${[...Array(10)].map(() => `
+          <tr><td>Nom Prénom</td><td>Type de soin</td><td>AAAA-MM-JJ</td><td>Statut</td></tr>`).join('')}</tbody>
       </table>
     </section>
 
     <!-- Planning -->
     <section id="planning" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Planning</h2>
-      <table class="styled-table">
-        <thead>
-          <tr><th>Date</th><th>Heure</th><th>Patient</th><th>Intervention</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>2025-07-20</td><td>09:00</td><td>Sophie Durand</td><td>Pansement</td></tr>
-          <tr><td>2025-07-21</td><td>11:00</td><td>Jean Martin</td><td>Injection</td></tr>
-          <tr><td>2025-07-22</td><td>15:30</td><td>Linh Nguyen</td><td>Prise tension</td></tr>
-        </tbody>
+      <table class="styled-table w-full">
+        <thead><tr><th>Date</th><th>Heure</th><th>Patient</th><th>Intervention</th></tr></thead>
+        <tbody>${[...Array(10)].map(() => `
+          <tr><td>AAAA-MM-JJ</td><td>HH:MM</td><td>Nom Prénom</td><td>Intervention</td></tr>`).join('')}</tbody>
       </table>
     </section>
 
     <!-- Inventaire -->
     <section id="inventaire" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Inventaire</h2>
-      <table class="styled-table">
-        <thead>
-          <tr><th>Article</th><th>Quantité</th><th>Expiration</th><th>Seuil</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Gants stériles</td><td>120</td><td>12/2026</td><td>30</td></tr>
-          <tr><td>Seringues</td><td>300</td><td>05/2026</td><td>50</td></tr>
-          <tr><td>Désinfectant</td><td>75</td><td>08/2025</td><td>20</td></tr>
-        </tbody>
+      <table class="styled-table w-full">
+        <thead><tr><th>Article</th><th>Quantité</th><th>Expiration</th><th>Seuil</th></tr></thead>
+        <tbody>${[...Array(10)].map(() => `
+          <tr><td>Article</td><td>0</td><td>MM/AAAA</td><td>0</td></tr>`).join('')}</tbody>
       </table>
     </section>
-  </main>
 
-  <footer class="text-center py-6 text-sm text-gray-400">
-    &copy; 2025 Habiba Medics. Tous droits réservés.
-  </footer>
+    <!-- Renseignements généraux -->
+    <section id="gen-info" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Renseignements généraux</h2>
+      <button onclick="window.print()" class="printable mb-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800">🖨️ Imprimer ce dossier</button>
+      <button onclick="exportPDF()" class="printable ml-2 mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">📄 Export PDF</button>
+      <div id="export-area">
+        <form id="form-gen" class="space-y-4 max-w-xl">
+          <input type="text" id="fg-nom" class="input-field" placeholder="Nom complet" required />
+          <input type="number" id="fg-age" class="input-field" placeholder="Âge" required />
+          <input type="text" id="fg-adresse" class="input-field" placeholder="Adresse" required />
+          <input type="tel" id="fg-tel" class="input-field" placeholder="Téléphone" required />
+          <input type="email" id="fg-email" class="input-field" placeholder="E-mail" required />
+          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md">Enregistrer</button>
+        </form>
+      </div>
+    </section>
 
-  <script src="js/main.js"></script>
+    <!-- Renseignements cliniques -->
+    <section id="cli-info" class="tab-content hidden">
+      <h2 class="text-xl font-semibold mb-4">Renseignements cliniques</h2>
+      <button onclick="window.print()" class="printable mb-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800">🖨️ Imprimer ce dossier</button>
+      <button onclick="exportPDF()" class="printable ml-2 mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">📄 Export PDF</button>
+      <div id="export-area-clin">
+        <form id="form-cli" class="space-y-4 max-w-xl">
+          <input type="number" id="fc-poids" class="input-field" placeholder="Poids (kg)" required />
+          <input type="number" id="fc-taille" class="input-field" placeholder="Taille (cm)" required />
+          <input type="text" id="fc-tension" class="input-field" placeholder="Tension artérielle" required />
+          <textarea id="fc-allergies" class="input-field" rows="2" placeholder="Allergies"></textarea>
+          <textarea id="fc-patho" class="input-field" rows="2" placeholder="Pathologies"></textarea>
+          <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md">Enregistrer</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="text-center py-6 text-sm text-gray-400 dark:text-gray-500">
+  &copy; 2025 Habiba Medics. Tous droits réservés.
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
