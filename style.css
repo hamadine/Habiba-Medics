@@ -221,3 +221,23 @@ body.dark {
   from { text-shadow: 0 0 10px var(--text-light); }
   to { text-shadow: 0 0 20px var(--text-light); }
 }
+
+/* === Apparition fluide === */
+.fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Renforcement actif si besoin */
+button.active-tab {
+  @apply font-bold shadow;
+}
