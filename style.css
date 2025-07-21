@@ -2,261 +2,133 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === Couleurs & palette === */
+/* === Variables couleur === */
 :root {
-  --mdc-primary: #047c7c;
-  --mdc-primary-dark: #036666;
-  --mdc-secondary: #f2f4f8;
-  --mdc-accent: #e6fffa;
-  --mdc-danger: #e53e3e;
-  --mdc-danger-dark: #c53030;
-  --mdc-highlight: #ffe5e5;
+  --primary: #047c7c;
+  --primary-dark: #036666;
+  --secondary: #f2f4f8;
+  --danger: #e53e3e;
+  --accent: #e6fffa;
+  --highlight: #ffe5e5;
   --text-light: #ffffff;
 }
+
 body {
-  background-color: var(--mdc-secondary);
   font-family: 'Inter', sans-serif;
+  background-color: var(--secondary);
 }
 
-/* === Header gradient === */
+/* === Header === */
 header {
-  background: linear-gradient(to right, var(--mdc-primary), #069696);
+  background: linear-gradient(to right, var(--primary), #069696);
 }
 
-/* === Sections (carte) === */
+/* === Navigation grille === */
+.nav-card {
+  @apply px-4 py-3 rounded-lg shadow-md bg-white dark:bg-gray-800 text-center font-semibold text-gray-700 dark:text-gray-200 transition transform hover:scale-105 hover:shadow-lg;
+}
+
+/* === Sections === */
 section {
-  @apply p-6 bg-white dark:bg-gray-800 rounded-lg mb-6 transition-shadow duration-200 relative;
+  @apply p-6 bg-white dark:bg-gray-800 rounded-lg shadow transition-shadow duration-200;
 }
 section:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* === Formulaires === */
+.input-field {
+  @apply block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 transition;
+}
+.input-field:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(4, 124, 124, 0.4);
 }
 
 /* === Boutons === */
 .btn-primary {
-  @apply px-4 py-2 rounded font-semibold text-white transition-shadow duration-200;
-  background-color: var(--mdc-primary);
-  box-shadow: 0 2px 6px rgba(4,124,124,0.4);
-}
-.btn-primary:hover {
-  background-color: var(--mdc-primary-dark);
-  box-shadow: 0 4px 12px rgba(4,124,124,0.6);
+  @apply bg-teal-600 text-white px-4 py-2 rounded shadow hover:bg-teal-700 transition;
 }
 .btn-secondary {
-  @apply px-4 py-2 rounded font-semibold text-white transition-shadow duration-200;
-  background-color: var(--mdc-danger);
-  box-shadow: 0 2px 6px rgba(229,62,62,0.4);
-}
-.btn-secondary:hover {
-  background-color: var(--mdc-danger-dark);
-  box-shadow: 0 4px 12px rgba(229,62,62,0.6);
-}
-button:disabled {
-  @apply opacity-50 cursor-not-allowed;
+  @apply bg-red-600 text-white px-4 py-2 rounded shadow hover:bg-red-700 transition;
 }
 
-/* === Inputs === */
-.input-field {
-  @apply block w-full px-3 py-2 border border-gray-300 rounded shadow-sm transition duration-200;
-}
-.input-field:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(4,124,124,0.4);
-}
-
-/* === Tables === */
+/* === Table === */
 .styled-table {
-  @apply w-full border-separate border-spacing-y-2 mt-4 text-left;
+  @apply w-full mt-4 text-sm text-left;
 }
 .styled-table thead {
-  background-color: var(--mdc-primary);
-  color: var(--text-light);
-  @apply uppercase text-xs;
+  @apply bg-teal-600 text-white uppercase;
 }
-.styled-table th {
-  @apply py-3 px-4 font-semibold;
+.styled-table th, .styled-table td {
+  @apply px-4 py-3 border border-gray-200 dark:border-gray-700;
 }
-.styled-table td {
-  @apply bg-white px-4 py-3 text-sm text-gray-800 shadow-sm rounded-md;
+.styled-table tr:nth-child(even) {
+  @apply bg-gray-50 dark:bg-gray-900;
 }
-.styled-table tr:hover td {
-  background-color: var(--mdc-accent);
-}
-
-/* === Inventaire alerte === */
 .inventory-alert td {
-  background-color: var(--mdc-highlight);
+  background-color: var(--highlight);
   color: #b30000;
   font-weight: bold;
 }
 
-/* === Tabs & nav === */
-.tab-content {
-  transition: opacity 0.3s;
+/* === Animations === */
+.loader-heart {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  position: relative;
 }
-.nav-btn { @apply relative inline-flex items-center cursor-pointer z-20; }
-#nav-menu {
-  @apply bg-white dark:bg-gray-700 rounded shadow-lg;
-}
-#nav-menu ul li + li {
-  @apply border-t border-gray-200 dark:border-gray-600;
-}
-#nav-menu button {
-  @apply w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors;
-}
-#nav-menu button.active-tab {
-  @apply bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300 font-semibold;
-}
-
-/* === Icon animations === */
-.animate-blink {
-  animation: blink 1s infinite alternate;
-}
-.animate-wiggle {
-  animation: wiggle 1s infinite ease-in-out;
-}
-@keyframes blink {
-  0% { opacity: 1; }
-  100% { opacity: 0.3; }
-}
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-5deg); }
-  50% { transform: rotate(5deg); }
-}
-
-/* === Tooltips CSS === */
-[data-tooltip]:hover::after {
-  content: attr(data-tooltip);
+.loader-heart::before,
+.loader-heart::after {
+  content: "";
   position: absolute;
-  background: #333;
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 4px;
-  white-space: nowrap;
-  z-index: 10;
-  top: 125%;
+  width: 1rem;
+  height: 1.6rem;
+  background: var(--danger);
+  border-radius: 0.5rem 0.5rem 0 0;
+  animation: beat 1s infinite ease-in-out;
+}
+.loader-heart::after {
+  left: 1rem;
+  transform: rotate(45deg);
+}
+.loader-heart::before {
   left: 0;
+  transform: rotate(-45deg);
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
-/* === Notification toast === */
+/* === Notification === */
 #notification {
-  @apply text-white rounded shadow-lg transition-opacity duration-300 opacity-0;
+  @apply text-white rounded shadow-lg opacity-0 transition-opacity duration-300;
 }
 #notification:not(.hidden) {
   @apply opacity-100;
 }
 
-/* === Responsiveness overflow === */
-.overflow-x-auto { @apply overflow-x-auto; }
+/* === Footer === */
+.animated-habiba {
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 8px #fff; }
+  to { text-shadow: 0 0 16px #00ffe0; }
+}
 
 /* === Impression === */
 @media print {
-  header, footer, .nav-menu, .nav-btn, button:not(.printable) {
+  header, nav, footer, button {
     display: none !important;
   }
-  body { background: white; color: black; }
-  section { break-inside: avoid; }
-  .tab-content { display: block; }
-}
-
-/* === Mode sombre === */
-body.dark {
-  background: #1a202c;
-  color: #e2e8f0;
-}
-.dark .input-field {
-  @apply bg-gray-700 border-gray-600 text-gray-200;
-}
-
-/* === LOADER ❤️ animation battement de cœur === */
-.loader-heart {
-  display: inline-block;
-  width: 3rem;
-  height: 3rem;
-  position: relative;
-}
-.loader-heart::before, .loader-heart::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 1.5rem;
-  height: 2.4rem;
-  background: var(--mdc-danger);
-  border-radius: 0.75rem 0.75rem 0 0;
-  transform: rotate(-45deg);
-  transform-origin: 0.75rem 1.2rem;
-  animation: beat 1s infinite ease-in-out;
-}
-.loader-heart::after {
-  left: 1.5rem;
-  transform: rotate(45deg);
-  transform-origin: 0 1.2rem;
-}
-@keyframes beat {
-  0%, 100% { transform: scale(1) rotate(-45deg); }
-  50% { transform: scale(0.8) rotate(-45deg); }
-}
-
-/* === SPLASH SCREEN === */
-#splash {
-  position: fixed;
-  inset: 0;
-  background: var(--mdc-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-  animation: fadeout 1s ease-in-out forwards;
-  animation-delay: 2s;
-}
-#splash .logo {
-  font-size: 2rem;
-  color: var(--text-light);
-  animation: glow 1.5s ease-in-out infinite alternate;
-}
-@keyframes fadeout {
-  to { opacity: 0; visibility: hidden; }
-}
-@keyframes glow {
-  from { text-shadow: 0 0 10px var(--text-light); }
-  to { text-shadow: 0 0 20px var(--text-light); }
-}
-
-/* === Apparition fluide === */
-.fade-in {
-  animation: fade-in 0.5s ease-out both;
-}
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  body {
+    background: white;
+    color: black;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Renforcement actif si besoin */
-button.active-tab {
-  @apply font-bold shadow;
-}
-.animated-habiba {
-  display: inline-block;
-  animation: habibaGlow 2s infinite ease-in-out;
-  background: linear-gradient(90deg, #0d9488, #22d3ee, #0d9488);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@keyframes habibaGlow {
-  0%, 100% {
-    background-position: 0% 50%;
-    text-shadow: 0 0 4px rgba(13,148,136,0.6);
-  }
-  50% {
-    background-position: 100% 50%;
-    text-shadow: 0 0 12px rgba(34,211,238,0.8);
+  section {
+    break-inside: avoid;
   }
 }
