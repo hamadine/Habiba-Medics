@@ -10,8 +10,7 @@
   <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-
-<header class="bg-white dark:bg-gray-800 shadow">
+  <header class="bg-white dark:bg-gray-800 shadow">
   <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">🩺 Habiba Medics</h1>
     <div class="flex items-center space-x-4">
@@ -34,54 +33,115 @@
       <li><button data-target="cli-info" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements cliniques</button></li>
     </ul>
   </div>
-</header>
-
-<main class="max-w-7xl mx-auto px-4 py-10">
+  </header>
+  <main class="max-w-7xl mx-auto px-4 py-10">
   <div id="notification" class="fixed top-4 right-4 px-4 py-2 rounded shadow hidden"></div>
   <div id="content-area">
+
     <!-- Patients -->
     <section id="patients" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Patients</h2>
       <table class="styled-table w-full">
-        <thead><tr><th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Naissance</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
         <tbody>
-          <!-- 10 lignes placeholder -->
-          ${[...Array(10)].map(() => `
-            <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>`).join('')}
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
+          <tr><td>Nom</td><td>Prénom</td><td>AAAA-MM-JJ</td><td>06 00 00 00 00</td></tr>
         </tbody>
       </table>
     </section>
-
     <!-- Soins -->
     <section id="soins" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Soins</h2>
       <table class="styled-table w-full">
-        <thead><tr><th>Patient</th><th>Soin</th><th>Date</th><th>Statut</th></tr></thead>
-        <tbody>${[...Array(10)].map(() => `
-          <tr><td>Nom Prénom</td><td>Type de soin</td><td>AAAA-MM-JJ</td><td>Statut</td></tr>`).join('')}</tbody>
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Soin</th>
+            <th>Date</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Nom Prénom</td><td>Pansement</td><td>2025-07-20</td><td>En cours</td></tr>
+          <tr><td>Nom Prénom</td><td>Injection</td><td>2025-07-21</td><td>À faire</td></tr>
+          <tr><td>Nom Prénom</td><td>Prise tension</td><td>2025-07-22</td><td>Fait</td></tr>
+          <tr><td>Nom Prénom</td><td>Prise de sang</td><td>2025-07-23</td><td>Fait</td></tr>
+          <tr><td>Nom Prénom</td><td>Vaccin</td><td>2025-07-24</td><td>En attente</td></tr>
+          <tr><td>Nom Prénom</td><td>Contrôle glycémie</td><td>2025-07-25</td><td>Fait</td></tr>
+          <tr><td>Nom Prénom</td><td>Pose perfusion</td><td>2025-07-26</td><td>En cours</td></tr>
+          <tr><td>Nom Prénom</td><td>Suivi plaie</td><td>2025-07-27</td><td>À faire</td></tr>
+          <tr><td>Nom Prénom</td><td>Électrocardiogramme</td><td>2025-07-28</td><td>Fait</td></tr>
+          <tr><td>Nom Prénom</td><td>Observation</td><td>2025-07-29</td><td>Fait</td></tr>
+        </tbody>
       </table>
     </section>
-
     <!-- Planning -->
     <section id="planning" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Planning</h2>
       <table class="styled-table w-full">
-        <thead><tr><th>Date</th><th>Heure</th><th>Patient</th><th>Intervention</th></tr></thead>
-        <tbody>${[...Array(10)].map(() => `
-          <tr><td>AAAA-MM-JJ</td><td>HH:MM</td><td>Nom Prénom</td><td>Intervention</td></tr>`).join('')}</tbody>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Patient</th>
+            <th>Intervention</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2025-07-20</td><td>08:30</td><td>Nom Prénom</td><td>Pansement</td></tr>
+          <tr><td>2025-07-21</td><td>09:00</td><td>Nom Prénom</td><td>Injection</td></tr>
+          <tr><td>2025-07-22</td><td>10:15</td><td>Nom Prénom</td><td>Prise tension</td></tr>
+          <tr><td>2025-07-23</td><td>11:00</td><td>Nom Prénom</td><td>Prise de sang</td></tr>
+          <tr><td>2025-07-24</td><td>13:30</td><td>Nom Prénom</td><td>Vaccin</td></tr>
+          <tr><td>2025-07-25</td><td>14:15</td><td>Nom Prénom</td><td>Contrôle glycémie</td></tr>
+          <tr><td>2025-07-26</td><td>15:00</td><td>Nom Prénom</td><td>Pose perfusion</td></tr>
+          <tr><td>2025-07-27</td><td>08:45</td><td>Nom Prénom</td><td>Suivi plaie</td></tr>
+          <tr><td>2025-07-28</td><td>16:30</td><td>Nom Prénom</td><td>Électrocardiogramme</td></tr>
+          <tr><td>2025-07-29</td><td>17:00</td><td>Nom Prénom</td><td>Observation</td></tr>
+        </tbody>
       </table>
     </section>
-
     <!-- Inventaire -->
     <section id="inventaire" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Inventaire</h2>
       <table class="styled-table w-full">
-        <thead><tr><th>Article</th><th>Quantité</th><th>Expiration</th><th>Seuil</th></tr></thead>
-        <tbody>${[...Array(10)].map(() => `
-          <tr><td>Article</td><td>0</td><td>MM/AAAA</td><td>0</td></tr>`).join('')}</tbody>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th>Quantité</th>
+            <th>Expiration</th>
+            <th>Seuil</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Gants stériles</td><td>120</td><td>12/2026</td><td>30</td></tr>
+          <tr><td>Seringues</td><td>300</td><td>05/2026</td><td>50</td></tr>
+          <tr><td>Désinfectant</td><td>75</td><td>08/2025</td><td>20</td></tr>
+          <tr><td>Bandes</td><td>200</td><td>03/2026</td><td>40</td></tr>
+          <tr><td>Masques</td><td>500</td><td>09/2025</td><td>100</td></tr>
+          <tr><td>Solution saline</td><td>150</td><td>11/2025</td><td>30</td></tr>
+          <tr><td>Thermomètres</td><td>15</td><td>--</td><td>5</td></tr>
+          <tr><td>Stéthoscopes</td><td>8</td><td>--</td><td>2</td></tr>
+          <tr><td>Alcool médical</td><td>60</td><td>10/2025</td><td>25</td></tr>
+          <tr><td>Compresses</td><td>250</td><td>04/2026</td><td>60</td></tr>
+        </tbody>
       </table>
     </section>
-
     <!-- Renseignements généraux -->
     <section id="gen-info" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Renseignements généraux</h2>
@@ -98,7 +158,6 @@
         </form>
       </div>
     </section>
-
     <!-- Renseignements cliniques -->
     <section id="cli-info" class="tab-content hidden">
       <h2 class="text-xl font-semibold mb-4">Renseignements cliniques</h2>
@@ -115,11 +174,11 @@
         </form>
       </div>
     </section>
-  </div>
+    </div> <!-- fin #content-area -->
 </main>
 
 <footer class="text-center py-6 text-sm text-gray-400 dark:text-gray-500">
-  &copy; 2025 Habiba Medics. Tous droits réservés.
+  &copy; 2025 Habiba Medics. Tous droits réservés. | <strong>Habiba-Medics by Hamadine</strong>
 </footer>
 
 <script src="js/main.js"></script>
