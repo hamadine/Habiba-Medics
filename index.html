@@ -3,19 +3,38 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Habiba Medics</title>
+  <title>🩺 Habiba Medics</title>
+
+  <!-- Tailwind + Chart + PDF -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+
+  <!-- Style personnalisé -->
   <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- Stéthoscope animé dans le head -->
+  <style>
+    .stetho-animate {
+      display: inline-block;
+      animation: pulse-stetho 1.2s infinite ease-in-out;
+    }
+    @keyframes pulse-stetho {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.7; }
+    }
+  </style>
 </head>
+
 <body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
   <div id="splash"><div class="logo">🩺 Habiba Medics</div></div>
 
   <header class="shadow">
     <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">🩺 Habiba Medics</h1>
+      <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">
+        <span class="stetho-animate">🩺</span> Habiba Medics
+      </h1>
       <div class="flex items-center space-x-4">
         <button id="theme-toggle" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">🌙</button>
         <button id="nav-toggle" class="nav-btn inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
@@ -43,84 +62,70 @@
   <main class="max-w-7xl mx-auto px-4 py-10">
     <div id="notification" class="fixed top-4 right-4 px-4 py-2 rounded shadow hidden z-50 text-white"></div>
 
-    <!-- Grille des sections -->
     <div id="content-area" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      
-      <!-- ACCUEIL (visible au chargement) -->
+
+      <!-- Accueil -->
       <section id="accueil" class="tab-content">
         <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
           <span class="tab-icon">🏠</span> Accueil
         </h2>
-        <p class="text-lg italic text-gray-600 dark:text-gray-300">"Je n'ai pas choisi la médecine mais c'est elle qui m'a choisi."</p>
+        <p class="text-lg italic text-gray-600 dark:text-gray-300">
+          "Je n'ai pas choisi la médecine mais c'est elle qui m'a choisi."
+        </p>
       </section>
 
       <!-- Patients -->
       <section id="patients" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">👥</span> Patients</h2>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon loader-heart">❤️</span> Patients
+        </h2>
         <!-- Contenu patients -->
       </section>
 
       <!-- Soins -->
       <section id="soins" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">💉</span> Soins</h2>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon animate-pulse">💉</span> Soins
+        </h2>
         <!-- Contenu soins -->
       </section>
 
       <!-- Planning -->
       <section id="planning" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">🗓️</span> Planning</h2>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon">🗓️</span> Planning
+        </h2>
         <!-- Alarme / Timer -->
-        <input id="alarm-time" type="time" class="border p-2 rounded mr-2"/>
-        <button id="set-alarm" class="bg-indigo-500 text-white px-4 py-2 rounded">⏰ Définir l'alarme</button>
-        <div class="mt-6">
-          <canvas id="timerChart" height="200"></canvas>
-          <div id="countdown" class="text-lg mt-2"></div>
-          <div class="flex gap-4 mt-2">
-            <button id="start-timer" class="bg-green-500 text-white px-4 py-2 rounded">▶️ Démarrer</button>
-            <button id="reset-timer" class="bg-red-500 text-white px-4 py-2 rounded">🔁 Réinitialiser</button>
-            <button id="export-chart" class="bg-gray-500 text-white px-4 py-2 rounded">📄 Export PDF</button>
-          </div>
-        </div>
       </section>
 
       <!-- Inventaire -->
       <section id="inventaire" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">⚕️</span> Inventaire</h2>
-        <!-- Contenu inventaire -->
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon">⚕️</span> Inventaire
+        </h2>
       </section>
 
       <!-- Renseignements généraux -->
       <section id="gen-info" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">📋</span> Renseignements généraux</h2>
-        <form id="form-gen" class="space-y-4">
-          <input id="nom" type="text" placeholder="Nom" class="input-field"/>
-          <textarea id="adresse" placeholder="Adresse" class="input-field"></textarea>
-          <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-        </form>
-        <div id="export-area-gen" class="mt-6"></div>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon">📋</span> Renseignements généraux
+        </h2>
+        <!-- Formulaire -->
       </section>
 
       <!-- Renseignements cliniques -->
       <section id="cli-info" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">🩺</span> Renseignements cliniques</h2>
-        <form id="form-cli" class="space-y-4">
-          <input id="temperature" type="text" placeholder="Température" class="input-field"/>
-          <textarea id="diagnostic" placeholder="Diagnostic" class="input-field"></textarea>
-          <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-        </form>
-        <div id="export-area-cli" class="mt-6"></div>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon">🩺</span> Renseignements cliniques
+        </h2>
+        <!-- Formulaire -->
       </section>
 
       <!-- Notes -->
       <section id="notes" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><span class="tab-icon">📝</span> Notes</h2>
-        <textarea id="notes-area" rows="6" class="w-full p-2 border rounded mb-4"></textarea>
-        <div class="flex gap-4">
-          <button id="save-notes" class="btn-primary">💾 Enregistrer</button>
-          <button id="google-search-notes" class="btn-secondary">🔍 Google</button>
-          <button id="search-symptoms" class="bg-yellow-500 text-white px-4 py-2 rounded">🧪 Symptômes</button>
-        </div>
-        <div id="symptom-results" class="mt-4 text-sm text-gray-700 dark:text-gray-300"></div>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span class="tab-icon">📝</span> Notes
+        </h2>
       </section>
 
     </div>
