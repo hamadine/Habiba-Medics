@@ -225,3 +225,4 @@ function exportPDF() {
 function imprimerDossier() {
   window.print();
 }
+console.log('✅ app.js chargé');
