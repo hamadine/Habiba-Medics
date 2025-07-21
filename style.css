@@ -1,126 +1,223 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const tabButtons = document.querySelectorAll('button[data-target]');
-  const tabContents = document.querySelectorAll('.tab-content');
-  const navToggle = document.getElementById('nav-toggle');
-  const navMenu = document.getElementById('nav-menu');
-  const toggleTheme = document.getElementById('theme-toggle');
-  const notification = document.getElementById('notification');
-  const body = document.body;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  // 🔄 Active a tab
-  function activateTab(targetId) {
-    tabContents.forEach(content => {
-      content.classList.add('hidden');
-    });
-
-    tabButtons.forEach(btn => btn.classList.remove('active-tab'));
-
-    const activeContent = document.getElementById(targetId);
-    const activeButton = [...tabButtons].find(btn => btn.dataset.target === targetId);
-
-    if (activeContent) activeContent.classList.remove('hidden');
-    if (activeButton) activeButton.classList.add('active-tab');
-  }
-
-  // 🌘 Light/Dark mode
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') body.classList.add('dark');
-
-  toggleTheme.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
-  });
-
-  // 📋 Tab switching via menu or buttons
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.target;
-      activateTab(tab);
-      navMenu.classList.add('hidden');
-    });
-  });
-
-  if (tabButtons.length) activateTab(tabButtons[0].dataset.target);
-
-  // 📂 Menu toggle
-  navToggle?.addEventListener('click', () => {
-    navMenu.classList.toggle('hidden');
-    navToggle.querySelector('svg')?.classList.toggle('rotate-180');
-  });
-
-  document.addEventListener('click', e => {
-    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-      navMenu.classList.add('hidden');
-      navToggle.querySelector('svg')?.classList.remove('rotate-180');
-    }
-  });
-
-  // 🔔 Notification function
-  function showNotif(msg, type = 'success') {
-    notification.textContent = msg;
-    notification.className = `fixed top-4 right-4 px-4 py-2 rounded shadow text-white z-50 ${
-      type === 'success' ? 'bg-green-500' : 'bg-red-500'
-    }`;
-    notification.classList.remove('hidden');
-    setTimeout(() => notification.classList.add('hidden'), 3000);
-  }
-
-  // 💾 Save forms (gen, cli)
-  ['gen', 'cli'].forEach(prefix => {
-    const form = document.getElementById(`form-${prefix}`);
-    if (!form) return;
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const data = {};
-      form.querySelectorAll('input,textarea').forEach(el => data[el.id] = el.value);
-      localStorage.setItem(`formData_${prefix}`, JSON.stringify(data));
-      showNotif('Données sauvegardées ✅');
-    });
-
-    const saved = localStorage.getItem(`formData_${prefix}`);
-    if (saved) {
-      const data = JSON.parse(saved);
-      Object.entries(data).forEach(([id, value]) => {
-        const el = document.getElementById(id);
-        if (el) el.value = value;
-      });
-    }
-  });
-
-  // ✏️ Notes section
-  const notesArea = document.getElementById('notes-area');
-  const saveNotesBtn = document.getElementById('save-notes');
-  if (notesArea && saveNotesBtn) {
-    const savedNote = localStorage.getItem('notes');
-    if (savedNote) notesArea.value = savedNote;
-
-    saveNotesBtn.addEventListener('click', () => {
-      localStorage.setItem('notes', notesArea.value);
-      showNotif('Notes enregistrées 📒');
-    });
-  }
-});
-
-// 📄 Export PDF
-function exportPDF() {
-  const visibleSection = [...document.querySelectorAll('.tab-content')]
-    .find(sec => !sec.classList.contains('hidden') && sec.querySelector('form'));
-
-  if (!visibleSection) return;
-
-  const exportArea = visibleSection.querySelector('div[id^="export-area"]');
-  if (!exportArea) return;
-
-  html2pdf().set({
-    margin: 10,
-    filename: 'dossier_patient.pdf',
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).from(exportArea).save();
+/* === Couleurs & palette === */
+:root {
+  --mdc-primary: #047c7c;
+  --mdc-primary-dark: #036666;
+  --mdc-secondary: #f2f4f8;
+  --mdc-accent: #e6fffa;
+  --mdc-danger: #e53e3e;
+  --mdc-danger-dark: #c53030;
+  --mdc-highlight: #ffe5e5;
+  --text-light: #ffffff;
+}
+body {
+  background-color: var(--mdc-secondary);
+  font-family: 'Inter', sans-serif;
 }
 
-// 🖨️ Imprimer
-function imprimerDossier() {
-  window.print();
+/* === Header gradient === */
+header {
+  background: linear-gradient(to right, var(--mdc-primary), #069696);
+}
+
+/* === Sections (carte) === */
+section {
+  @apply p-6 bg-white dark:bg-gray-800 rounded-lg mb-6 transition-shadow duration-200 relative;
+}
+section:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* === Boutons === */
+.btn-primary {
+  @apply px-4 py-2 rounded font-semibold text-white transition-shadow duration-200;
+  background-color: var(--mdc-primary);
+  box-shadow: 0 2px 6px rgba(4,124,124,0.4);
+}
+.btn-primary:hover {
+  background-color: var(--mdc-primary-dark);
+  box-shadow: 0 4px 12px rgba(4,124,124,0.6);
+}
+.btn-secondary {
+  @apply px-4 py-2 rounded font-semibold text-white transition-shadow duration-200;
+  background-color: var(--mdc-danger);
+  box-shadow: 0 2px 6px rgba(229,62,62,0.4);
+}
+.btn-secondary:hover {
+  background-color: var(--mdc-danger-dark);
+  box-shadow: 0 4px 12px rgba(229,62,62,0.6);
+}
+button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* === Inputs === */
+.input-field {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded shadow-sm transition duration-200;
+}
+.input-field:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(4,124,124,0.4);
+}
+
+/* === Tables === */
+.styled-table {
+  @apply w-full border-separate border-spacing-y-2 mt-4 text-left;
+}
+.styled-table thead {
+  background-color: var(--mdc-primary);
+  color: var(--text-light);
+  @apply uppercase text-xs;
+}
+.styled-table th {
+  @apply py-3 px-4 font-semibold;
+}
+.styled-table td {
+  @apply bg-white px-4 py-3 text-sm text-gray-800 shadow-sm rounded-md;
+}
+.styled-table tr:hover td {
+  background-color: var(--mdc-accent);
+}
+
+/* === Inventaire alerte === */
+.inventory-alert td {
+  background-color: var(--mdc-highlight);
+  color: #b30000;
+  font-weight: bold;
+}
+
+/* === Tabs & nav === */
+.tab-content {
+  transition: opacity 0.3s;
+}
+.nav-btn { @apply relative inline-flex items-center cursor-pointer z-20; }
+#nav-menu {
+  @apply bg-white dark:bg-gray-700 rounded shadow-lg;
+}
+#nav-menu ul li + li {
+  @apply border-t border-gray-200 dark:border-gray-600;
+}
+#nav-menu button {
+  @apply w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors;
+}
+#nav-menu button.active-tab {
+  @apply bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300 font-semibold;
+}
+
+/* === Icon animations === */
+.animate-blink {
+  animation: blink 1s infinite alternate;
+}
+.animate-wiggle {
+  animation: wiggle 1s infinite ease-in-out;
+}
+@keyframes blink {
+  0% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* === Tooltips CSS === */
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+  top: 125%;
+  left: 0;
+}
+
+/* === Notification toast === */
+#notification {
+  @apply text-white rounded shadow-lg transition-opacity duration-300 opacity-0;
+}
+#notification:not(.hidden) {
+  @apply opacity-100;
+}
+
+/* === Responsiveness overflow === */
+.overflow-x-auto { @apply overflow-x-auto; }
+
+/* === Impression === */
+@media print {
+  header, footer, .nav-menu, .nav-btn, button:not(.printable) {
+    display: none !important;
   }
+  body { background: white; color: black; }
+  section { break-inside: avoid; }
+  .tab-content { display: block; }
+}
+
+/* === Mode sombre === */
+body.dark {
+  background: #1a202c;
+  color: #e2e8f0;
+}
+.dark .input-field {
+  @apply bg-gray-700 border-gray-600 text-gray-200;
+}
+
+/* === LOADER ❤️ animation battement de cœur === */
+.loader-heart {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+}
+.loader-heart::before, .loader-heart::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 1.5rem;
+  height: 2.4rem;
+  background: var(--mdc-danger);
+  border-radius: 0.75rem 0.75rem 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0.75rem 1.2rem;
+  animation: beat 1s infinite ease-in-out;
+}
+.loader-heart::after {
+  left: 1.5rem;
+  transform: rotate(45deg);
+  transform-origin: 0 1.2rem;
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1) rotate(-45deg); }
+  50% { transform: scale(0.8) rotate(-45deg); }
+}
+
+/* === SPLASH SCREEN === */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: var(--mdc-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: fadeout 1s ease-in-out forwards;
+  animation-delay: 2s;
+}
+#splash .logo {
+  font-size: 2rem;
+  color: var(--text-light);
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+@keyframes fadeout {
+  to { opacity: 0; visibility: hidden; }
+}
+@keyframes glow {
+  from { text-shadow: 0 0 10px var(--text-light); }
+  to { text-shadow: 0 0 20px var(--text-light); }
+}
