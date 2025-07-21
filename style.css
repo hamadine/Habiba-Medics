@@ -1,86 +1,126 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+document.addEventListener('DOMContentLoaded', () => {
+  const tabButtons = document.querySelectorAll('button[data-target]');
+  const tabContents = document.querySelectorAll('.tab-content');
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const toggleTheme = document.getElementById('theme-toggle');
+  const notification = document.getElementById('notification');
+  const body = document.body;
 
-/* ========== DASHBOARD CARDS ========== */
-.card-module {
-  @apply bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition duration-200 flex flex-col gap-3;
-}
-.card-module .icon {
-  @apply text-4xl opacity-80;
-}
-.card-module .title {
-  @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
-}
-.card-module .desc {
-  @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
-}
-.card-module .link {
-  @apply mt-2 text-sm text-blue-600 font-medium hover:underline;
-}
+  // 🔄 Active a tab
+  function activateTab(targetId) {
+    tabContents.forEach(content => {
+      content.classList.add('hidden');
+    });
 
-/* ========== TABS STYLING ========== */
-.tab-btn {
-  @apply relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 transition;
-}
-.tab-btn::after {
-  content: '';
-  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300;
-}
-.tab-btn:hover::after {
-  @apply w-full;
-}
-.active-tab {
-  @apply text-blue-600 dark:text-blue-400 font-semibold;
-}
-.active-tab::after {
-  @apply w-full;
-}
-.tab-content {
-  @apply hidden;
-}
-.tab-content.block {
-  @apply block;
-}
+    tabButtons.forEach(btn => btn.classList.remove('active-tab'));
 
-/* ========== TABLE STYLING ========== */
-.styled-table {
-  @apply w-full text-left border-separate border-spacing-y-2 mt-4;
-}
-.styled-table thead {
-  @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 uppercase text-xs;
-}
-.styled-table th {
-  @apply py-3 px-4 font-semibold;
-}
-.styled-table td {
-  @apply bg-white dark:bg-gray-800 px-4 py-3 text-sm text-gray-800 dark:text-gray-100 shadow-sm rounded-md;
-}
-.styled-table tr:hover td {
-  @apply bg-blue-50 dark:bg-blue-900;
-}
+    const activeContent = document.getElementById(targetId);
+    const activeButton = [...tabButtons].find(btn => btn.dataset.target === targetId);
 
-/* ========== INPUTS & FORMS ========== */
-.input-field {
-  @apply block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200;
-}
-
-/* ========== PRINT RULES ========== */
-@media print {
-  header, footer, .nav-menu, .nav-btn, button:not(.printable), #theme-toggle {
-    display: none !important;
+    if (activeContent) activeContent.classList.remove('hidden');
+    if (activeButton) activeButton.classList.add('active-tab');
   }
-  body {
-    background: white !important;
-    color: black !important;
+
+  // 🌘 Light/Dark mode
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') body.classList.add('dark');
+
+  toggleTheme.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // 📋 Tab switching via menu or buttons
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.target;
+      activateTab(tab);
+      navMenu.classList.add('hidden');
+    });
+  });
+
+  if (tabButtons.length) activateTab(tabButtons[0].dataset.target);
+
+  // 📂 Menu toggle
+  navToggle?.addEventListener('click', () => {
+    navMenu.classList.toggle('hidden');
+    navToggle.querySelector('svg')?.classList.toggle('rotate-180');
+  });
+
+  document.addEventListener('click', e => {
+    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+      navMenu.classList.add('hidden');
+      navToggle.querySelector('svg')?.classList.remove('rotate-180');
+    }
+  });
+
+  // 🔔 Notification function
+  function showNotif(msg, type = 'success') {
+    notification.textContent = msg;
+    notification.className = `fixed top-4 right-4 px-4 py-2 rounded shadow text-white z-50 ${
+      type === 'success' ? 'bg-green-500' : 'bg-red-500'
+    }`;
+    notification.classList.remove('hidden');
+    setTimeout(() => notification.classList.add('hidden'), 3000);
   }
-  .tab-content {
-    display: block !important;
+
+  // 💾 Save forms (gen, cli)
+  ['gen', 'cli'].forEach(prefix => {
+    const form = document.getElementById(`form-${prefix}`);
+    if (!form) return;
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {};
+      form.querySelectorAll('input,textarea').forEach(el => data[el.id] = el.value);
+      localStorage.setItem(`formData_${prefix}`, JSON.stringify(data));
+      showNotif('Données sauvegardées ✅');
+    });
+
+    const saved = localStorage.getItem(`formData_${prefix}`);
+    if (saved) {
+      const data = JSON.parse(saved);
+      Object.entries(data).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
+      });
+    }
+  });
+
+  // ✏️ Notes section
+  const notesArea = document.getElementById('notes-area');
+  const saveNotesBtn = document.getElementById('save-notes');
+  if (notesArea && saveNotesBtn) {
+    const savedNote = localStorage.getItem('notes');
+    if (savedNote) notesArea.value = savedNote;
+
+    saveNotesBtn.addEventListener('click', () => {
+      localStorage.setItem('notes', notesArea.value);
+      showNotif('Notes enregistrées 📒');
+    });
   }
+});
+
+// 📄 Export PDF
+function exportPDF() {
+  const visibleSection = [...document.querySelectorAll('.tab-content')]
+    .find(sec => !sec.classList.contains('hidden') && sec.querySelector('form'));
+
+  if (!visibleSection) return;
+
+  const exportArea = visibleSection.querySelector('div[id^="export-area"]');
+  if (!exportArea) return;
+
+  html2pdf().set({
+    margin: 10,
+    filename: 'dossier_patient.pdf',
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(exportArea).save();
 }
 
-/* ========== DARK MODE SUPPORT ========== */
-body.dark {
-  background: #1a202c;
-  color: #e2e8f0;
-}
+// 🖨️ Imprimer
+function imprimerDossier() {
+  window.print();
+  }
