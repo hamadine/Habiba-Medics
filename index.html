@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>🩺 Habiba Medics</title>
 
-  <!-- Tailwind + Chart + PDF -->
+  <!-- Tailwind + Librairies -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-
-  <!-- Style personnalisé -->
   <link rel="stylesheet" href="css/style.css"/>
 
-  <!-- Stéthoscope animé dans le head -->
+  <!-- Stéthoscope animé -->
   <style>
     .stetho-animate {
       display: inline-block;
@@ -28,112 +26,251 @@
 </head>
 
 <body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-  <div id="splash"><div class="logo">🩺 Habiba Medics</div></div>
 
-  <header class="shadow">
+  <!-- Header -->
+  <header class="shadow bg-white dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">
         <span class="stetho-animate">🩺</span> Habiba Medics
       </h1>
-      <div class="flex items-center space-x-4">
-        <button id="theme-toggle" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">🌙</button>
-        <button id="nav-toggle" class="nav-btn inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
-          Menu des sections
-          <svg class="ml-2 h-5 w-5 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div id="nav-menu" class="absolute mt-2 ml-4 w-56 bg-white dark:bg-gray-700 border rounded-md shadow-lg z-10 hidden">
-      <ul>
-        <li><button data-target="accueil">🏠 Accueil</button></li>
-        <li><button data-target="patients">👥 Patients</button></li>
-        <li><button data-target="soins">💉 Soins</button></li>
-        <li><button data-target="planning">🗓️ Planning</button></li>
-        <li><button data-target="inventaire">⚕️ Inventaire</button></li>
-        <li><button data-target="gen-info">📋 Renseignements généraux</button></li>
-        <li><button data-target="cli-info">🩺 Renseignements cliniques</button></li>
-        <li><button data-target="notes">📝 Notes</button></li>
-      </ul>
+      <button id="theme-toggle" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">🌙</button>
     </div>
   </header>
 
+  <!-- Navigation en grille -->
+  <nav class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
+    <button data-target="accueil" class="nav-card">🏠 Accueil</button>
+    <button data-target="patients" class="nav-card">👥 Patients</button>
+    <button data-target="soins" class="nav-card">💉 Soins</button>
+    <button data-target="planning" class="nav-card">🗓️ Planning</button>
+    <button data-target="inventaire" class="nav-card">⚕️ Inventaire</button>
+    <button data-target="gen-info" class="nav-card">📋 Infos générales</button>
+    <button data-target="cli-info" class="nav-card">🩺 Infos cliniques</button>
+    <button data-target="notes" class="nav-card">📝 Notes</button>
+  </nav>
+
+  <!-- Contenu principal -->
   <main class="max-w-7xl mx-auto px-4 py-10">
     <div id="notification" class="fixed top-4 right-4 px-4 py-2 rounded shadow hidden z-50 text-white"></div>
-
+    
     <div id="content-area" class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       <!-- Accueil -->
       <section id="accueil" class="tab-content">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon">🏠</span> Accueil
-        </h2>
+        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">🏠 Accueil</h2>
         <p class="text-lg italic text-gray-600 dark:text-gray-300">
-          "Je n'ai pas choisi la médecine mais c'est elle qui m'a choisi."
+          "Je n’ai pas choisi la médecine, c’est elle qui m’a choisi. Car parfois, ce n’est pas nous qui entrons dans une vocation… c’est la douleur des autres qui nous appelle."
         </p>
       </section>
 
       <!-- Patients -->
       <section id="patients" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon loader-heart">❤️</span> Patients
-        </h2>
-        <!-- Contenu patients -->
-      </section>
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+    <span class="tab-icon loader-heart">❤️</span> Patients
+  </h2>
+  <form id="form-patient" class="space-y-4">
 
+    <!-- Identité -->
+    <input type="text" id="patient_nom" placeholder="Nom du patient" class="input-field" />
+    <input type="text" id="patient_prenom" placeholder="Prénom" class="input-field" />
+    <input type="date" id="patient_naissance" placeholder="Date de naissance" class="input-field" />
+    <input type="text" id="patient_sexe" placeholder="Sexe (M / F)" class="input-field" />
+    <input type="text" id="patient_nationalite" placeholder="Nationalité" class="input-field" />
+    <input type="text" id="patient_numero" placeholder="Numéro de dossier / ID patient" class="input-field" />
+
+    <!-- Contact -->
+    <input type="tel" id="patient_tel" placeholder="Téléphone" class="input-field" />
+    <input type="email" id="patient_email" placeholder="Email" class="input-field" />
+    <input type="text" id="patient_adresse" placeholder="Adresse" class="input-field" />
+
+    <!-- Infos administratives -->
+    <input type="text" id="patient_assurance" placeholder="Nom de l'assurance santé" class="input-field" />
+    <input type="text" id="patient_num_secu" placeholder="Numéro de sécurité sociale" class="input-field" />
+
+    <!-- Personne à contacter -->
+    <input type="text" id="contact_urgence_nom" placeholder="Nom de la personne à contacter" class="input-field" />
+    <input type="tel" id="contact_urgence_tel" placeholder="Téléphone de la personne à contacter" class="input-field" />
+    <input type="text" id="contact_urgence_lien" placeholder="Lien (parent, ami, tuteur...)" class="input-field" />
+
+    <!-- Notes -->
+    <textarea id="patient_remarques" rows="4" placeholder="Remarques médicales ou administratives" class="input-field"></textarea>
+
+    <button type="submit" class="btn-primary">💾 Enregistrer</button>
+  </form>
+      </section>
       <!-- Soins -->
       <section id="soins" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon animate-pulse">💉</span> Soins
-        </h2>
-        <!-- Contenu soins -->
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+    <span class="tab-icon animate-pulse">💉</span> Soins
+  </h2>
+  <form id="form-soins" class="space-y-4">
+    <input type="text" id="soin_type" placeholder="Type de soin (ex: Vaccin, Pansement...)" class="input-field" />
+    <input type="date" id="soin_date" class="input-field" />
+    <textarea id="soin_notes" placeholder="Notes supplémentaires" class="input-field"></textarea>
+    <button type="submit" class="btn-primary">💾 Ajouter</button>
+  </form>
       </section>
 
       <!-- Planning -->
       <section id="planning" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon">🗓️</span> Planning
-        </h2>
-        <!-- Alarme / Timer -->
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">🗓️ Planning</h2>
+  <input id="alarm-time" type="time" class="border p-2 rounded mr-2"/>
+  <button id="set-alarm" class="bg-indigo-500 text-white px-4 py-2 rounded">⏰ Définir l'alarme</button>
+  <div class="mt-6">
+    <canvas id="timerChart" height="200"></canvas>
+    <div id="countdown" class="text-lg mt-2"></div>
+    <div class="flex gap-4 mt-2">
+      <button id="start-timer" class="bg-green-500 text-white px-4 py-2 rounded">▶️ Démarrer</button>
+      <button id="reset-timer" class="bg-red-500 text-white px-4 py-2 rounded">🔁 Réinitialiser</button>
+      <button id="export-chart" class="bg-gray-500 text-white px-4 py-2 rounded">📄 Export PDF</button>
+    </div>
+  </div>
       </section>
-
       <!-- Inventaire -->
       <section id="inventaire" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon">⚕️</span> Inventaire
-        </h2>
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">⚕️ Inventaire</h2>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Article</th>
+        <th>Quantité</th>
+        <th>Seuil critique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gants médicaux</td>
+        <td>120</td>
+        <td>50</td>
+      </tr>
+      <tr class="inventory-alert">
+        <td>Seringues</td>
+        <td>15</td>
+        <td>30</td>
+      </tr>
+      <tr>
+        <td>Compresses stériles</td>
+        <td>200</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <td>Masques chirurgicaux</td>
+        <td>80</td>
+        <td>50</td>
+      </tr>
+      <tr class="inventory-alert">
+        <td>Désinfectant</td>
+        <td>10</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Thermomètres</td>
+        <td>5</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Stéthoscopes</td>
+        <td>3</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Pansements</td>
+        <td>150</td>
+        <td>50</td>
+      </tr>
+      <tr class="inventory-alert">
+        <td>Bandelettes urinaires</td>
+        <td>12</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Solutions salines</td>
+        <td>25</td>
+        <td>15</td>
+      </tr>
+    </tbody>
+  </table>
       </section>
-
-      <!-- Renseignements généraux -->
       <section id="gen-info" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon">📋</span> Renseignements généraux
-        </h2>
-        <!-- Formulaire -->
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">📋 Renseignements Généraux</h2>
+  <form id="form-gen" class="space-y-4">
+
+    <!-- Identité -->
+    <input type="text" id="nom" placeholder="Nom complet" class="input-field" />
+    <input type="text" id="prenom" placeholder="Prénom" class="input-field" />
+    <input type="date" id="date_naissance" placeholder="Date de naissance" class="input-field" />
+    <input type="text" id="sexe" placeholder="Sexe (M/F)" class="input-field" />
+    <input type="text" id="adresse" placeholder="Adresse complète" class="input-field" />
+    <input type="tel" id="telephone" placeholder="Téléphone" class="input-field" />
+    <input type="email" id="email" placeholder="Email" class="input-field" />
+    <input type="text" id="groupe_sanguin" placeholder="Groupe sanguin" class="input-field" />
+
+    <!-- Informations médicales -->
+    <textarea id="ant_med" placeholder="Antécédents médicaux (ex : diabète, hypertension...)" class="input-field"></textarea>
+    <textarea id="ant_chir" placeholder="Antécédents chirurgicaux (opérations passées)" class="input-field"></textarea>
+    <textarea id="allergies" placeholder="Allergies connues (médicaments, aliments, autres)" class="input-field"></textarea>
+    <textarea id="traitements" placeholder="Traitements actuels (médicaments en cours)" class="input-field"></textarea>
+    <textarea id="habitudes" placeholder="Habitudes de vie (tabac, alcool, activité physique...)" class="input-field"></textarea>
+    <textarea id="autres_info" placeholder="Autres informations importantes" class="input-field"></textarea>
+
+    <button type="submit" class="btn-primary">💾 Sauvegarder</button>
+  </form>
+  <div id="export-area-gen" class="mt-6"></div>
       </section>
 
       <!-- Renseignements cliniques -->
       <section id="cli-info" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon">🩺</span> Renseignements cliniques
-        </h2>
-        <!-- Formulaire -->
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">🩺 Renseignements Cliniques</h2>
+  <form id="form-cli" class="space-y-4">
+
+    <!-- Signes vitaux -->
+    <input type="text" id="temperature" placeholder="Température (°C)" class="input-field" />
+    <input type="text" id="frequence_cardiaque" placeholder="Fréquence cardiaque (bpm)" class="input-field" />
+    <input type="text" id="tension" placeholder="Tension artérielle (ex : 120/80)" class="input-field" />
+    <input type="text" id="frequence_respiratoire" placeholder="Fréquence respiratoire (rpm)" class="input-field" />
+    <input type="text" id="saturation" placeholder="Saturation O₂ (%)" class="input-field" />
+    <input type="text" id="poids" placeholder="Poids (kg)" class="input-field" />
+    <input type="text" id="taille" placeholder="Taille (cm)" class="input-field" />
+    <input type="text" id="imc" placeholder="IMC (automatique ou manuel)" class="input-field" />
+
+    <!-- État général -->
+    <textarea id="etat_general" placeholder="État général du patient (fatigue, état de conscience...)" class="input-field"></textarea>
+    <textarea id="symptomes" placeholder="Symptômes actuels (douleurs, toux, nausées...)" class="input-field"></textarea>
+    <textarea id="examen_physique" placeholder="Résultat de l'examen physique" class="input-field"></textarea>
+    <textarea id="diagnostic" placeholder="Hypothèse ou diagnostic retenu" class="input-field"></textarea>
+    <textarea id="prescription" placeholder="Prescription ou recommandations" class="input-field"></textarea>
+
+    <button type="submit" class="btn-primary">💾 Enregistrer</button>
+  </form>
+  <div id="export-area-cli" class="mt-6"></div>
       </section>
 
       <!-- Notes -->
       <section id="notes" class="tab-content hidden">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon">📝</span> Notes
-        </h2>
+  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">📝 Notes</h2>
+  <textarea id="notes-area" rows="8" placeholder="Écrivez ici les symptômes, remarques, observations..." class="w-full input-field mb-4"></textarea>
+  
+  <div class="flex flex-wrap gap-4">
+    <button id="save-notes" class="btn-primary">💾 Sauvegarder</button>
+    <button id="google-search-notes" class="btn-secondary">🔎 Rechercher sur Google</button>
+    <button id="search-symptoms" class="bg-yellow-500 text-white px-4 py-2 rounded hover:shadow">🧪 Détecter les symptômes</button>
+    <button id="ask-gpt" class="bg-purple-600 text-white px-4 py-2 rounded hover:shadow">🤖 Demander à ChatGPT</button>
+  </div>
+
+  <div id="symptom-results" class="mt-6 text-sm text-gray-700 dark:text-gray-300"></div>
+  <div id="gpt-response" class="mt-4 text-sm italic text-indigo-600 dark:text-indigo-300"></div>
       </section>
 
     </div>
   </main>
-<footer class="text-center py-6 text-sm text-gray-400 dark:text-gray-500">
-  &copy; 2025 <span class="text-gray-500">Habiba Medics.</span> Tous droits réservés. |
-  <strong class="animated-habiba">Habiba‑Medics by Hamadine</strong>
-</footer>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-sm text-gray-400 dark:text-gray-500">
+    &copy; 2025 Habiba Medics. Tous droits réservés. |
+    <strong class="animated-habiba">Habiba‑Medics by Hamadine</strong>
+  </footer>
+
+  <!-- Script -->
   <script src="js/main.js"></script>
 </body>
 </html>
