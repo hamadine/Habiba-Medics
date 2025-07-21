@@ -123,3 +123,26 @@ function exportPDF() {
 function imprimerDossier() {
   window.print();
 }
+// 📝 Gestion des notes
+document.addEventListener('DOMContentLoaded', () => {
+  const notesArea = document.getElementById('notes-area');
+  const saveNotesBtn = document.getElementById('save-notes');
+
+  if (notesArea && saveNotesBtn) {
+    // Restaurer les notes enregistrées
+    const savedNotes = localStorage.getItem('notesContent');
+    if (savedNotes) notesArea.value = savedNotes;
+
+    // Sauvegarder manuellement via bouton
+    saveNotesBtn.addEventListener('click', () => {
+      localStorage.setItem('notesContent', notesArea.value);
+      const notification = document.getElementById('notification');
+      if (notification) {
+        notification.textContent = "Notes sauvegardées.";
+        notification.className = 'fixed top-4 right-4 px-4 py-2 rounded shadow text-white bg-blue-500';
+        notification.classList.remove('hidden');
+        setTimeout(() => notification.classList.add('hidden'), 3000);
+      }
+    });
+  }
+});
