@@ -207,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Export PDF général
 function exportPDF() {
   const visibleSection = [...document.querySelectorAll('.tab-content')]
     .find(sec => !sec.classList.contains('hidden') && sec.querySelector('form'));
@@ -223,7 +222,6 @@ function exportPDF() {
   }).from(exportArea).save();
 }
 
-// Impression
 function imprimerDossier() {
   window.print();
-    }
+}
