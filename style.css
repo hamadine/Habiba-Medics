@@ -25,7 +25,15 @@ header {
 
 /* === Navigation grille === */
 .nav-card {
-  @apply px-4 py-3 rounded-lg shadow-md bg-white dark:bg-gray-800 text-center font-semibold text-gray-700 dark:text-gray-200 transition transform hover:scale-105 hover:shadow-lg;
+  @apply flex items-center justify-center gap-2 px-4 py-3 rounded-lg 
+         shadow-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 
+         font-semibold text-base transition duration-200 ease-in-out;
+  border: 1px solid #ddd;
+}
+.nav-card:hover {
+  @apply bg-teal-100 dark:bg-gray-700 scale-105 shadow-lg text-teal-800 dark:text-teal-300;
+  border-color: #0d9488;
+  cursor: pointer;
 }
 
 /* === Sections === */
@@ -55,7 +63,9 @@ section:hover {
 
 /* === Table === */
 .styled-table {
-  @apply w-full mt-4 text-sm text-left;
+  @apply w-full mt-4 text-sm text-left border-collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 .styled-table thead {
   @apply bg-teal-600 text-white uppercase;
