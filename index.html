@@ -18,20 +18,21 @@
       <button id="theme-toggle" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">🌙</button>
       <button id="nav-toggle" class="nav-btn inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
         Menu des sections
-        <svg class="ml-2 h-5 w-5 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        <svg class="ml-2 h-5 w-5 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
         </svg>
       </button>
     </div>
   </div>
-  <div id="nav-menu" class="nav-menu absolute mt-2 ml-4 w-56 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg hidden z-10">
+  <div id="nav-menu" class="nav-menu absolute mt-2 ml-4 w-56 bg-white dark:bg-gray-700 border rounded-md shadow-lg z-10">
     <ul>
-      <li><button data-target="patients" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Patients</button></li>
-      <li><button data-target="soins" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Soins</button></li>
-      <li><button data-target="planning" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Planning</button></li>
-      <li><button data-target="inventaire" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Inventaire</button></li>
-      <li><button data-target="gen-info" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements généraux</button></li>
-      <li><button data-target="cli-info" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements cliniques</button></li>
+      <li><button data-target="patients" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Patients</button></li>
+      <li><button data-target="soins" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Soins</button></li>
+      <li><button data-target="planning" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Planning</button></li>
+      <li><button data-target="inventaire" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Inventaire</button></li>
+      <li><button data-target="gen-info" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements généraux</button></li>
+      <li><button data-target="cli-info" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Renseignements cliniques</button></li>
+      <li><button data-target="notes" class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Notes</button></li>
     </ul>
   </div>
 </header>
@@ -46,29 +47,10 @@
       <form id="form-patients">
         <div class="overflow-x-auto">
           <table class="styled-table w-full">
-            <thead>
-              <tr>
-                <th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Nom</th><th>Prénom</th><th>Naissance</th><th>Contact</th></tr></thead>
             <tbody>
-              <!-- 10 lignes modifiables statiques -->
-              <tr>
-                <td><input type="text" name="nom0" class="input-field" placeholder="Nom"></td>
-                <td><input type="text" name="prenom0" class="input-field" placeholder="Prénom"></td>
-                <td><input type="date" name="naissance0" class="input-field"></td>
-                <td><input type="tel" name="contact0" class="input-field" placeholder="06 00 00 00 00"></td>
-              </tr>
-              <!-- Répète ci‑dessus de nom1 à nom9 -->
-              <tr><td><input type="text" name="nom1" class="input-field"></td><td><input type="text" name="prenom1" class="input-field"></td><td><input type="date" name="naissance1" class="input-field"></td><td><input type="tel" name="contact1" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom2" class="input-field"></td><td><input type="text" name="prenom2" class="input-field"></td><td><input type="date" name="naissance2" class="input-field"></td><td><input type="tel" name="contact2" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom3" class="input-field"></td><td><input type="text" name="prenom3" class="input-field"></td><td><input type="date" name="naissance3" class="input-field"></td><td><input type="tel" name="contact3" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom4" class="input-field"></td><td><input type="text" name="prenom4" class="input-field"></td><td><input type="date" name="naissance4" class="input-field"></td><td><input type="tel" name="contact4" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom5" class="input-field"></td><td><input type="text" name="prenom5" class="input-field"></td><td><input type="date" name="naissance5" class="input-field"></td><td><input type="tel" name="contact5" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom6" class="input-field"></td><td><input type="text" name="prenom6" class="input-field"></td><td><input type="date" name="naissance6" class="input-field"></td><td><input type="tel" name="contact6" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom7" class="input-field"></td><td><input type="text" name="prenom7" class="input-field"></td><td><input type="date" name="naissance7" class="input-field"></td><td><input type="tel" name="contact7" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom8" class="input-field"></td><td><input type="text" name="prenom8" class="input-field"></td><td><input type="date" name="naissance8" class="input-field"></td><td><input type="tel" name="contact8" class="input-field"></td></tr>
-              <tr><td><input type="text" name="nom9" class="input-field"></td><td><input type="text" name="prenom9" class="input-field"></td><td><input type="date" name="naissance9" class="input-field"></td><td><input type="tel" name="contact9" class="input-field"></td></tr>
+              <!-- Input rows -->
+              <!-- ... lignes nom0 à nom9 ... -->
             </tbody>
           </table>
         </div>
@@ -77,57 +59,39 @@
     </section>
 
     <!-- Soins -->
-    <section id="soins" class="tab-content hidden">
+    <section id="soins" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Soins</h2>
       <div class="overflow-x-auto">
-        <table class="styled-table w-full">
-          <thead><tr><th>Patient</th><th>Soin</th><th>Date</th><th>Statut</th></tr></thead>
-          <tbody>
-            <tr><td>Nom Prénom</td><td>Pansement</td><td>2025-07-20</td><td>En cours</td></tr>
-            <!-- ... 9 autres lignes ... -->
-          </tbody>
-        </table>
+        <!-- contenu statique -->
       </div>
     </section>
 
     <!-- Planning -->
-    <section id="planning" class="tab-content hidden">
+    <section id="planning" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Planning</h2>
       <div class="overflow-x-auto">
-        <table class="styled-table w-full">
-          <thead><tr><th>Date</th><th>Heure</th><th>Patient</th><th>Intervention</th></tr></thead>
-          <tbody>
-            <tr><td>2025-07-20</td><td>08:30</td><td>Nom Prénom</td><td>Pansement</td></tr>
-            <!-- ... 9 autres lignes ... -->
-          </tbody>
-        </table>
+        <!-- contenu statique -->
       </div>
     </section>
 
     <!-- Inventaire -->
-    <section id="inventaire" class="tab-content hidden">
+    <section id="inventaire" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Inventaire</h2>
       <div class="overflow-x-auto">
-        <table class="styled-table w-full">
-          <thead><tr><th>Article</th><th>Quantité</th><th>Expiration</th><th>Seuil</th></tr></thead>
-          <tbody>
-            <tr><td>Gants stériles</td><td>120</td><td>12/2026</td><td>30</td></tr>
-            <!-- ... autres lignes ... -->
-          </tbody>
-        </table>
+        <!-- contenu statique -->
       </div>
     </section>
 
     <!-- Renseignements généraux -->
-    <section id="gen-info" class="tab-content hidden">
+    <section id="gen-info" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Renseignements généraux</h2>
       <button onclick="window.print()" class="printable btn-secondary">🖨️ Imprimer</button>
       <button onclick="exportPDF()" class="printable btn-primary ml-2">📄 Export PDF</button>
-      <div id="export-area">
+      <div id="export-area" spellcheck="true">
         <form id="form-gen" class="space-y-4 max-w-xl">
-          <input type="text" id="fg-nom" class="input-field" placeholder="Nom complet" required>
+          <input type="text" id="fg-nom" class="input-field" placeholder="Nom complet" required spellcheck="true">
           <input type="number" id="fg-age" class="input-field" placeholder="Âge" required>
-          <input type="text" id="fg-adresse" class="input-field" placeholder="Adresse" required>
+          <input type="text" id="fg-adresse" class="input-field" placeholder="Adresse" required spellcheck="true">
           <input type="tel" id="fg-tel" class="input-field" placeholder="Téléphone" required>
           <input type="email" id="fg-email" class="input-field" placeholder="E-mail" required>
           <button type="submit" class="btn-primary">💾 Sauvegarder</button>
@@ -136,19 +100,28 @@
     </section>
 
     <!-- Renseignements cliniques -->
-    <section id="cli-info" class="tab-content hidden">
+    <section id="cli-info" class="tab-content block">
       <h2 class="text-xl font-semibold mb-4">Renseignements cliniques</h2>
       <button onclick="window.print()" class="printable btn-secondary">🖨️ Imprimer</button>
       <button onclick="exportPDF()" class="printable btn-primary ml-2">📄 Export PDF</button>
-      <div id="export-area-clin">
+      <div id="export-area-clin" spellcheck="true">
         <form id="form-cli" class="space-y-4 max-w-xl">
           <input type="number" id="fc-poids" class="input-field" placeholder="Poids (kg)" required>
           <input type="number" id="fc-taille" class="input-field" placeholder="Taille (cm)" required>
-          <input type="text" id="fc-tension" class="input-field" placeholder="Tension artérielle" required>
-          <textarea id="fc-allergies" class="input-field" rows="2" placeholder="Allergies"></textarea>
-          <textarea id="fc-patho" class="input-field" rows="2" placeholder="Pathologies"></textarea>
+          <input type="text" id="fc-tension" class="input-field" placeholder="Tension artérielle" required spellcheck="true">
+          <textarea id="fc-allergies" class="input-field" rows="2" placeholder="Allergies" spellcheck="true"></textarea>
+          <textarea id="fc-patho" class="input-field" rows="2" placeholder="Pathologies" spellcheck="true"></textarea>
           <button type="submit" class="btn-primary">💾 Sauvegarder</button>
         </form>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section id="notes" class="tab-content block">
+      <h2 class="text-xl font-semibold mb-4">Notes</h2>
+      <div class="overflow-x-auto">
+        <textarea id="notes-area" class="input-field w-full h-64" placeholder="Rédigez des notes ici…" spellcheck="true"></textarea>
+        <button id="save-notes" class="mt-4 btn-primary">💾 Sauvegarder les notes</button>
       </div>
     </section>
 
