@@ -4,23 +4,27 @@
 
 /* === Variables couleur === */
 :root {
-  --primary: #047c7c;
-  --primary-dark: #036666;
-  --secondary: #f2f4f8;
+  --primary: #38b2ac; /* Turquoise doux */
+  --primary-dark: #2c7a7b;
+  --secondary: #f9fafb; /* Sable clair */
   --danger: #e53e3e;
   --accent: #e6fffa;
-  --highlight: #ffe5e5;
+  --highlight: #fff5f5;
   --text-light: #ffffff;
+  --nav-bg: #edfdfd;
+  --desert: #f0e5cf;
 }
 
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--secondary);
+  color: #1a202c;
 }
 
 /* === Header === */
 header {
-  background: linear-gradient(to right, var(--primary), #069696);
+  background: linear-gradient(to right, var(--primary), #81e6d9);
+  color: white;
 }
 
 /* === Navigation grille === */
@@ -28,25 +32,25 @@ header {
   @apply flex items-center justify-center gap-2 px-4 py-3 rounded-lg 
          shadow-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 
          font-semibold text-base transition duration-200 ease-in-out;
-  border: 1px solid #ddd;
+  border: 1px solid #cbd5e0;
 }
 .nav-card:hover {
   @apply bg-teal-100 dark:bg-gray-700 scale-105 shadow-lg text-teal-800 dark:text-teal-300;
-  border-color: #0d9488;
+  border-color: #319795;
   cursor: pointer;
 }
 
 /* === Sections === */
 section {
   @apply p-6 rounded-lg shadow-md transition-shadow duration-300;
-  background: linear-gradient(to bottom right, #ffffff, #f0fdfa);
+  background: linear-gradient(to bottom right, #ffffff, var(--nav-bg));
   border: 1px solid #e0f2f1;
 }
 section:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* === Formulaires améliorés === */
+/* === Formulaires === */
 .input-field {
   @apply block w-full px-4 py-2 border rounded-md shadow-sm transition-all duration-300;
   background-color: #ffffff;
@@ -54,16 +58,15 @@ section:hover {
   color: #1f2937;
 }
 .input-field::placeholder {
-  color: #9ca3af;
+  color: #94a3b8;
   font-style: italic;
 }
 .input-field:focus {
   outline: none;
-  border-color: #0f766e;
-  background-color: #ecfdf5;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.4);
+  border-color: var(--primary-dark);
+  background-color: #f0fdfa;
+  box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.4);
 }
-
 
 /* === Boutons === */
 .btn-primary {
@@ -90,11 +93,11 @@ section:hover {
 }
 .inventory-alert td {
   background-color: var(--highlight);
-  color: #b30000;
+  color: #c53030;
   font-weight: bold;
 }
 
-/* === Animations === */
+/* === Animations coeur battant === */
 .loader-heart {
   display: inline-block;
   width: 2rem;
@@ -137,8 +140,8 @@ section:hover {
   animation: glow 1.5s ease-in-out infinite alternate;
 }
 @keyframes glow {
-  from { text-shadow: 0 0 8px #fff; }
-  to { text-shadow: 0 0 16px #00ffe0; }
+  from { text-shadow: 0 0 8px #c3f3ec; }
+  to { text-shadow: 0 0 16px #38b2ac; }
 }
 
 /* === Impression === */
