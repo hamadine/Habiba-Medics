@@ -1,3 +1,6 @@
+/* =======================
+   BASE GÉNÉRALE
+========================== */
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
@@ -15,6 +18,14 @@ input, select, textarea, button {
   font-family: inherit;
   font-size: 1rem;
 }
+
+.hidden {
+  display: none !important;
+}
+
+/* =======================
+   EN-TÊTE ET NAVIGATION
+========================== */
 .site-header {
   background-color: #005fa3;
   color: white;
@@ -36,6 +47,7 @@ input, select, textarea, button {
   color: white;
   cursor: pointer;
 }
+
 .main-nav {
   background-color: #e0e7ef;
   padding: 1rem;
@@ -61,6 +73,10 @@ input, select, textarea, button {
   background-color: #005fa3;
   color: white;
 }
+
+/* =======================
+   CONTENU PRINCIPAL
+========================== */
 .main-container {
   padding: 2rem;
 }
@@ -77,6 +93,10 @@ input, select, textarea, button {
 .tab-content.active {
   display: block;
 }
+
+/* =======================
+   FORMULAIRES
+========================== */
 form {
   display: grid;
   gap: 1rem;
@@ -89,42 +109,15 @@ input, select, textarea {
   width: 100%;
 }
 
-button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.btn-primary {
-  background-color: #005fa3;
-  color: white;
+textarea.local-warning {
+  border: 2px dashed #f59e0b;
+  background-color: #fff7ed;
+  animation: fadeHighlight 1s ease-in-out;
 }
 
-.btn-secondary {
-  background-color: #6b7280;
-  color: white;
-}
-
-.btn-warning {
-  background-color: #f59e0b;
-  color: white;
-}
-
-.btn-gpt {
-  background-color: #8b5cf6;
-  color: white;
-}
-
-.btn-green {
-  background-color: #10b981;
-  color: white;
-}
-
-.btn-red {
-  background-color: #ef4444;
-  color: white;
-}
+/* =======================
+   TABLES
+========================== */
 .styled-table {
   width: 100%;
   border-collapse: collapse;
@@ -145,6 +138,39 @@ button {
   background-color: #fee2e2;
   color: #b91c1c;
 }
+
+/* =======================
+   BOUTONS
+========================== */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary { background-color: #005fa3; color: white; }
+.btn-secondary { background-color: #6b7280; color: white; }
+.btn-warning { background-color: #f59e0b; color: white; }
+.btn-gpt { background-color: #8b5cf6; color: white; }
+.btn-green { background-color: #10b981; color: white; }
+.btn-red { background-color: #ef4444; color: white; }
+.btn-success { background-color: #22c55e; color: white; }
+.btn-error { background-color: #dc2626; color: white; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+.animate-pulse {
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+/* =======================
+   NOTIFICATIONS
+========================== */
 .toast {
   position: fixed;
   top: 1rem;
@@ -156,17 +182,13 @@ button {
   display: none;
 }
 
-.toast.success {
-  background-color: #16a34a;
-}
+.toast.success { background-color: #16a34a; }
+.toast.error { background-color: #dc2626; }
+.toast.info { background-color: #2563eb; }
 
-.toast.error {
-  background-color: #dc2626;
-}
-
-.toast.info {
-  background-color: #2563eb;
-}
+/* =======================
+   PIED DE PAGE
+========================== */
 .site-footer {
   text-align: center;
   padding: 1rem;
@@ -175,6 +197,10 @@ button {
   margin-top: 2rem;
 }
 
-.hidden {
-  display: none !important;
+/* =======================
+   ANIMATIONS UTILITAIRES
+========================== */
+@keyframes fadeHighlight {
+  0% { background-color: #fef3c7; }
+  100% { background-color: #fff7ed; }
 }
