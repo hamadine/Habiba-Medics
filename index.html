@@ -85,7 +85,23 @@
 <input type="file" id="pdf-upload" accept="application/pdf" />
 <button id="summarize-pdf" class="btn-gpt mt-2">📄 Résumer ce cours</button>
 <div id="pdf-summary" class="results-block mt-4"></div>
+    
+<section id="notes" class="tab-content hidden" aria-labelledby="Notes">
+  <h2 class="tab-title">📝 Notes, Recherches & Aide IA</h2>
 
+  <label for="notes" class="sr-only">Zone de notes</label>
+  <textarea id="notes" rows="8" class="input-field mb-4" placeholder="Écrivez ici vos observations, cours, symptômes..."></textarea>
+
+  <div class="flex flex-wrap gap-4 mt-2">
+    <button id="save-notes" class="btn-primary">💾 Sauvegarder</button>
+    <button id="restore-notes" class="btn-secondary">♻️ Restaurer sauvegarde</button>
+    <button id="notes_google_search" class="btn-warning">🔍 Rechercher sur Google</button>
+    <button id="notes_symptom_analyze" class="btn-gpt">🧪 Analyser les symptômes</button>
+  </div>
+
+  <div id="notes_symptom_results" class="results-block mt-3"></div>
+  <div id="notes_gpt_response" class="results-block italic text-indigo-600 dark:text-indigo-300"></div>
+</section>
     <!-- PATIENTS -->
     <section id="patients" class="tab-content hidden" aria-labelledby="Patients">
       <h2 class="tab-title">👥 Patients</h2>
@@ -283,24 +299,7 @@
     <button type="submit" class="btn-primary">💾 Sauvegarder</button>
   </form>
 </section>
-    <!-- NOTES ET AIDE IA -->
-<section id="notes" class="tab-content hidden" aria-labelledby="Notes">
-  <h2 class="tab-title">📝 Notes, Recherches & Aide IA</h2>
-
-  <label for="notes_contenu" class="sr-only">Zone de notes</label>
-  <textarea id="notes_contenu" rows="8" class="input-field mb-4" placeholder="Écrivez ici vos observations, symptômes, commentaires..."></textarea>
-
-  <div class="flex flex-wrap gap-4">
-    <button id="notes_save" class="btn-primary">💾 Sauvegarder</button>
-    <button id="notes_google_search" class="btn-secondary">🔎 Rechercher sur Google</button>
-    <button id="notes_symptom_analyze" class="btn-warning">🧪 Analyser les symptômes</button>
-    <button id="notes_ask_gpt" class="btn-gpt">🤖 Interroger l'IA</button>
-  </div>
-
-  <div id="notes_symptom_results" class="results-block"></div>
-  <div id="notes_gpt_response" class="results-block italic text-indigo-600 dark:text-indigo-300"></div>
-</section>
-    </div> <!-- Fin de #content-area -->
+  
 </main>
 
 <!-- PIED DE PAGE -->
