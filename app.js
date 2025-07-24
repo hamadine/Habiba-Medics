@@ -155,7 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
       showNotif('✅ Résumé généré avec succès', 'success');
     }, 3000);
   });
-
+// ✨ Animation de clic sur tous les boutons
+document.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.add('animate-pulse');
+    setTimeout(() => btn.classList.remove('animate-pulse'), 600);
+  });
+});
 }); // Fin du DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -211,19 +217,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (saveNotes) {
-      saveNotes.addEventListener('click', () => {
-        db.collection("notes").doc(uid).set({
-          contenu: notes.value
-        }).then(() => {
-          showNotif("✅ Notes sauvegardées dans le cloud !");
-          saveNotes.classList.add("btn-success", "animate-pulse");
-          saveNotes.textContent = "✅ Sauvegardé !";
-          setTimeout(() => {
-            saveNotes.classList.remove("btn-success", "animate-pulse");
-            saveNotes.textContent = "💾 Sauvegarder";
-          }, 2500);
-        }).catch(err => {
-          console.error("❌ Erreur de sauvegarde :", err);
+  saveNotes.addEventListener('click', () => {
+    const originalText = saveNotes.innerHTML;
+    saveNotes.disabled = true;
+    saveNotes.innerHTML = "⏳ Sauvegarde...";
+
+    db.collection("notes").doc(user.uid).set({
+      contenu: notes.value
+    })
+    .then(() => {
+      showNotif("✅ Notes sauvegardées dans le cloud !");
+      saveNotes.classList.add('animate-pulse');
+      saveNotes.innerHTML = "✅ Sauvegardé !";
+
+      setTimeout(() => {
+        saveNotes.classList.remove('animate-pulse');
+        saveNotes.innerHTML = originalText;
+        saveNotes.disabled = false;
+      }, 2000);
+    })
+    .catch((err) => {
+      console.error("❌ Erreur de sauvegarde :", err);
+      showNotif("❌ Échec de la sauvegarde", "error");
+      saveNotes.innerHTML = originalText;
+      saveNotes.disabled = false;
+    });
+  });
+    }
         localStorage.setItem('notes_backup', notes.value);
           showNotif("📦 Sauvegarde locale effectuée", "info");
 
