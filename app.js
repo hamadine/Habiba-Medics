@@ -115,58 +115,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }, delay);
     });
   }
+  // 📂 Affichage dynamique de la bibliothèque PDF
   document.getElementById('open-pdf-library')?.addEventListener('click', () => {
-  // À remplacer par un vrai affichage dynamique
-  document.getElementById('pdf-list').innerHTML = `
-    <ul>
-      <li><a href="pdfs/anatomie.pdf" target="_blank">📄 Anatomie</a></li>
-      <li><a href="pdfs/physiologie.pdf" target="_blank">📄 Physiologie</a></li>
-      <li><a href="pdfs/pharmacologie.pdf" target="_blank">📄 Pharmacologie</a></li>
-    </ul>
-  `;
-});
+    document.getElementById('pdf-list').innerHTML = `
+      <ul>
+        <li><a href="pdfs/anatomie.pdf" target="_blank">📄 Anatomie</a></li>
+        <li><a href="pdfs/physiologie.pdf" target="_blank">📄 Physiologie</a></li>
+        <li><a href="pdfs/pharmacologie.pdf" target="_blank">📄 Pharmacologie</a></li>
+      </ul>
+    `;
+  });
+
+  // 🤖 Résumé automatique du fichier PDF
   document.getElementById('summarize-pdf')?.addEventListener('click', async () => {
-  const input = document.getElementById('pdf-upload');
-  if (!input || !input.files || !input.files.length) {
-    showNotif('⚠️ Aucun fichier PDF sélectionné', 'error');
-    return;
-  }
+    const input = document.getElementById('pdf-upload');
+    if (!input || !input.files || !input.files.length) {
+      showNotif('⚠️ Aucun fichier PDF sélectionné', 'error');
+      return;
+    }
 
-  const file = input.files[0];
-  if (!file.type.includes('pdf')) {
-    showNotif('⚠️ Le fichier sélectionné n’est pas un PDF', 'error');
-    return;
-  }
+    const file = input.files[0];
+    if (!file.type.includes('pdf')) {
+      showNotif('⚠️ Le fichier sélectionné n’est pas un PDF', 'error');
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append('pdf', file);
+    const formData = new FormData();
+    formData.append('pdf', file);
 
-  showNotif('📡 Envoi du PDF en cours...', 'info');
+    showNotif('📡 Envoi du PDF en cours...', 'info');
 
-  // Simulation de l'appel à l'API
-  setTimeout(() => {
-    document.getElementById('pdf-summary').innerHTML = `
-      <h4>Résumé du cours :</h4>
-      <p><strong>Sujet :</strong> Système nerveux humain</p>
-      <p>Le système nerveux est divisé en système central et périphérique. Il coordonne les fonctions vitales, les réactions motrices, et le traitement des signaux sensoriels...</p>
-    `;
-    showNotif('✅ Résumé généré avec succès', 'success');
-  }, 3000);
-});
+    // Simule l’appel à une API Laravel
+    setTimeout(() => {
+      document.getElementById('pdf-summary').innerHTML = `
+        <h4>Résumé du cours :</h4>
+        <p><strong>Sujet :</strong> Système nerveux humain</p>
+        <p>Le système nerveux est divisé en système central et périphérique. Il coordonne les fonctions vitales, les réactions motrices, et le traitement des signaux sensoriels...</p>
+      `;
+      showNotif('✅ Résumé généré avec succès', 'success');
+    }, 3000);
+  });
 
-  const formData = new FormData();
-  formData.append('pdf', file);
-
-  showNotif('📡 Envoi du PDF en cours...', 'info');
-  
-  // Simule appel backend — remplacer par une vraie requête vers une API Laravel ou serveur IA
-  setTimeout(() => {
-    document.getElementById('pdf-summary').innerHTML = `
-      <h4>Résumé du cours :</h4>
-      <p><strong>Sujet :</strong> Système nerveux humain</p>
-      <p>Le système nerveux est divisé en système central et périphérique. Il coordonne les fonctions vitales, les réactions motrices, et le traitement des signaux sensoriels...</p>
-    `;
-    showNotif('✅ Résumé généré avec succès', 'success');
-  }, 3000);
-});
-  }); // Fin du DOMContentLoaded
+}); // Fin du DOMContentLoaded
