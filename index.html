@@ -7,31 +7,26 @@
   <meta name="theme-color" content="#005fa3" />
   <title>🩺 Habiba Medics</title>
 
-  <!-- Favicon & Manifest -->
   <link rel="icon" href="assets/habiba_medics.png" type="image/png" />
   <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="./style.css" />
 
-  <!-- Feuilles de style -->
-  <!-- Styles principaux -->
-<link rel="stylesheet" href="./style.css" />
-
-  <!-- Librairies JavaScript -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-<!-- Configuration Firebase -->
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
-    authDomain: "habibamedics.firebaseapp.com",
-    projectId: "habibamedics",
-    storageBucket: "habibamedics.firebasestorage.app",
-    messagingSenderId: "727036841121",
-    appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
-    measurementId: "G-LH90ZZ1C8M"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-</script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
+      authDomain: "habibamedics.firebaseapp.com",
+      projectId: "habibamedics",
+      storageBucket: "habibamedics.appspot.com",
+      messagingSenderId: "727036841121",
+      appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
+      measurementId: "G-LH90ZZ1C8M"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
   <script src="js/html2pdf.bundle.min.js" defer></script>
   <script src="js/chart.min.js" defer></script>
   <script src="./app.js" defer></script>
@@ -41,75 +36,71 @@
 <header class="site-header">
   <div class="container flex-header">
     <h1 class="logo"><span class="emoji-logo">🩺</span> Habiba Medics</h1>
-    <button id="theme-toggle" aria-label="Basculer thème" title="Basculer thème">🌙</button>
+    <button id="theme-toggle" aria-label="Basculer thème">🌙</button>
   </div>
 </header>
 
-<nav class="main-nav" role="navigation" aria-label="Menu principal">
+<nav class="main-nav" role="navigation">
   <ul class="nav-grid">
-    <li><button data-target="accueil" class="nav-btn active" role="tab">🏠 Accueil</button></li>
-    <li><button data-target="patients" class="nav-btn" role="tab">👥 Patients</button></li>
-    <li><button data-target="soins" class="nav-btn" role="tab">💉 Soins</button></li>
-    <li><button data-target="planning" class="nav-btn" role="tab">🗓️ Planning</button></li>
-    <li><button data-target="inventaire" class="nav-btn" role="tab">⚕️ Inventaire</button></li>
-    <li><button data-target="infos-generales" class="nav-btn" role="tab">📋 Infos générales</button></li>
-    <li><button data-target="infos-cliniques" class="nav-btn" role="tab">🩺 Infos cliniques</button></li>
-    <li><button data-target="notes" class="nav-btn" role="tab">📝 Notes</button></li>
+    <li><button data-target="accueil" class="nav-btn active">🏠 Accueil</button></li>
+    <li><button data-target="patients" class="nav-btn">👥 Patients</button></li>
+    <li><button data-target="soins" class="nav-btn">💉 Soins</button></li>
+    <li><button data-target="planning" class="nav-btn">🗓️ Planning</button></li>
+    <li><button data-target="reveil" class="nav-btn">⏰ Réveil</button></li>
+    <li><button data-target="inventaire" class="nav-btn">⚕️ Inventaire</button></li>
+    <li><button data-target="infos-generales" class="nav-btn">📋 Infos générales</button></li>
+    <li><button data-target="infos-cliniques" class="nav-btn">🩺 Infos cliniques</button></li>
+    <li><button data-target="notes" class="nav-btn">📝 Notes</button></li>
   </ul>
   <div style="text-align:center; margin-top:1rem;">
-  <button id="install-trigger" class="btn-primary">
-    📲 Télécharger l'application
-  </button>
+    <button id="install-trigger" class="btn-primary">📲 Télécharger l'application</button>
   </div>
 </nav>
 
 <main class="main-container">
   <div id="notification" class="toast hidden" role="status" aria-live="polite"></div>
-
   <div id="content-area" class="tab-container">
-    
-<!-- RÉVEIL PERSONNALISÉ -->
-<section id="reveil" class="tab-content hidden" aria-labelledby="Réveil">
-  <h2 class="tab-title">⏰ Réveil personnalisé</h2>
 
-  <div class="form-grid">
-    <label for="alarm-time-custom">Heure de réveil</label>
-    <input type="time" id="alarm-time-custom" />
+    <!-- SECTION RÉVEIL -->
+    <section id="reveil" class="tab-content hidden">
+      <h2 class="tab-title">⏰ Réveil personnalisé</h2>
+      <div class="form-grid">
+        <label for="alarm-time-custom">Heure de réveil</label>
+        <input type="time" id="alarm-time-custom" />
 
-    <label for="alarm-sound">Son du réveil</label>
-    <select id="alarm-sound">
-      <option value="sounds/beep.mp3">🔔 Bip classique</option>
-      <option value="sounds/birds.mp3">🐦 Oiseaux</option>
-      <option value="sounds/ocean.mp3">🌊 Vagues de l’océan</option>
-      <option value="sounds/zen.mp3">🧘‍♀️ Son Zen</option>
-    </select>
+        <label for="alarm-sound">Son du réveil</label>
+        <select id="alarm-sound">
+          <option value="sounds/beep.mp3">🔔 Bip classique</option>
+          <option value="sounds/birds.mp3">🐦 Oiseaux</option>
+          <option value="sounds/ocean.mp3">🌊 Vagues de l’océan</option>
+          <option value="sounds/zen.mp3">🧘‍♀️ Son Zen</option>
+        </select>
 
-    <button id="set-custom-alarm" class="btn-primary">⏰ Activer le réveil</button>
-  </div>
-</section>
+        <button id="set-custom-alarm" class="btn-primary">⏰ Activer le réveil</button>
+      </div>
+    </section>
+
     <!-- ACCUEIL -->
-    <section id="accueil" class="tab-content" aria-labelledby="Accueil">
+    <section id="accueil" class="tab-content">
       <h2 class="tab-title">🏠 Accueil</h2>
-      <p class="quote">
-        « Je n’ai pas choisi la médecine, c’est elle qui m’a choisi. Car parfois, ce n’est pas nous qui entrons dans une vocation… c’est la douleur des autres qui nous appelle. »
-      </p>
+      <p class="quote">« Je n’ai pas choisi la médecine, c’est elle qui m’a choisi. »</p>
     </section>
-    <section id="pdf-tools" class="tab-content hidden" aria-labelledby="PDF Cours">
-  <h2 class="tab-title">📚 Mes Cours </h2>
 
-  <button id="open-pdf-library" class="btn-primary">📂 Accéder à mes cours PDF</button>
-  <div id="pdf-list" class="mt-4"></div>
+    <!-- NOTES -->
+    <section id="notes" class="tab-content hidden">
+      <h2 class="tab-title">📝 Notes, Recherches & Aide IA</h2>
+      <textarea id="notes_contenu" rows="8" class="input-field mb-4" placeholder="Écrivez ici vos observations, cours, symptômes..."></textarea>
+      <div class="flex flex-wrap gap-4 mt-2">
+        <button id="save-notes" class="btn-primary">💾 Sauvegarder</button>
+        <button id="restore-notes" class="btn-secondary">♻️ Restaurer sauvegarde</button>
+        <button id="notes_google_search" class="btn-warning">🔍 Rechercher sur Google</button>
+        <button id="notes_symptom_analyze" class="btn-gpt">🧪 Analyser les symptômes</button>
+      </div>
+      <div id="notes_symptom_results" class="results-block mt-3"></div>
+      <div id="notes_gpt_response" class="results-block italic text-indigo-600 dark:text-indigo-300"></div>
     </section>
-    <h3>🤖 Résumeur de cours PDF</h3>
-<input type="file" id="pdf-upload" accept="application/pdf" />
-<button id="summarize-pdf" class="btn-gpt mt-2">📄 Résumer ce cours</button>
-<div id="pdf-summary" class="results-block mt-4"></div>
-    
-<section id="notes" class="tab-content hidden" aria-labelledby="Notes">
-  <h2 class="tab-title">📝 Notes, Recherches & Aide IA</h2>
 
-  <label for="notes" class="sr-only">Zone de notes</label>
-  <textarea id="notes" rows="8" class="input-field mb-4" placeholder="Écrivez ici vos observations, cours, symptômes..."></textarea>
+   
 
   <div class="flex flex-wrap gap-4 mt-2">
     <button id="save-notes" class="btn-primary">💾 Sauvegarder</button>
