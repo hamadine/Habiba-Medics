@@ -157,6 +157,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 }); // Fin du DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  // ... ton code existant
+
+  const notes = document.getElementById('notes_contenu');
+  const saveNotes = document.getElementById('notes_save');
+
+  // 🔁 Récupération des notes Firebase
+  if (notes) {
+    db.collection("notes").doc("uniqueNote").get().then(doc => {
+      if (doc.exists) {
+        notes.value = doc.data().contenu;
+        showNotif('☁️ Notes récupérées du cloud', 'info');
+      }
+    }).catch(err => {
+      console.warn("⚠️ Erreur lors du chargement Firebase :", err);
+    });
+  }
+
+  // 💾 Sauvegarde dans Firebase
+  if (saveNotes && notes) {
+    saveNotes.addEventListener('click', () => {
+      db.collection("notes").doc("uniqueNote").set({
+        contenu: notes.value
+      }).then(() => {
+        showNotif('✅ Notes sauvegardées dans Firebase', 'success');
+      }).catch(err => {
+        console.error("❌ Sauvegarde échouée :", err);
+        showNotif('❌ Échec de la sauvegarde Firebase', 'error');
+      });
+    });
+  }
+});
+
 let deferredPrompt = null;
 
 const installTrigger = document.getElementById('install-trigger');
