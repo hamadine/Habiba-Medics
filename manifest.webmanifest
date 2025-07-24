@@ -1,21 +1,19 @@
 {
   "name": "Habiba Medics",
   "short_name": "Habiba",
-  "description": "Application médicale complète pour la gestion des patients, soins, planning et inventaire.",
-  "start_url": "./index.html",
+  "description": "Application médicale de gestion pour Habiba",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#f4f6f9",
+  "background_color": "#ffffff",
   "theme_color": "#005fa3",
-  "lang": "fr",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "assets/icon.png",
+      "src": "assets/habiba_medics.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icon.png",
+      "src": "assets/habiba_medics.png",
       "sizes": "512x512",
       "type": "image/png"
     }
