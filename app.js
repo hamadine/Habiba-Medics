@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     first.classList.add('active');
     document.getElementById(first.dataset.target).classList.add('active');
   }
+
   // Gestion du thème sombre
   if (localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark');
@@ -71,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     poidsInput.addEventListener('input', calculIMC);
     tailleInput.addEventListener('input', calculIMC);
   }
+
   if (notes && saveNotes) {
     notes.value = localStorage.getItem('notes') || '';
     saveNotes.addEventListener('click', () => {
@@ -111,10 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setTimeout(() => {
         showNotif(`⏰ Alarme de ${time} !`, 'success');
-        alarmAudio.play().catch(e => console.warn('Alarme non jouée'));
+        alarmAudio.play().catch(e => console.warn('🔇 Son non lu :', e));
       }, delay);
     });
   }
+
   // 📂 Affichage dynamique de la bibliothèque PDF
   document.getElementById('open-pdf-library')?.addEventListener('click', () => {
     document.getElementById('pdf-list').innerHTML = `
@@ -155,50 +158,42 @@ document.addEventListener('DOMContentLoaded', () => {
       showNotif('✅ Résumé généré avec succès', 'success');
     }, 3000);
   });
-// ✨ Animation de clic sur tous les boutons
-document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.classList.add('animate-pulse');
-    setTimeout(() => btn.classList.remove('animate-pulse'), 600);
+
+  // ✨ Animation de clic sur tous les boutons
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.add('animate-pulse');
+      setTimeout(() => btn.classList.remove('animate-pulse'), 600);
+    });
   });
 });
-}); // Fin du DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-
 // ================================
 // 📦 Initialisation Firebase
 // ================================
-const firebaseConfig = {
-  apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
-  authDomain: "habibamedics.firebaseapp.com",
-  projectId: "habibamedics",
-  storageBucket: "habibamedics.appspot.com",
-  messagingSenderId: "727036841121",
-  appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
-  measurementId: "G-LH90ZZ1C8M"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
 document.addEventListener('DOMContentLoaded', () => {
-  const notes = document.getElementById("notes");
+  const firebaseConfig = {
+    apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
+    authDomain: "habibamedics.firebaseapp.com",
+    projectId: "habibamedics",
+    storageBucket: "habibamedics.appspot.com",
+    messagingSenderId: "727036841121",
+    appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
+    measurementId: "G-LH90ZZ1C8M"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const notes = document.getElementById("notes_contenu");
   const saveNotes = document.getElementById("save-notes");
   const restoreNotes = document.getElementById("restore-notes");
   const notification = document.getElementById("notification");
 
-  function showNotif(msg, type = 'info') {
-    if (!notification) return;
-    notification.textContent = msg;
-    notification.className = `toast ${type}`;
-    notification.classList.remove('hidden');
-    setTimeout(() => notification.classList.add('hidden'), 4000);
-  }
-
   firebase.auth().signInAnonymously().then(() => {
     const user = firebase.auth().currentUser;
     const uid = user.uid;
-  db.collection("notes").doc(uid).get().then(doc => {
+
+    db.collection("notes").doc(uid).get().then(doc => {
       if (doc.exists) {
         notes.value = doc.data().contenu;
         showNotif("☁️ Notes récupérées depuis le cloud !");
@@ -216,108 +211,80 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    if (saveNotes) {
-  saveNotes.addEventListener('click', () => {
-    const originalText = saveNotes.innerHTML;
-    saveNotes.disabled = true;
-    saveNotes.innerHTML = "⏳ Sauvegarde...";
+    saveNotes?.addEventListener('click', () => {
+      const originalText = saveNotes.innerHTML;
+      saveNotes.disabled = true;
+      saveNotes.innerHTML = "⏳ Sauvegarde...";
 
-    db.collection("notes").doc(user.uid).set({
-      contenu: notes.value
-    })
-    .then(() => {
-      showNotif("✅ Notes sauvegardées dans le cloud !");
-      saveNotes.classList.add('animate-pulse');
-      saveNotes.innerHTML = "✅ Sauvegardé !";
-
-      setTimeout(() => {
-        saveNotes.classList.remove('animate-pulse');
-        saveNotes.innerHTML = originalText;
-        saveNotes.disabled = false;
-      }, 2000);
-    })
-    .catch((err) => {
-      console.error("❌ Erreur de sauvegarde :", err);
-      showNotif("❌ Échec de la sauvegarde", "error");
-      saveNotes.innerHTML = originalText;
-      saveNotes.disabled = false;
-    });
-  });
-    }
-        localStorage.setItem('notes_backup', notes.value);
-          showNotif("📦 Sauvegarde locale effectuée", "info");
-
-          saveNotes.classList.add("btn-error", "animate-pulse");
-          saveNotes.textContent = "❌ Échec !";
+      db.collection("notes").doc(uid).set({ contenu: notes.value })
+        .then(() => {
+          showNotif("✅ Notes sauvegardées dans le cloud !");
+          saveNotes.innerHTML = "✅ Sauvegardé !";
+          saveNotes.classList.add("animate-pulse");
           setTimeout(() => {
-            saveNotes.classList.remove("btn-error", "animate-pulse");
-            saveNotes.textContent = "💾 Sauvegarder";
-          }, 2500);
+            saveNotes.classList.remove("animate-pulse");
+            saveNotes.innerHTML = originalText;
+            saveNotes.disabled = false;
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("❌ Erreur de sauvegarde :", err);
+          showNotif("❌ Échec de la sauvegarde", "error");
+          saveNotes.innerHTML = originalText;
+          saveNotes.disabled = false;
         });
-      });
-    }
 
-    if (restoreNotes) {
-      restoreNotes.addEventListener('click', () => {
-        const backup = localStorage.getItem('notes_backup');
-        if (backup) {
-          notes.value = backup;
-          notes.classList.add("local-warning");
-          showNotif("📦 Notes restaurées depuis la sauvegarde locale", "info");
-          setTimeout(() => {
-            notes.classList.remove("local-warning");
-          }, 3000);
-        } else {
-          showNotif("⚠️ Aucune sauvegarde locale trouvée", "error");
-        }
-      });
-    }
+      localStorage.setItem('notes_backup', notes.value);
+    });
+
+    restoreNotes?.addEventListener('click', () => {
+      const backup = localStorage.getItem('notes_backup');
+      if (backup) {
+        notes.value = backup;
+        notes.classList.add("local-warning");
+        showNotif("📦 Notes restaurées depuis la sauvegarde locale", "info");
+        setTimeout(() => notes.classList.remove("local-warning"), 3000);
+      } else {
+        showNotif("⚠️ Aucune sauvegarde locale trouvée", "error");
+      }
+    });
+
   }).catch(error => {
     console.error("❌ Auth anonyme Firebase échouée :", error);
     showNotif("❌ Échec connexion Firebase", "error");
   });
 });
 
+// 📲 Support PWA - Installation
+let deferredPrompt;
 const installTrigger = document.getElementById('install-trigger');
 const installBanner = document.getElementById('install-banner');
 const installBtn = document.getElementById('install-btn');
 
-// 📦 Lorsque l'événement beforeinstallprompt est capturé
 window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('🟢 beforeinstallprompt déclenché');
   e.preventDefault();
   deferredPrompt = e;
-
-  // Affiche le bouton principal et la bannière si existants
   installTrigger?.classList.remove('hidden');
   installBanner?.classList.remove('hidden');
 });
 
-// 🎯 Clic sur le bouton principal (sous le menu)
 installTrigger?.addEventListener('click', () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then(result => {
     if (result.outcome === 'accepted') {
-      console.log("✅ Application installée via bouton !");
       showNotif('📲 Application installée avec succès !', 'success');
-    } else {
-      console.log("❌ Installation refusée.");
     }
     deferredPrompt = null;
   });
 });
 
-// 🎯 Clic sur le bouton dans la bannière flottante
 installBtn?.addEventListener('click', () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then(result => {
     if (result.outcome === 'accepted') {
-      console.log("✅ Installation acceptée via bannière");
       showNotif('📦 Application ajoutée à votre écran d’accueil !', 'success');
-    } else {
-      console.log("❌ Installation refusée via bannière");
     }
     installBanner?.classList.add('hidden');
     deferredPrompt = null;
