@@ -147,3 +147,4 @@ document.addEventListener('DOMContentLoaded', () => {
     showNotif('✅ Résumé généré avec succès', 'success');
   }, 3000);
 });
+  }); // Fin du DOMContentLoaded
