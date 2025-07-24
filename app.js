@@ -159,7 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
 }); // Fin du DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
 
-// Configuration Firebase
+// ================================
+// 📦 Initialisation Firebase
+// ================================
 const firebaseConfig = {
   apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
   authDomain: "habibamedics.firebaseapp.com",
@@ -170,56 +172,91 @@ const firebaseConfig = {
   measurementId: "G-LH90ZZ1C8M"
 };
 
- // Initialisation Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Authentification anonyme
-firebase.auth().signInAnonymously()
-  .then(() => {
+document.addEventListener('DOMContentLoaded', () => {
+  const notes = document.getElementById("notes");
+  const saveNotes = document.getElementById("save-notes");
+  const restoreNotes = document.getElementById("restore-notes");
+  const notification = document.getElementById("notification");
+
+  function showNotif(msg, type = 'info') {
+    if (!notification) return;
+    notification.textContent = msg;
+    notification.className = `toast ${type}`;
+    notification.classList.remove('hidden');
+    setTimeout(() => notification.classList.add('hidden'), 4000);
+  }
+
+  firebase.auth().signInAnonymously().then(() => {
     const user = firebase.auth().currentUser;
-    console.log("✅ Connecté anonymement :", user.uid);
-    showNotif("🔐 Connexion anonyme réussie !");
-
-    // 🔄 Charger les notes à partir de Firestore
-    const notes = document.getElementById("notes");
-    const saveNotes = document.getElementById("save-notes");
-
-    if (notes && user) {
-      db.collection("notes").doc(user.uid).get()
-        .then((doc) => {
-          if (doc.exists) {
-            notes.value = doc.data().contenu;
-            showNotif("☁️ Notes récupérées depuis le cloud !");
-          }
-        })
-        .catch((err) => {
-          console.warn("⚠️ Erreur de récupération des notes :", err);
-        });
-
-      // 💾 Sauvegarde dans Firestore
-      if (saveNotes) {
-        saveNotes.addEventListener('click', () => {
-          db.collection("notes").doc(user.uid).set({
-            contenu: notes.value
-          })
-          .then(() => {
-            showNotif("✅ Notes sauvegardées dans le cloud !");
-          })
-          .catch((err) => {
-            console.error("❌ Erreur de sauvegarde :", err);
-            showNotif("❌ Échec de la sauvegarde", "error");
-          });
-        });
+    const uid = user.uid;
+  db.collection("notes").doc(uid).get().then(doc => {
+      if (doc.exists) {
+        notes.value = doc.data().contenu;
+        showNotif("☁️ Notes récupérées depuis le cloud !");
+      } else {
+        const backup = localStorage.getItem('notes_backup');
+        if (backup) {
+          notes.value = backup;
+          notes.classList.add('local-warning');
+          showNotif("🗃️ Récupération depuis la sauvegarde locale", "info");
+          setTimeout(() => notes.classList.remove("local-warning"), 3000);
+        } else {
+          notes.placeholder = "📝 Aucune note enregistrée pour l’instant.";
+          showNotif("ℹ️ Aucune note trouvée pour ce compte.", "info");
+        }
       }
-    }
-  })
-  .catch((error) => {
-    console.error("❌ Erreur d'authentification anonyme :", error);
-    showNotif("❌ Échec de la connexion Firebase", 'error');
-  });
+    });
 
-let deferredPrompt = null;
+    if (saveNotes) {
+      saveNotes.addEventListener('click', () => {
+        db.collection("notes").doc(uid).set({
+          contenu: notes.value
+        }).then(() => {
+          showNotif("✅ Notes sauvegardées dans le cloud !");
+          saveNotes.classList.add("btn-success", "animate-pulse");
+          saveNotes.textContent = "✅ Sauvegardé !";
+          setTimeout(() => {
+            saveNotes.classList.remove("btn-success", "animate-pulse");
+            saveNotes.textContent = "💾 Sauvegarder";
+          }, 2500);
+        }).catch(err => {
+          console.error("❌ Erreur de sauvegarde :", err);
+        localStorage.setItem('notes_backup', notes.value);
+          showNotif("📦 Sauvegarde locale effectuée", "info");
+
+          saveNotes.classList.add("btn-error", "animate-pulse");
+          saveNotes.textContent = "❌ Échec !";
+          setTimeout(() => {
+            saveNotes.classList.remove("btn-error", "animate-pulse");
+            saveNotes.textContent = "💾 Sauvegarder";
+          }, 2500);
+        });
+      });
+    }
+
+    if (restoreNotes) {
+      restoreNotes.addEventListener('click', () => {
+        const backup = localStorage.getItem('notes_backup');
+        if (backup) {
+          notes.value = backup;
+          notes.classList.add("local-warning");
+          showNotif("📦 Notes restaurées depuis la sauvegarde locale", "info");
+          setTimeout(() => {
+            notes.classList.remove("local-warning");
+          }, 3000);
+        } else {
+          showNotif("⚠️ Aucune sauvegarde locale trouvée", "error");
+        }
+      });
+    }
+  }).catch(error => {
+    console.error("❌ Auth anonyme Firebase échouée :", error);
+    showNotif("❌ Échec connexion Firebase", "error");
+  });
+});
 
 const installTrigger = document.getElementById('install-trigger');
 const installBanner = document.getElementById('install-banner');
