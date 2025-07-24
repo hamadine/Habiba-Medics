@@ -157,32 +157,50 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 }); // Fin du DOMContentLoaded
-let deferredPrompt;
-const banner = document.getElementById('install-banner');
+let deferredPrompt = null;
+
+const installTrigger = document.getElementById('install-trigger');
+const installBanner = document.getElementById('install-banner');
 const installBtn = document.getElementById('install-btn');
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (banner) banner.classList.remove('hidden');
-});
-
-installBtn?.addEventListener('click', () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(choice => {
-    if (choice.outcome === 'accepted') {
-      console.log("✅ Installation acceptée");
-    } else {
-      console.log("❌ Installation refusée");
-    }
-    banner.classList.add('hidden');
-    deferredPrompt = null;
-  });
-});
+// 📦 Lorsque l'événement beforeinstallprompt est capturé
 window.addEventListener('beforeinstallprompt', (e) => {
   console.log('🟢 beforeinstallprompt déclenché');
   e.preventDefault();
   deferredPrompt = e;
-  banner.classList.remove('hidden');
+
+  // Affiche le bouton principal et la bannière si existants
+  installTrigger?.classList.remove('hidden');
+  installBanner?.classList.remove('hidden');
+});
+
+// 🎯 Clic sur le bouton principal (sous le menu)
+installTrigger?.addEventListener('click', () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(result => {
+    if (result.outcome === 'accepted') {
+      console.log("✅ Application installée via bouton !");
+      showNotif('📲 Application installée avec succès !', 'success');
+    } else {
+      console.log("❌ Installation refusée.");
+    }
+    deferredPrompt = null;
+  });
+});
+
+// 🎯 Clic sur le bouton dans la bannière flottante
+installBtn?.addEventListener('click', () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(result => {
+    if (result.outcome === 'accepted') {
+      console.log("✅ Installation acceptée via bannière");
+      showNotif('📦 Application ajoutée à votre écran d’accueil !', 'success');
+    } else {
+      console.log("❌ Installation refusée via bannière");
+    }
+    installBanner?.classList.add('hidden');
+    deferredPrompt = null;
+  });
 });
