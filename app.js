@@ -115,4 +115,35 @@ document.addEventListener('DOMContentLoaded', () => {
       }, delay);
     });
   }
+  document.getElementById('open-pdf-library')?.addEventListener('click', () => {
+  // À remplacer par un vrai affichage dynamique
+  document.getElementById('pdf-list').innerHTML = `
+    <ul>
+      <li><a href="pdfs/anatomie.pdf" target="_blank">📄 Anatomie</a></li>
+      <li><a href="pdfs/physiologie.pdf" target="_blank">📄 Physiologie</a></li>
+      <li><a href="pdfs/pharmacologie.pdf" target="_blank">📄 Pharmacologie</a></li>
+    </ul>
+  `;
+});
+  document.getElementById('summarize-pdf')?.addEventListener('click', async () => {
+  const file = document.getElementById('pdf-upload').files[0];
+  if (!file || !file.type.includes('pdf')) {
+    showNotif('⚠️ Veuillez sélectionner un fichier PDF valide', 'error');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('pdf', file);
+
+  showNotif('📡 Envoi du PDF en cours...', 'info');
+  
+  // Simule appel backend — remplacer par une vraie requête vers une API Laravel ou serveur IA
+  setTimeout(() => {
+    document.getElementById('pdf-summary').innerHTML = `
+      <h4>Résumé du cours :</h4>
+      <p><strong>Sujet :</strong> Système nerveux humain</p>
+      <p>Le système nerveux est divisé en système central et périphérique. Il coordonne les fonctions vitales, les réactions motrices, et le traitement des signaux sensoriels...</p>
+    `;
+    showNotif('✅ Résumé généré avec succès', 'success');
+  }, 3000);
 });
