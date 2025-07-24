@@ -157,3 +157,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 }); // Fin du DOMContentLoaded
+let deferredPrompt;
+const banner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (banner) banner.classList.remove('hidden');
+});
+
+installBtn?.addEventListener('click', () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(choice => {
+    if (choice.outcome === 'accepted') {
+      console.log("✅ Installation acceptée");
+    } else {
+      console.log("❌ Installation refusée");
+    }
+    banner.classList.add('hidden');
+    deferredPrompt = null;
+  });
+});
