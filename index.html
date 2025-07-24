@@ -1,298 +1,341 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Habiba Medics — Application médicale complète pour gestion de soins, patients, diagnostics, et outils cliniques" />
+  <meta name="theme-color" content="#005fa3" />
   <title>🩺 Habiba Medics</title>
 
-  <!-- Librairies locales -->
-  <link rel="stylesheet" href="css/style-final.css" />
+  <!-- Favicon & Manifest -->
+  <link rel="icon" href="assets/icon.png" type="image/png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- Feuilles de style -->
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="fonts/inter/inter.css" />
 
-  <!-- Scripts -->
+  <!-- Librairies JavaScript -->
   <script src="js/html2pdf.bundle.min.js" defer></script>
   <script src="js/chart.min.js" defer></script>
   <script src="js/app.js" defer></script>
 </head>
-
-<body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-
-  <!-- Header -->
-  <header class="shadow bg-white dark:bg-gray-800">
-    <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">
-        <span class="stetho-animate" aria-hidden="true">🩺</span> Habiba Medics
+<body>
+  <!-- Bandeau supérieur -->
+  <header class="site-header">
+    <div class="container flex-header">
+      <h1 class="logo">
+        <span class="emoji-logo">🩺</span> Habiba Medics
       </h1>
-      <button id="theme-toggle" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" aria-label="Basculer thème">🌙</button>
+      <button id="theme-toggle" aria-label="Basculer thème" title="Basculer thème">
+        🌙
+      </button>
     </div>
   </header>
 
-  <!-- Navigation -->
-  <nav class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-2 sm:grid-cols-3 gap-4" role="navigation" aria-label="Sections principales">
-    <button data-target="accueil" class="nav-card" role="tab" aria-label="Accueil">🏠 Accueil</button>
-    <button data-target="patients" class="nav-card" role="tab" aria-label="Patients">👥 Patients</button>
-    <button data-target="soins" class="nav-card" role="tab" aria-label="Soins">💉 Soins</button>
-    <button data-target="planning" class="nav-card" role="tab" aria-label="Planning">🗓️ Planning</button>
-    <button data-target="inventaire" class="nav-card" role="tab" aria-label="Inventaire">⚕️ Inventaire</button>
-    <button data-target="gen-info" class="nav-card" role="tab" aria-label="Infos générales">📋 Infos générales</button>
-    <button data-target="cli-info" class="nav-card" role="tab" aria-label="Infos cliniques">🩺 Infos cliniques</button>
-    <button data-target="notes" class="nav-card" role="tab" aria-label="Notes">📝 Notes</button>
+  <!-- Navigation principale -->
+  <nav class="main-nav" role="navigation" aria-label="Menu principal">
+    <ul class="nav-grid">
+      <li><button data-target="accueil" class="nav-btn active" role="tab">🏠 Accueil</button></li>
+      <li><button data-target="patients" class="nav-btn" role="tab">👥 Patients</button></li>
+      <li><button data-target="soins" class="nav-btn" role="tab">💉 Soins</button></li>
+      <li><button data-target="planning" class="nav-btn" role="tab">🗓️ Planning</button></li>
+      <li><button data-target="inventaire" class="nav-btn" role="tab">⚕️ Inventaire</button></li>
+      <li><button data-target="gen-info" class="nav-btn" role="tab">📋 Infos générales</button></li>
+      <li><button data-target="cli-info" class="nav-btn" role="tab">🩺 Infos cliniques</button></li>
+      <li><button data-target="notes" class="nav-btn" role="tab">📝 Notes</button></li>
+    </ul>
   </nav>
+  <main class="main-container">
+  <!-- Notifications (toast) -->
+  <div id="notification" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <!-- Contenu principal -->
-  <main class="max-w-7xl mx-auto px-4 py-10">
-    <div id="notification" class="fixed top-4 right-4 px-4 py-2 rounded shadow hidden z-50 text-white"></div>
-    <div id="content-area" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Accueil -->
-      <section id="accueil" class="tab-content" aria-labelledby="Accueil">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">🏠 Accueil</h2>
-        <p class="text-lg italic text-gray-600 dark:text-gray-300">
-          "Je n’ai pas choisi la médecine, c’est elle qui m’a choisi. Car parfois, ce n’est pas nous qui entrons dans une vocation… c’est la douleur des autres qui nous appelle."
-        </p>
-      </section>
+  <!-- Conteneur de contenu principal -->
+  <div id="content-area" class="tab-container">
+    <!-- Accueil -->
+    <section id="accueil" class="tab-content" aria-labelledby="Accueil">
+      <h2 class="tab-title">🏠 Accueil</h2>
+      <p class="quote">
+        « Je n’ai pas choisi la médecine, c’est elle qui m’a choisi. Car parfois, ce n’est pas nous qui entrons dans une vocation… c’est la douleur des autres qui nous appelle. »
+      </p>
+    </section>
+    <!-- Patients -->
+    <section id="patients" class="tab-content hidden" aria-labelledby="Patients">
+      <h2 class="tab-title">👥 Patients</h2>
+      <form id="form-patient" class="form-grid">
 
-      <!-- Patients -->
-      <section id="patients" class="tab-content hidden" aria-labelledby="Patients">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon loader-heart" aria-hidden="true">❤️</span> Patients
-        </h2>
-        <form id="form-patient" class="space-y-4">
-
-          <!-- Identité -->
-          <label for="patient_nom">Nom du patient</label>
-          <input type="text" id="patient_nom" class="input-field" />
-
+        <!-- Identité -->
+        <fieldset>
+          <legend>Identité</legend>
+          <label for="patient_nom">Nom</label>
+          <input type="text" id="patient_nom" required />
+          
           <label for="patient_prenom">Prénom</label>
-          <input type="text" id="patient_prenom" class="input-field" />
-
+          <input type="text" id="patient_prenom" required />
+          
           <label for="patient_naissance">Date de naissance</label>
-          <input type="date" id="patient_naissance" class="input-field" />
-
-          <label for="patient_sexe">Sexe (M / F)</label>
-          <input type="text" id="patient_sexe" class="input-field" />
-
+          <input type="date" id="patient_naissance" required />
+          
+          <label for="patient_sexe">Sexe (M/F)</label>
+          <input type="text" id="patient_sexe" maxlength="1" />
+          
           <label for="patient_nationalite">Nationalité</label>
-          <input type="text" id="patient_nationalite" class="input-field" />
+          <input type="text" id="patient_nationalite" />
+          
+          <label for="patient_numero">N° Dossier / ID</label>
+          <input type="text" id="patient_numero" />
+        </fieldset>
 
-          <label for="patient_numero">Numéro de dossier / ID</label>
-          <input type="text" id="patient_numero" class="input-field" />
-
-          <!-- Contact -->
+        <!-- Contact -->
+        <fieldset>
+          <legend>Contact</legend>
           <label for="patient_tel">Téléphone</label>
-          <input type="tel" id="patient_tel" class="input-field" />
-
+          <input type="tel" id="patient_tel" />
+          
           <label for="patient_email">Email</label>
-          <input type="email" id="patient_email" class="input-field" />
-
+          <input type="email" id="patient_email" />
+          
           <label for="patient_adresse">Adresse</label>
-          <input type="text" id="patient_adresse" class="input-field" />
+          <input type="text" id="patient_adresse" />
+        </fieldset>
 
-          <!-- Infos administratives -->
+        <!-- Informations administratives -->
+        <fieldset>
+          <legend>Informations administratives</legend>
           <label for="patient_assurance">Assurance</label>
-          <input type="text" id="patient_assurance" class="input-field" />
-
+          <input type="text" id="patient_assurance" />
+          
           <label for="patient_num_secu">N° Sécurité sociale</label>
-          <input type="text" id="patient_num_secu" class="input-field" />
+          <input type="text" id="patient_num_secu" />
+        </fieldset>
 
-          <!-- Contact urgence -->
-          <label for="contact_urgence_nom">Nom du contact d'urgence</label>
-          <input type="text" id="contact_urgence_nom" class="input-field" />
-
+        <!-- Contact d'urgence -->
+        <fieldset>
+          <legend>Contact d'urgence</legend>
+          <label for="contact_urgence_nom">Nom</label>
+          <input type="text" id="contact_urgence_nom" />
+          
           <label for="contact_urgence_tel">Téléphone</label>
-          <input type="tel" id="contact_urgence_tel" class="input-field" />
-
+          <input type="tel" id="contact_urgence_tel" />
+          
           <label for="contact_urgence_lien">Lien avec le patient</label>
-          <input type="text" id="contact_urgence_lien" class="input-field" />
+          <input type="text" id="contact_urgence_lien" />
+        </fieldset>
 
-          <!-- Remarques -->
-          <label for="patient_remarques">Remarques</label>
-          <textarea id="patient_remarques" rows="4" class="input-field"></textarea>
+        <!-- Remarques -->
+        <label for="patient_remarques">Remarques</label>
+        <textarea id="patient_remarques" rows="3"></textarea>
 
-          <button type="submit" class="btn-primary">💾 Enregistrer</button>
-        </form>
-      </section>
+        <button type="submit" class="btn-primary">💾 Enregistrer</button>
+      </form>
+    </section>
+    <!-- Soins -->
+    <section id="soins" class="tab-content hidden" aria-labelledby="Soins">
+      <h2 class="tab-title">💉 Soins</h2>
+      <form id="form-soins" class="form-grid">
+        <label for="soin_type">Type de soin</label>
+        <input type="text" id="soin_type" placeholder="Ex : Injection, pansement, etc." />
 
-      <!-- Soins -->
-      <section id="soins" class="tab-content hidden" aria-labelledby="Soins">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-          <span class="tab-icon animate-pulse" aria-hidden="true">💉</span> Soins
-        </h2>
-        <form id="form-soins" class="space-y-4">
-          <label for="soin_type">Type de soin</label>
-          <input type="text" id="soin_type" class="input-field" />
+        <label for="soin_date">Date</label>
+        <input type="date" id="soin_date" />
 
-          <label for="soin_date">Date</label>
-          <input type="date" id="soin_date" class="input-field" />
+        <label for="soin_notes">Notes sur le soin</label>
+        <textarea id="soin_notes" rows="3"></textarea>
 
-          <label for="soin_notes">Notes</label>
-          <textarea id="soin_notes" class="input-field"></textarea>
+        <button type="submit" class="btn-primary">💾 Ajouter</button>
+      </form>
+    </section>
+    <!-- Planning -->
+    <section id="planning" class="tab-content hidden" aria-labelledby="Planning">
+      <h2 class="tab-title">🗓️ Planning médical</h2>
 
-          <button type="submit" class="btn-primary">💾 Ajouter</button>
-        </form>
-      </section>
+      <div class="form-grid">
+        <label for="alarm-time">Définir une alarme</label>
+        <input type="time" id="alarm-time" />
 
-      <!-- Planning -->
-      <section id="planning" class="tab-content hidden" aria-labelledby="Planning">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">🗓️ Planning</h2>
-        <label for="alarm-time">Heure d’alarme</label>
-        <input id="alarm-time" type="time" class="border p-2 rounded mr-2" />
-        <button id="set-alarm" class="bg-indigo-500 text-white px-4 py-2 rounded">⏰ Définir l'alarme</button>
-        <div class="mt-6">
-          <canvas id="timerChart" height="200"></canvas>
-          <div id="countdown" class="text-lg mt-2"></div>
-          <div class="flex gap-4 mt-2">
-            <button id="start-timer" class="bg-green-500 text-white px-4 py-2 rounded">▶️ Démarrer</button>
-            <button id="reset-timer" class="bg-red-500 text-white px-4 py-2 rounded">🔁 Réinitialiser</button>
-            <button id="export-chart" class="bg-gray-500 text-white px-4 py-2 rounded">📄 Export PDF</button>
-          </div>
+        <button id="set-alarm" class="btn-primary">⏰ Activer l'alarme</button>
+      </div>
+
+      <div class="chart-block">
+        <canvas id="timerChart" height="180"></canvas>
+        <div id="countdown" class="text-center countdown-display"></div>
+        <div class="btn-group">
+          <button id="start-timer" class="btn-green">▶️ Démarrer</button>
+          <button id="reset-timer" class="btn-red">🔁 Réinitialiser</button>
+          <button id="export-chart" class="btn-secondary">📄 Export PDF</button>
         </div>
-      </section>
-      <!-- Inventaire -->
-      <section id="inventaire" class="tab-content hidden" aria-labelledby="Inventaire">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">⚕️ Inventaire</h2>
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th scope="col">Article</th>
-              <th scope="col">Quantité</th>
-              <th scope="col">Seuil critique</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Gants médicaux</td><td>120</td><td>50</td></tr>
-            <tr class="inventory-alert"><td>Seringues</td><td>15</td><td>30</td></tr>
-            <tr><td>Compresses stériles</td><td>200</td><td>100</td></tr>
-            <tr><td>Masques chirurgicaux</td><td>80</td><td>50</td></tr>
-            <tr class="inventory-alert"><td>Désinfectant</td><td>10</td><td>20</td></tr>
-            <tr><td>Thermomètres</td><td>5</td><td>3</td></tr>
-            <tr><td>Stéthoscopes</td><td>3</td><td>2</td></tr>
-            <tr><td>Pansements</td><td>150</td><td>50</td></tr>
-            <tr class="inventory-alert"><td>Bandelettes urinaires</td><td>12</td><td>20</td></tr>
-            <tr><td>Solutions salines</td><td>25</td><td>15</td></tr>
-          </tbody>
-        </table>
-      </section>
+      </div>
+    </section>
+    <!-- Inventaire -->
+    <section id="inventaire" class="tab-content hidden" aria-labelledby="Inventaire">
+      <h2 class="tab-title">⚕️ Inventaire médical</h2>
 
-      <!-- Infos Générales -->
-      <section id="gen-info" class="tab-content hidden" aria-labelledby="Infos générales">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">📋 Renseignements Généraux</h2>
-        <form id="form-gen" class="space-y-4">
-          <label for="nom">Nom complet</label>
-          <input type="text" id="nom" class="input-field" />
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th>Quantité</th>
+            <th>Seuil critique</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Gants</td><td>120</td><td>50</td></tr>
+          <tr class="inventory-alert"><td>Seringues</td><td>15</td><td>30</td></tr>
+          <tr><td>Masques</td><td>80</td><td>40</td></tr>
+          <tr><td>Stéthoscopes</td><td>5</td><td>2</td></tr>
+          <tr class="inventory-alert"><td>Désinfectant</td><td>10</td><td>20</td></tr>
+          <tr><td>Compresses</td><td>200</td><td>100</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- Infos Générales -->
+    <section id="gen-info" class="tab-content hidden" aria-labelledby="Infos générales">
+      <h2 class="tab-title">📋 Informations Générales</h2>
 
-          <label for="prenom">Prénom</label>
-          <input type="text" id="prenom" class="input-field" />
+      <form id="form-gen" class="form-block">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" class="input-field" />
 
-          <label for="date_naissance">Date de naissance</label>
-          <input type="date" id="date_naissance" class="input-field" />
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" class="input-field" />
 
-          <label for="sexe">Sexe (M/F)</label>
-          <input type="text" id="sexe" class="input-field" />
+        <label for="date_naissance">Date de naissance</label>
+        <input type="date" id="date_naissance" class="input-field" />
 
-          <label for="adresse">Adresse complète</label>
-          <input type="text" id="adresse" class="input-field" />
+        <label for="sexe">Sexe</label>
+        <select id="sexe" class="input-field">
+          <option value="">-- Choisir --</option>
+          <option value="M">Masculin</option>
+          <option value="F">Féminin</option>
+        </select>
 
-          <label for="telephone">Téléphone</label>
-          <input type="tel" id="telephone" class="input-field" />
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" class="input-field" />
 
-          <label for="email">Email</label>
-          <input type="email" id="email" class="input-field" />
+        <label for="email">Email</label>
+        <input type="email" id="email" class="input-field" />
 
-          <label for="groupe_sanguin">Groupe sanguin</label>
-          <input type="text" id="groupe_sanguin" class="input-field" />
+        <label for="adresse">Adresse</label>
+        <input type="text" id="adresse" class="input-field" />
 
-          <label for="ant_med">Antécédents médicaux</label>
-          <textarea id="ant_med" class="input-field"></textarea>
+        <label for="groupe_sanguin">Groupe sanguin</label>
+        <input type="text" id="groupe_sanguin" class="input-field" />
 
-          <label for="ant_chir">Antécédents chirurgicaux</label>
-          <textarea id="ant_chir" class="input-field"></textarea>
+        <button type="submit" class="btn-primary">💾 Enregistrer</button>
+      </form>
+    </section>
+    <!-- Infos Cliniques -->
+    <section id="cli-info" class="tab-content hidden" aria-labelledby="Infos cliniques">
+      <h2 class="tab-title">🩺 Données Cliniques</h2>
 
-          <label for="allergies">Allergies connues</label>
-          <textarea id="allergies" class="input-field"></textarea>
+      <form id="form-cli" class="form-block">
+        <label for="temperature">Température (°C)</label>
+        <input type="text" id="temperature" class="input-field" />
 
-          <label for="traitements">Traitements actuels</label>
-          <textarea id="traitements" class="input-field"></textarea>
+        <label for="frequence_cardiaque">Fréquence cardiaque (bpm)</label>
+        <input type="text" id="frequence_cardiaque" class="input-field" />
 
-          <label for="habitudes">Habitudes de vie</label>
-          <textarea id="habitudes" class="input-field"></textarea>
+        <label for="tension">Tension artérielle (mmHg)</label>
+        <input type="text" id="tension" class="input-field" />
 
-          <label for="autres_info">Autres informations</label>
-          <textarea id="autres_info" class="input-field"></textarea>
+        <label for="frequence_respiratoire">Fréquence respiratoire (/min)</label>
+        <input type="text" id="frequence_respiratoire" class="input-field" />
 
-          <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-        </form>
-        <div id="export-area-gen" class="mt-6"></div>
-      </section>
+        <label for="saturation">Saturation en O₂ (%)</label>
+        <input type="text" id="saturation" class="input-field" />
 
-      <!-- Infos Cliniques -->
-      <section id="cli-info" class="tab-content hidden" aria-labelledby="Infos cliniques">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">🩺 Renseignements Cliniques</h2>
-        <form id="form-cli" class="space-y-4">
-          <label for="temperature">Température (°C)</label>
-          <input type="text" id="temperature" class="input-field" />
+        <label for="poids">Poids (kg)</label>
+        <input type="text" id="poids" class="input-field" />
 
-          <label for="frequence_cardiaque">Fréquence cardiaque</label>
-          <input type="text" id="frequence_cardiaque" class="input-field" />
+        <label for="taille">Taille (cm)</label>
+        <input type="text" id="taille" class="input-field" />
 
-          <label for="tension">Tension artérielle</label>
-          <input type="text" id="tension" class="input-field" />
+        <label for="imc">IMC</label>
+        <input type="text" id="imc" class="input-field" readonly />
 
-          <label for="frequence_respiratoire">Fréquence respiratoire</label>
-          <input type="text" id="frequence_respiratoire" class="input-field" />
+        <button type="submit" class="btn-primary">💾 Sauvegarder</button>
+      </form>
+    </section>
+    <!-- Soins -->
+    <section id="soins" class="tab-content hidden" aria-labelledby="Soins">
+      <h2 class="tab-title">💊 Soins et Prescriptions</h2>
 
-          <label for="saturation">Saturation O₂ (%)</label>
-          <input type="text" id="saturation" class="input-field" />
+      <form id="form-soins" class="form-block">
+        <label for="soin_type">Type de soin</label>
+        <input type="text" id="soin_type" class="input-field" />
 
-          <label for="poids">Poids (kg)</label>
-          <input type="text" id="poids" class="input-field" />
+        <label for="soin_date">Date du soin</label>
+        <input type="date" id="soin_date" class="input-field" />
 
-          <label for="taille">Taille (cm)</label>
-          <input type="text" id="taille" class="input-field" />
+        <label for="soin_notes">Observations / Détails</label>
+        <textarea id="soin_notes" rows="4" class="input-field"></textarea>
 
-          <label for="imc">IMC</label>
-          <input type="text" id="imc" class="input-field" />
+        <button type="submit" class="btn-primary">💾 Ajouter le soin</button>
+      </form>
 
-          <label for="etat_general">État général</label>
-          <textarea id="etat_general" class="input-field"></textarea>
+      <div id="liste-soins" class="mt-4">
+        <!-- Soins ajoutés dynamiquement -->
+      </div>
+    </section>
+    <!-- Notes -->
+    <section id="notes" class="tab-content hidden" aria-labelledby="Notes">
+      <h2 class="tab-title">📝 Notes, Recherches & Aide IA</h2>
 
-          <label for="symptomes">Symptômes actuels</label>
-          <textarea id="symptomes" class="input-field"></textarea>
+      <label for="notes-area" class="sr-only">Zone de notes</label>
+      <textarea id="notes-area" rows="8" class="input-field mb-4" placeholder="Écrivez ici vos observations, symptômes, commentaires..."></textarea>
 
-          <label for="examen_physique">Examen physique</label>
-          <textarea id="examen_physique" class="input-field"></textarea>
+      <div class="flex flex-wrap gap-4">
+        <button id="save-notes" class="btn-primary">💾 Sauvegarder</button>
+        <button id="google-search-notes" class="btn-secondary">🔎 Rechercher sur Google</button>
+        <button id="search-symptoms" class="btn-warning">🧪 Analyser les symptômes</button>
+        <button id="ask-gpt" class="btn-gpt">🤖 Interroger l'IA</button>
+      </div>
 
-          <label for="diagnostic">Diagnostic</label>
-          <textarea id="diagnostic" class="input-field"></textarea>
+      <div id="symptom-results" class="results-block"></div>
+      <div id="gpt-response" class="results-block italic text-indigo-600 dark:text-indigo-300"></div>
+    </section>
+    
+    <!-- Planning -->
+    <section id="planning" class="tab-content hidden" aria-labelledby="Planning">
+      <h2 class="tab-title">🗓️ Planning & Suivi</h2>
 
-          <label for="prescription">Prescription</label>
-          <textarea id="prescription" class="input-field"></textarea>
+      <label for="alarm-time">⏰ Heure d’alarme</label>
+      <input id="alarm-time" type="time" class="input-field" />
 
-          <button type="submit" class="btn-primary">💾 Enregistrer</button>
-        </form>
-        <div id="export-area-cli" class="mt-6"></div>
-      </section>
+      <button id="set-alarm" class="btn-primary mt-2">🔔 Définir une alarme</button>
 
-      <!-- Notes -->
-      <section id="notes" class="tab-content hidden" aria-labelledby="Notes">
-        <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">📝 Notes</h2>
-        <label for="notes-area" class="sr-only">Zone de saisie des notes</label>
-        <textarea id="notes-area" rows="8" class="w-full input-field mb-4" placeholder="Écrivez ici les symptômes, remarques, observations..."></textarea>
-        <div class="flex flex-wrap gap-4">
-          <button id="save-notes" class="btn-primary">💾 Sauvegarder</button>
-          <button id="google-search-notes" class="btn-secondary">🔎 Rechercher sur Google</button>
-          <button id="search-symptoms" class="bg-yellow-500 text-white px-4 py-2 rounded hover:shadow">🧪 Détecter les symptômes</button>
-          <button id="ask-gpt" class="bg-purple-600 text-white px-4 py-2 rounded hover:shadow">🤖 Demander à ChatGPT</button>
+      <div class="mt-6">
+        <canvas id="timerChart" height="200" aria-label="Graphique du suivi"></canvas>
+        <div id="countdown" class="countdown-display mt-2"></div>
+
+        <div class="flex gap-4 mt-4">
+          <button id="start-timer" class="btn-success">▶️ Démarrer</button>
+          <button id="reset-timer" class="btn-danger">🔁 Réinitialiser</button>
+          <button id="export-chart" class="btn-secondary">📄 Export PDF</button>
         </div>
-        <div id="symptom-results" class="mt-6 text-sm text-gray-700 dark:text-gray-300"></div>
-        <div id="gpt-response" class="mt-4 text-sm italic text-indigo-600 dark:text-indigo-300"></div>
-      </section>
-    </div>
-  </main>
+      </div>
+    </section>
+    </div> <!-- Fin de #content-area -->
+</main>
 
-  <!-- Footer -->
-  <footer class="text-center py-6 text-sm text-gray-400 dark:text-gray-500">
-    &copy; 2025 Habiba Medics. Tous droits réservés. |
-    <strong class="animated-habiba">Habiba‑Medics by Hamadine</strong>
-  </footer>
+<!-- Pied de page -->
+<footer class="site-footer">
+  <p>
+    &copy; 2025 Habiba Medics – Tous droits réservés. |
+    <strong>Développé avec ❤️ par Hamadine</strong>
+  </p>
+</footer>
+
+<!-- Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      console.log("✅ Service Worker enregistré");
+    }).catch(err => {
+      console.error("❌ Échec d’enregistrement du Service Worker", err);
+    });
+  }
+</script>
+
 </body>
 </html>
