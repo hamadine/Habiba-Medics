@@ -180,3 +180,9 @@ installBtn?.addEventListener('click', () => {
     deferredPrompt = null;
   });
 });
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('🟢 beforeinstallprompt déclenché');
+  e.preventDefault();
+  deferredPrompt = e;
+  banner.classList.remove('hidden');
+});
