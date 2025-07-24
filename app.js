@@ -126,11 +126,33 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
 });
   document.getElementById('summarize-pdf')?.addEventListener('click', async () => {
-  const file = document.getElementById('pdf-upload').files[0];
-  if (!file || !file.type.includes('pdf')) {
-    showNotif('⚠️ Veuillez sélectionner un fichier PDF valide', 'error');
+  const input = document.getElementById('pdf-upload');
+  if (!input || !input.files || !input.files.length) {
+    showNotif('⚠️ Aucun fichier PDF sélectionné', 'error');
     return;
   }
+
+  const file = input.files[0];
+  if (!file.type.includes('pdf')) {
+    showNotif('⚠️ Le fichier sélectionné n’est pas un PDF', 'error');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('pdf', file);
+
+  showNotif('📡 Envoi du PDF en cours...', 'info');
+
+  // Simulation de l'appel à l'API
+  setTimeout(() => {
+    document.getElementById('pdf-summary').innerHTML = `
+      <h4>Résumé du cours :</h4>
+      <p><strong>Sujet :</strong> Système nerveux humain</p>
+      <p>Le système nerveux est divisé en système central et périphérique. Il coordonne les fonctions vitales, les réactions motrices, et le traitement des signaux sensoriels...</p>
+    `;
+    showNotif('✅ Résumé généré avec succès', 'success');
+  }, 3000);
+});
 
   const formData = new FormData();
   formData.append('pdf', file);
