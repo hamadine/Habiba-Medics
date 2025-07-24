@@ -67,7 +67,26 @@
   <div id="notification" class="toast hidden" role="status" aria-live="polite"></div>
 
   <div id="content-area" class="tab-container">
+    
+<!-- RÉVEIL PERSONNALISÉ -->
+<section id="reveil" class="tab-content hidden" aria-labelledby="Réveil">
+  <h2 class="tab-title">⏰ Réveil personnalisé</h2>
 
+  <div class="form-grid">
+    <label for="alarm-time-custom">Heure de réveil</label>
+    <input type="time" id="alarm-time-custom" />
+
+    <label for="alarm-sound">Son du réveil</label>
+    <select id="alarm-sound">
+      <option value="sounds/beep.mp3">🔔 Bip classique</option>
+      <option value="sounds/birds.mp3">🐦 Oiseaux</option>
+      <option value="sounds/ocean.mp3">🌊 Vagues de l’océan</option>
+      <option value="sounds/zen.mp3">🧘‍♀️ Son Zen</option>
+    </select>
+
+    <button id="set-custom-alarm" class="btn-primary">⏰ Activer le réveil</button>
+  </div>
+</section>
     <!-- ACCUEIL -->
     <section id="accueil" class="tab-content" aria-labelledby="Accueil">
       <h2 class="tab-title">🏠 Accueil</h2>
