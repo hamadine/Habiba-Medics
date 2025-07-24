@@ -158,37 +158,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }); // Fin du DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-  // ... ton code existant
 
-  const notes = document.getElementById('notes_contenu');
-  const saveNotes = document.getElementById('notes_save');
+// Configuration Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
+  authDomain: "habibamedics.firebaseapp.com",
+  projectId: "habibamedics",
+  storageBucket: "habibamedics.appspot.com",
+  messagingSenderId: "727036841121",
+  appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
+  measurementId: "G-LH90ZZ1C8M"
+};
 
-  // 🔁 Récupération des notes Firebase
-  if (notes) {
-    db.collection("notes").doc("uniqueNote").get().then(doc => {
-      if (doc.exists) {
-        notes.value = doc.data().contenu;
-        showNotif('☁️ Notes récupérées du cloud', 'info');
+ // Initialisation Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Authentification anonyme
+firebase.auth().signInAnonymously()
+  .then(() => {
+    const user = firebase.auth().currentUser;
+    console.log("✅ Connecté anonymement :", user.uid);
+    showNotif("🔐 Connexion anonyme réussie !");
+
+    // 🔄 Charger les notes à partir de Firestore
+    const notes = document.getElementById("notes");
+    const saveNotes = document.getElementById("save-notes");
+
+    if (notes && user) {
+      db.collection("notes").doc(user.uid).get()
+        .then((doc) => {
+          if (doc.exists) {
+            notes.value = doc.data().contenu;
+            showNotif("☁️ Notes récupérées depuis le cloud !");
+          }
+        })
+        .catch((err) => {
+          console.warn("⚠️ Erreur de récupération des notes :", err);
+        });
+
+      // 💾 Sauvegarde dans Firestore
+      if (saveNotes) {
+        saveNotes.addEventListener('click', () => {
+          db.collection("notes").doc(user.uid).set({
+            contenu: notes.value
+          })
+          .then(() => {
+            showNotif("✅ Notes sauvegardées dans le cloud !");
+          })
+          .catch((err) => {
+            console.error("❌ Erreur de sauvegarde :", err);
+            showNotif("❌ Échec de la sauvegarde", "error");
+          });
+        });
       }
-    }).catch(err => {
-      console.warn("⚠️ Erreur lors du chargement Firebase :", err);
-    });
-  }
-
-  // 💾 Sauvegarde dans Firebase
-  if (saveNotes && notes) {
-    saveNotes.addEventListener('click', () => {
-      db.collection("notes").doc("uniqueNote").set({
-        contenu: notes.value
-      }).then(() => {
-        showNotif('✅ Notes sauvegardées dans Firebase', 'success');
-      }).catch(err => {
-        console.error("❌ Sauvegarde échouée :", err);
-        showNotif('❌ Échec de la sauvegarde Firebase', 'error');
-      });
-    });
-  }
-});
+    }
+  })
+  .catch((error) => {
+    console.error("❌ Erreur d'authentification anonyme :", error);
+    showNotif("❌ Échec de la connexion Firebase", 'error');
+  });
 
 let deferredPrompt = null;
 
