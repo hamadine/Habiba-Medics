@@ -11,25 +11,28 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="./style.css" />
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
-      authDomain: "habibamedics.firebaseapp.com",
-      projectId: "habibamedics",
-      storageBucket: "habibamedics.appspot.com",
-      messagingSenderId: "727036841121",
-      appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
-      measurementId: "G-LH90ZZ1C8M"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-  </script>
+  <!-- Firebase en modules -->
+<script type="module">
+  // Import Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  <script src="js/html2pdf.bundle.min.js" defer></script>
-  <script src="js/chart.min.js" defer></script>
-  <script src="./app.js" defer></script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBalIy0kTC0a_ZjxNMmn1ZUfznO3kZYk6w",
+    authDomain: "habibamedics.firebaseapp.com",
+    projectId: "habibamedics",
+    storageBucket: "habibamedics.appspot.com",
+    messagingSenderId: "727036841121",
+    appId: "1:727036841121:web:50dc1a0099b1119858f4e0",
+    measurementId: "G-LH90ZZ1C8M"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // On rend 'db' accessible globalement
+  window.db = db;
+</script>
 </head>
 <body>
 
