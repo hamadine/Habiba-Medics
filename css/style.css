@@ -1,0 +1,250 @@
+/* =======================
+   BASE GÉNÉRALE
+========================== */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f9;
+  color: #333;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* Mode sombre */
+body.dark {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+body.dark .tab-content {
+  background: #111827;
+  color: #f3f4f6;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: #374151;
+  color: #fff;
+  border-color: #4b5563;
+}
+
+body.dark .nav-btn {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+body.dark .nav-btn.active {
+  background-color: #2563eb;
+}
+
+/* Accessibilité : focus */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Classe loading */
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: wait;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =======================
+   EN-TÊTE ET NAVIGATION
+========================== */
+.site-header {
+  background-color: #005fa3;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.main-nav {
+  background-color: #e0e7ef;
+  padding: 1rem;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  background-color: #d0d7df;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn.active, .nav-btn:hover {
+  background-color: #005fa3;
+  color: white;
+}
+
+/* =======================
+   CONTENU PRINCIPAL
+========================== */
+.main-container {
+  padding: 2rem;
+}
+
+.tab-content {
+  display: none;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* =======================
+   FORMULAIRES
+========================== */
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+input, select, textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+textarea.local-warning {
+  border: 2px dashed #f59e0b;
+  background-color: #fff7ed;
+  animation: fadeHighlight 1s ease-in-out;
+}
+
+/* =======================
+   TABLES
+========================== */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.styled-table th, .styled-table td {
+  border: 1px solid #d1d5db;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.styled-table thead {
+  background-color: #f3f4f6;
+}
+
+.inventory-alert {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* =======================
+   BOUTONS
+========================== */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary { background-color: #005fa3; color: white; }
+.btn-secondary { background-color: #6b7280; color: white; }
+.btn-warning { background-color: #f59e0b; color: white; }
+.btn-gpt { background-color: #8b5cf6; color: white; }
+.btn-green { background-color: #10b981; color: white; }
+.btn-red { background-color: #ef4444; color: white; }
+.btn-success { background-color: #22c55e; color: white; }
+.btn-error { background-color: #dc2626; color: white; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+.animate-pulse {
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+/* =======================
+   NOTIFICATIONS
+========================== */
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  color: white;
+  z-index: 9999;
+  display: none;
+}
+
+.toast.success { background-color: #16a34a; }
+.toast.error { background-color: #dc2626; }
+.toast.info { background-color: #2563eb; }
+
+/* =======================
+   PIED DE PAGE
+========================== */
+.site-footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #005fa3;
+  color: white;
+  margin-top: 2rem;
+}
+
+/* =======================
+   ANIMATIONS UTILITAIRES
+========================== */
+@keyframes fadeHighlight {
+  0% { background-color: #fef3c7; }
+  100% { background-color: #fff7ed; }
+}
