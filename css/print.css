@@ -1,0 +1,73 @@
+/* Impression : cacher tous sauf les éléments importants */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  /* Cacher la navigation, les boutons, les onglets */
+  .site-header,
+  .main-nav,
+  .site-footer,
+  .btn-primary,
+  .btn-secondary,
+  .btn-warning,
+  .btn-gpt,
+  .btn-red,
+  .btn-green,
+  .btn-error,
+  #install-banner,
+  #install-trigger,
+  button,
+  nav,
+  .nav-grid,
+  .tab-title {
+    display: none !important;
+  }
+
+  /* Afficher seulement ces sections */
+  #patients,
+  #notes,
+  #soins,
+  .tab-content {
+    display: block !important;
+    padding: 0;
+    box-shadow: none;
+    background: white;
+  }
+
+  form,
+  .form-grid,
+  .form-block,
+  .styled-table {
+    width: 100%;
+    font-size: 12pt;
+    border: none;
+  }
+
+  input, textarea, select {
+    border: none;
+    background: transparent;
+    color: black;
+    font-size: 12pt;
+  }
+
+  textarea,
+  input[type="text"],
+  input[type="date"],
+  input[type="email"],
+  input[type="tel"] {
+    outline: none;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 1rem;
+  }
+
+  /* Masquer tout sauf contenu patient, notes et soins */
+  .tab-content:not(#patients):not(#notes):not(#soins) {
+    display: none !important;
+  }
+}
