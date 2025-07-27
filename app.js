@@ -4,6 +4,59 @@ import { getUserNotes, saveUserNotes } from './js/firebase-notes.js';
 
 // ========== DOM READY ==========
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log("🧪 [DEBUG] Initialisation de Habiba Medics…");
+
+const debugElements = [
+  'notes_contenu',
+  'save-notes',
+  'restore-notes',
+  'notes_google_search',
+  'notes_symptom_analyze',
+  'planning_alarm_time',
+  'set-planning-alarm',
+  'theme-toggle',
+  'study-pdf',
+  'study-pdf-name',
+  'studies-table-body',
+  'add-study-row',
+  'install-trigger',
+  'install-banner',
+  'install-btn'
+];
+
+debugElements.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) {
+    console.warn(`⚠️ Élément manquant : #${id}`);
+  } else {
+    console.log(`✅ Élément présent : #${id}`);
+  }
+});
+
+// Vérification des boutons de navigation
+const tabButtons = document.querySelectorAll('button[data-target]');
+if (!tabButtons.length) {
+  console.error("❌ Aucun bouton de navigation trouvé !");
+} else {
+  console.log(`✅ ${tabButtons.length} bouton(s) de navigation détecté(s).`);
+  tabButtons.forEach(btn => {
+    console.log(`➡️ Bouton : ${btn.textContent.trim()} -> cible ${btn.dataset.target}`);
+  });
+}
+
+// Vérification du body et du mode sombre
+if (document.body.classList.contains('dark')) {
+  console.log("🌙 Mode sombre activé");
+} else {
+  console.log("☀️ Mode clair activé");
+}
+
+// Vérifie si Firebase est chargé (si modules ont fonctionné)
+if (typeof signInAnon !== 'function') {
+  console.error("❌ signInAnon() non défini : vérifie firebase-auth.js !");
+} else {
+  console.log("✅ signInAnon() détecté");
+}
   const tabButtons = document.querySelectorAll('button[data-target]');
   const tabContents = document.querySelectorAll('.tab-content');
   const notification = document.getElementById('notification');
