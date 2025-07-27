@@ -53,20 +53,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     body.classList.toggle('dark');
     localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
   });
+// IMC
+const poidsInput = document.getElementById('cli_poids');
+const tailleInput = document.getElementById('cli_taille');
+const imcOutput = document.getElementById('cli_imc');
+const imcInterpretation = document.getElementById('cli_imc_interpretation');
 
-  // IMC
-  const poidsInput = document.getElementById('cli_poids');
-  const tailleInput = document.getElementById('cli_taille');
-  const imcOutput = document.getElementById('cli_imc');
-  if (poidsInput && tailleInput && imcOutput) {
-    const calculIMC = () => {
-      const poids = parseFloat(poidsInput.value);
-      const taille = parseFloat(tailleInput.value) / 100;
-      imcOutput.value = poids > 0 && taille > 0 ? (poids / (taille * taille)).toFixed(2) : '';
-    };
-    poidsInput.addEventListener('input', calculIMC);
-    tailleInput.addEventListener('input', calculIMC);
-  }
+if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
+  const calculIMC = () => {
+    const poids = parseFloat(poidsInput.value);
+    const taille = parseFloat(tailleInput.value) / 100;
+    if (poids > 0 && taille > 0) {
+      const imc = poids / (taille * taille);
+      imcOutput.value = imc.toFixed(2);
+
+      // Interprétation IMC
+      let interpretation = '';
+      if (imc < 18.5) interpretation = "Insuffisance pondérale (maigreur)";
+      else if (imc < 25) interpretation = "Corpulence normale";
+      else if (imc < 30) interpretation = "Surpoids";
+      else if (imc < 35) interpretation = "Obésité modérée";
+      else if (imc < 40) interpretation = "Obésité sévère";
+      else interpretation = "Obésité morbide";
+
+      imcInterpretation.textContent = `💡 ${interpretation}`;
+    } else {
+      imcOutput.value = '';
+      imcInterpretation.textContent = '';
+    }
+  };
+
+  poidsInput.addEventListener('input', calculIMC);
+  tailleInput.addEventListener('input', calculIMC);
+}
   // 🔐 Firebase Auth
   let uid;
   try {
