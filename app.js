@@ -1,62 +1,21 @@
-// ✅ Import des modules Firebase
-import { signInAnon } from './js/firebase-auth.js';
-import { getUserNotes, saveUserNotes } from './js/firebase-notes.js';
+// ✅ DOM READY
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("🧪 [DEBUG] Initialisation Habiba Medics (local only)");
 
-// ========== DOM READY ==========
-document.addEventListener('DOMContentLoaded', async () => {
-  console.log("🧪 [DEBUG] Initialisation de Habiba Medics…");
+  const debugElements = [
+    'notes_contenu', 'save-notes', 'restore-notes',
+    'notes_google_search', 'notes_symptom_analyze',
+    'planning_alarm_time', 'set-planning-alarm',
+    'theme-toggle', 'study-pdf', 'study-pdf-name',
+    'studies-table-body', 'add-study-row',
+    'install-trigger', 'install-banner', 'install-btn'
+  ];
 
-const debugElements = [
-  'notes_contenu',
-  'save-notes',
-  'restore-notes',
-  'notes_google_search',
-  'notes_symptom_analyze',
-  'planning_alarm_time',
-  'set-planning-alarm',
-  'theme-toggle',
-  'study-pdf',
-  'study-pdf-name',
-  'studies-table-body',
-  'add-study-row',
-  'install-trigger',
-  'install-banner',
-  'install-btn'
-];
-
-debugElements.forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) {
-    console.warn(`⚠️ Élément manquant : #${id}`);
-  } else {
-    console.log(`✅ Élément présent : #${id}`);
-  }
-});
-
-// Vérification des boutons de navigation
-const tabButtons = document.querySelectorAll('button[data-target]');
-if (!tabButtons.length) {
-  console.error("❌ Aucun bouton de navigation trouvé !");
-} else {
-  console.log(`✅ ${tabButtons.length} bouton(s) de navigation détecté(s).`);
-  tabButtons.forEach(btn => {
-    console.log(`➡️ Bouton : ${btn.textContent.trim()} -> cible ${btn.dataset.target}`);
+  debugElements.forEach(id => {
+    const el = document.getElementById(id);
+    console[el ? 'log' : 'warn'](`${el ? '✅' : '⚠️'} ${el ? 'Présent' : 'Manquant'} : #${id}`);
   });
-}
 
-// Vérification du body et du mode sombre
-if (document.body.classList.contains('dark')) {
-  console.log("🌙 Mode sombre activé");
-} else {
-  console.log("☀️ Mode clair activé");
-}
-
-// Vérifie si Firebase est chargé (si modules ont fonctionné)
-if (typeof signInAnon !== 'function') {
-  console.error("❌ signInAnon() non défini : vérifie firebase-auth.js !");
-} else {
-  console.log("✅ signInAnon() détecté");
-}
   const tabButtons = document.querySelectorAll('button[data-target]');
   const tabContents = document.querySelectorAll('.tab-content');
   const notification = document.getElementById('notification');
@@ -72,13 +31,13 @@ if (typeof signInAnon !== 'function') {
   const alarmBtn = document.getElementById('set-planning-alarm');
   const alarmAudio = new Audio('sounds/beep.mp3');
 
-  function showNotif(msg, type = 'info') {
+  const showNotif = (msg, type = 'info') => {
     if (!notification) return;
     notification.textContent = msg;
     notification.className = `toast ${type}`;
     notification.classList.remove('hidden');
     setTimeout(() => notification.classList.add('hidden'), 4000);
-  }
+  };
 
   // Onglets
   tabButtons.forEach(btn => {
@@ -106,67 +65,44 @@ if (typeof signInAnon !== 'function') {
     body.classList.toggle('dark');
     localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
   });
-// IMC
-const poidsInput = document.getElementById('cli_poids');
-const tailleInput = document.getElementById('cli_taille');
-const imcOutput = document.getElementById('cli_imc');
-const imcInterpretation = document.getElementById('cli_imc_interpretation');
 
-if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
-  const calculIMC = () => {
-    const poids = parseFloat(poidsInput.value);
-    const taille = parseFloat(tailleInput.value) / 100;
-    if (poids > 0 && taille > 0) {
-      const imc = poids / (taille * taille);
-      imcOutput.value = imc.toFixed(2);
+  // IMC
+  const poidsInput = document.getElementById('cli_poids');
+  const tailleInput = document.getElementById('cli_taille');
+  const imcOutput = document.getElementById('cli_imc');
+  const imcInterpretation = document.getElementById('cli_imc_interpretation');
 
-      // Interprétation IMC
-      let interpretation = '';
-      if (imc < 18.5) interpretation = "Insuffisance pondérale (maigreur)";
-      else if (imc < 25) interpretation = "Corpulence normale";
-      else if (imc < 30) interpretation = "Surpoids";
-      else if (imc < 35) interpretation = "Obésité modérée";
-      else if (imc < 40) interpretation = "Obésité sévère";
-      else interpretation = "Obésité morbide";
-
-      imcInterpretation.textContent = `💡 ${interpretation}`;
-    } else {
-      imcOutput.value = '';
-      imcInterpretation.textContent = '';
-    }
-  };
-
-  poidsInput.addEventListener('input', calculIMC);
-  tailleInput.addEventListener('input', calculIMC);
-}
-  // 🔐 Firebase Auth
-  let uid;
-  try {
-    uid = await signInAnon();
-    const savedNotes = await getUserNotes(uid);
-    notes.value = savedNotes || localStorage.getItem('notes_backup') || '';
-    if (savedNotes) showNotif("☁️ Notes récupérées du cloud");
-    else if (notes.value) showNotif("🗃️ Récupérées en local");
-  } catch {
-    showNotif("❌ Connexion Firebase échouée", "error");
+  if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
+    const calculIMC = () => {
+      const poids = parseFloat(poidsInput.value);
+      const taille = parseFloat(tailleInput.value) / 100;
+      if (poids > 0 && taille > 0) {
+        const imc = poids / (taille * taille);
+        imcOutput.value = imc.toFixed(2);
+        let interpretation = '';
+        if (imc < 18.5) interpretation = "Insuffisance pondérale (maigreur)";
+        else if (imc < 25) interpretation = "Corpulence normale";
+        else if (imc < 30) interpretation = "Surpoids";
+        else if (imc < 35) interpretation = "Obésité modérée";
+        else if (imc < 40) interpretation = "Obésité sévère";
+        else interpretation = "Obésité morbide";
+        imcInterpretation.textContent = `💡 ${interpretation}`;
+      } else {
+        imcOutput.value = '';
+        imcInterpretation.textContent = '';
+      }
+    };
+    poidsInput.addEventListener('input', calculIMC);
+    tailleInput.addEventListener('input', calculIMC);
   }
 
-  // Sauvegarde notes
-  saveNotes?.addEventListener('click', async () => {
-    if (!uid || !notes) return;
-    saveNotes.disabled = true;
-    const content = notes.value;
-    localStorage.setItem('notes_backup', content);
-    try {
-      await saveUserNotes(uid, content);
-      showNotif("✅ Sauvegardées dans le cloud !");
-    } catch {
-      showNotif("❌ Erreur de sauvegarde", "error");
-    }
-    saveNotes.disabled = false;
+  // Notes : Sauvegarde locale uniquement
+  saveNotes?.addEventListener('click', () => {
+    if (!notes) return;
+    localStorage.setItem('notes_backup', notes.value);
+    showNotif("💾 Notes enregistrées localement !");
   });
 
-  // Restaurer
   restoreNotes?.addEventListener('click', () => {
     const backup = localStorage.getItem('notes_backup');
     if (backup) {
@@ -179,7 +115,7 @@ if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
     }
   });
 
-  // Symptômes
+  // Analyse Symptômes
   analyzeSymptomsBtn?.addEventListener('click', () => {
     const text = notes.value;
     const found = text.match(/\b(fievre|toux|fatigue|douleur)\b/gi) || [];
@@ -188,7 +124,7 @@ if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
       : '<p>Aucun symptôme détecté</p>';
   });
 
-  // Google
+  // Recherche Google
   googleSearchBtn?.addEventListener('click', () => {
     const q = notes.value.trim();
     if (!q) return showNotif('⚠️ Zone vide', 'error');
@@ -244,6 +180,7 @@ if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
       e.target.closest('tr').remove();
     }
   });
+
   // 📲 PWA install
   let deferredPrompt;
   const installTrigger = document.getElementById('install-trigger');
