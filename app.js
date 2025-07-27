@@ -11,17 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'install-trigger', 'install-banner', 'install-btn'
   ];
 
-  debugElements.forEach(id => {
-    const el = document.getElementById(id);
-    console[el ? 'log' : 'warn'](`${el ? '✅' : '⚠️'} ${el ? 'Présent' : 'Manquant'} : #${id}`);
-  });const currentHour = new Date().getHours();
-const prefersDark = currentHour >= 19 || currentHour <= 7;
-if (prefersDark && !localStorage.getItem('theme')) {
-  document.body.classList.add('dark');
-  localStorage.setItem('theme', 'dark');
-}
-
-  const tabButtons = document.querySelectorAll('button[data-target]');
+   const tabButtons = document.querySelectorAll('button[data-target]');
   const tabContents = document.querySelectorAll('.tab-content');
   const notification = document.getElementById('notification');
   const body = document.body;
