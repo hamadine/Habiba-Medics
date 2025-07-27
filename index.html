@@ -116,7 +116,35 @@
   <div id="notes_symptom_results" class="results-block mt-3"></div>
   <div id="notes_gpt_response" class="results-block italic text-indigo-600 dark:text-indigo-300"></div>
 </section>
-
+    
+<!-- INFORMATIONS GÉNÉRALES -->
+<section id="infos-generales" class="tab-content hidden" aria-labelledby="Infos générales">
+  <h2 class="tab-title">📋 Informations Générales</h2>
+  <form id="form-infos-generales" class="form-block">
+    <label for="infos_nom">Nom</label>
+    <input type="text" id="infos_nom" class="input-field" />
+    <label for="infos_prenom">Prénom</label>
+    <input type="text" id="infos_prenom" class="input-field" />
+    <label for="infos_naissance">Date de naissance</label>
+    <input type="date" id="infos_naissance" class="input-field" />
+    <label for="infos_sexe">Sexe</label>
+    <select id="infos_sexe" class="input-field">
+      <option value="">-- Choisir --</option>
+      <option value="M">Masculin</option>
+      <option value="F">Féminin</option>
+    </select>
+    <label for="infos_tel">Téléphone</label>
+    <input type="tel" id="infos_tel" class="input-field" />
+    <label for="infos_email">Email</label>
+    <input type="email" id="infos_email" class="input-field" />
+    <label for="infos_adresse">Adresse</label>
+    <input type="text" id="infos_adresse" class="input-field" />
+    <label for="infos_sang">Groupe sanguin</label>
+    <input type="text" id="infos_sang" class="input-field" />
+    <button type="submit" class="btn-primary">💾 Enregistrer</button>
+  </form>
+</section>
+    
 <!-- PATIENTS -->
 <section id="patients" class="tab-content hidden" aria-labelledby="Patients">
   <h2 class="tab-title">👥 Patients</h2>
@@ -174,7 +202,39 @@
     <button type="submit" class="btn-primary">💾 Enregistrer</button>
   </form>
 </section>
+    
+<!-- INFORMATIONS CLINIQUES -->
+<section id="infos-cliniques" class="tab-content hidden" aria-labelledby="Infos cliniques">
+  <h2 class="tab-title">🩺 Données Cliniques</h2>
+  <form id="form-infos-cliniques" class="form-block">
+    <label for="cli_temperature">Température (°C)</label>
+    <input type="text" id="cli_temperature" class="input-field" />
 
+    <label for="cli_frequence_cardiaque">Fréquence cardiaque (bpm)</label>
+    <input type="text" id="cli_frequence_cardiaque" class="input-field" />
+
+    <label for="cli_tension">Tension artérielle (mmHg)</label>
+    <input type="text" id="cli_tension" class="input-field" />
+
+    <label for="cli_frequence_respiratoire">Fréquence respiratoire (/min)</label>
+    <input type="text" id="cli_frequence_respiratoire" class="input-field" />
+
+    <label for="cli_saturation">Saturation en O₂ (%)</label>
+    <input type="text" id="cli_saturation" class="input-field" />
+
+    <label for="cli_poids">Poids (kg)</label>
+    <input type="text" id="cli_poids" class="input-field" />
+
+    <label for="cli_taille">Taille (cm)</label>
+    <input type="text" id="cli_taille" class="input-field" />
+
+    <label for="cli_imc">IMC</label>
+    <input type="text" id="cli_imc" class="input-field" readonly />
+    <div id="cli_imc_interpretation" class="text-sm mt-1 italic text-gray-600"></div>
+
+    <button type="submit" class="btn-primary">💾 Sauvegarder</button>
+  </form>
+</section>
 <!-- SOINS -->
 <section id="soins" class="tab-content hidden" aria-labelledby="Soins">
   <h2 class="tab-title">💉 Soins</h2>
@@ -231,64 +291,13 @@
   </table>
 </section>
 
-<!-- INFORMATIONS GÉNÉRALES -->
-<section id="infos-generales" class="tab-content hidden" aria-labelledby="Infos générales">
-  <h2 class="tab-title">📋 Informations Générales</h2>
-  <form id="form-infos-generales" class="form-block">
-    <label for="infos_nom">Nom</label>
-    <input type="text" id="infos_nom" class="input-field" />
-    <label for="infos_prenom">Prénom</label>
-    <input type="text" id="infos_prenom" class="input-field" />
-    <label for="infos_naissance">Date de naissance</label>
-    <input type="date" id="infos_naissance" class="input-field" />
-    <label for="infos_sexe">Sexe</label>
-    <select id="infos_sexe" class="input-field">
-      <option value="">-- Choisir --</option>
-      <option value="M">Masculin</option>
-      <option value="F">Féminin</option>
-    </select>
-    <label for="infos_tel">Téléphone</label>
-    <input type="tel" id="infos_tel" class="input-field" />
-    <label for="infos_email">Email</label>
-    <input type="email" id="infos_email" class="input-field" />
-    <label for="infos_adresse">Adresse</label>
-    <input type="text" id="infos_adresse" class="input-field" />
-    <label for="infos_sang">Groupe sanguin</label>
-    <input type="text" id="infos_sang" class="input-field" />
-    <button type="submit" class="btn-primary">💾 Enregistrer</button>
-  </form>
-</section>
-
-<!-- INFORMATIONS CLINIQUES -->
-<section id="infos-cliniques" class="tab-content hidden" aria-labelledby="Infos cliniques">
-  <h2 class="tab-title">🩺 Données Cliniques</h2>
-  <form id="form-infos-cliniques" class="form-block">
-    <label for="cli_temperature">Température (°C)</label>
-    <input type="text" id="cli_temperature" class="input-field" />
-    <label for="cli_frequence_cardiaque">Fréquence cardiaque (bpm)</label>
-    <input type="text" id="cli_frequence_cardiaque" class="input-field" />
-    <label for="cli_tension">Tension artérielle (mmHg)</label>
-    <input type="text" id="cli_tension" class="input-field" />
-    <label for="cli_frequence_respiratoire">Fréquence respiratoire (/min)</label>
-    <input type="text" id="cli_frequence_respiratoire" class="input-field" />
-    <label for="cli_saturation">Saturation en O₂ (%)</label>
-    <input type="text" id="cli_saturation" class="input-field" />
-    <label for="cli_poids">Poids (kg)</label>
-    <input type="text" id="cli_poids" class="input-field" />
-    <label for="cli_taille">Taille (cm)</label>
-    <input type="text" id="cli_taille" class="input-field" />
-    <label for="cli_imc">IMC</label>
-    <input type="text" id="cli_imc" class="input-field" readonly />
-    <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-  </form>
-</section>
 </main>
 
 <!-- PIED DE PAGE -->
 <footer class="site-footer">
   <p>
     &copy; 2025 Habiba Medics – Tous droits réservés. |
-    <strong>Développé avec ❤️ par Hamadine</strong>
+    <strong>Développé avec passion et amour ❤️ par Hamadine AG MOCTAR</strong>
   </p>
 </footer>
 
