@@ -40,24 +40,41 @@
     <button id="theme-toggle" aria-label="Basculer thème">🌙</button>
   </div>
 </header>
-
 <nav class="main-nav" role="navigation">
   <ul class="nav-grid">
-    <li><a href="aide.html" class="nav-btn">🧭 Aide</a></li>
-    <li><button data-target="habiba-studies" class="nav-btn">📚 Habiba Studies</button></li>
-    <li><button data-target="patients" class="nav-btn">👥 Patients</button></li>
-    <li><button data-target="soins" class="nav-btn">💉 Soins</button></li>
-    <li><button data-target="planning" class="nav-btn">🗓️ Planning</button></li>
-    <li><button data-target="reveil" class="nav-btn">⏰ Réveil</button></li>
-    <li><button data-target="inventaire" class="nav-btn">⚕️ Inventaire</button></li>
-    <li><button data-target="infos-generales" class="nav-btn">📋 Infos générales</button></li>
-    <li><button data-target="infos-cliniques" class="nav-btn">🩺 Infos cliniques</button></li>
-    <li><button data-target="notes" class="nav-btn">📝 Notes</button></li>
+
+    <!-- Menu Découvres-moi -->
+    <li class="dropdown">
+      <button class="nav-btn">✨ Découvres-moi</button>
+      <ul class="dropdown-content">
+        <li><a href="aide.html" class="nav-btn">🧭 Aide</a></li>
+        <li><button data-target="habiba-playlist" class="nav-btn">🎧 Habiba Playlist</button></li>
+        <li><a href="manuel.html" class="nav-btn">📘 Manuel d’utilisateur</a></li>
+      </ul>
+    </li>
+
+    <!-- Menu Gestion des soins -->
+    <li class="dropdown">
+      <button class="nav-btn">🏥 Gestion des soins</button>
+      <ul class="dropdown-content">
+        <li><button data-target="habiba-studies" class="nav-btn">📚 Habiba Studies</button></li>
+        <li><button data-target="patients" class="nav-btn">👥 Patients</button></li>
+        <li><button data-target="soins" class="nav-btn">💉 Soins</button></li>
+        <li><button data-target="planning" class="nav-btn">🗓️ Planning</button></li>
+        <li><button data-target="reveil" class="nav-btn">⏰ Réveil</button></li>
+        <li><button data-target="inventaire" class="nav-btn">⚕️ Inventaire</button></li>
+        <li><button data-target="infos-generales" class="nav-btn">📋 Infos générales</button></li>
+        <li><button data-target="infos-cliniques" class="nav-btn">🩺 Infos cliniques</button></li>
+        <li><button data-target="notes" class="nav-btn">📝 Notes</button></li>
+      </ul>
+    </li>
   </ul>
+
   <div style="text-align:center; margin-top:1rem;">
     <button id="install-trigger" class="btn-primary">📲 Télécharger l'application</button>
   </div>
 </nav>
+
 
 <main class="main-container">
   <div id="notification" class="toast hidden" role="status" aria-live="polite"></div>
@@ -356,6 +373,25 @@
       .catch(err => console.error("❌ Échec d’enregistrement du Service Worker", err));
   }
 </script>
+  <script>
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.dropdown-content').forEach(menu => {
+      if (!menu.parentElement.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropdown > button').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const content = this.nextElementSibling;
+      const isVisible = content.style.display === 'block';
+      document.querySelectorAll('.dropdown-content').forEach(menu => menu.style.display = 'none');
+      content.style.display = isVisible ? 'none' : 'block';
+    });
+  });
+  </script>
 
 <!-- Bannière d'installation PWA -->
 <div id="install-banner" class="toast info hidden" style="bottom: 1rem; top: auto; left: 1rem; right: auto;">
