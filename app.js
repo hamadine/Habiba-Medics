@@ -151,6 +151,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const pdfInput = document.getElementById('study-pdf');
   const pdfNameDisplay = document.getElementById('study-pdf-name');
   const tableBody = document.getElementById('studies-table-body');
+  const resumeBtn = document.getElementById('open-resumer');
+resumeBtn?.addEventListener('click', () => {
+  const file = pdfInput?.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      localStorage.setItem('resume_pdf_base64', e.target.result);
+    };
+    reader.readAsDataURL(file); // base64 encode
+  } else {
+    showNotif("⚠️ Aucun fichier PDF sélectionné", "error");
+  }
+});
   const addRowBtn = document.getElementById('add-study-row');
 
   pdfInput?.addEventListener('change', () => {
