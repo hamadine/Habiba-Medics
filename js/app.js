@@ -57,8 +57,6 @@ if (typeof signInAnon !== 'function') {
 } else {
   console.log("✅ signInAnon() détecté");
 }
-  const tabButtons = document.querySelectorAll('button[data-target]');
-  const tabContents = document.querySelectorAll('.tab-content');
   const notification = document.getElementById('notification');
   const body = document.body;
   const toggleTheme = document.getElementById('theme-toggle');
