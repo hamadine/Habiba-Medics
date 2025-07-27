@@ -4,6 +4,59 @@ import { getUserNotes, saveUserNotes } from './js/firebase-notes.js';
 
 // ========== DOM READY ==========
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log("🧪 [DEBUG] Initialisation de Habiba Medics…");
+
+const debugElements = [
+  'notes_contenu',
+  'save-notes',
+  'restore-notes',
+  'notes_google_search',
+  'notes_symptom_analyze',
+  'planning_alarm_time',
+  'set-planning-alarm',
+  'theme-toggle',
+  'study-pdf',
+  'study-pdf-name',
+  'studies-table-body',
+  'add-study-row',
+  'install-trigger',
+  'install-banner',
+  'install-btn'
+];
+
+debugElements.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) {
+    console.warn(`⚠️ Élément manquant : #${id}`);
+  } else {
+    console.log(`✅ Élément présent : #${id}`);
+  }
+});
+
+// Vérification des boutons de navigation
+const tabButtons = document.querySelectorAll('button[data-target]');
+if (!tabButtons.length) {
+  console.error("❌ Aucun bouton de navigation trouvé !");
+} else {
+  console.log(`✅ ${tabButtons.length} bouton(s) de navigation détecté(s).`);
+  tabButtons.forEach(btn => {
+    console.log(`➡️ Bouton : ${btn.textContent.trim()} -> cible ${btn.dataset.target}`);
+  });
+}
+
+// Vérification du body et du mode sombre
+if (document.body.classList.contains('dark')) {
+  console.log("🌙 Mode sombre activé");
+} else {
+  console.log("☀️ Mode clair activé");
+}
+
+// Vérifie si Firebase est chargé (si modules ont fonctionné)
+if (typeof signInAnon !== 'function') {
+  console.error("❌ signInAnon() non défini : vérifie firebase-auth.js !");
+} else {
+  console.log("✅ signInAnon() détecté");
+}
   const tabButtons = document.querySelectorAll('button[data-target]');
   const tabContents = document.querySelectorAll('.tab-content');
   const notification = document.getElementById('notification');
@@ -53,21 +106,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     body.classList.toggle('dark');
     localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
   });
+// IMC
+const poidsInput = document.getElementById('cli_poids');
+const tailleInput = document.getElementById('cli_taille');
+const imcOutput = document.getElementById('cli_imc');
+const imcInterpretation = document.getElementById('cli_imc_interpretation');
 
-  // IMC
-  const poidsInput = document.getElementById('cli_poids');
-  const tailleInput = document.getElementById('cli_taille');
-  const imcOutput = document.getElementById('cli_imc');
-  if (poidsInput && tailleInput && imcOutput) {
-    const calculIMC = () => {
-      const poids = parseFloat(poidsInput.value);
-      const taille = parseFloat(tailleInput.value) / 100;
-      imcOutput.value = poids > 0 && taille > 0 ? (poids / (taille * taille)).toFixed(2) : '';
-    };
-    poidsInput.addEventListener('input', calculIMC);
-    tailleInput.addEventListener('input', calculIMC);
-  }
+if (poidsInput && tailleInput && imcOutput && imcInterpretation) {
+  const calculIMC = () => {
+    const poids = parseFloat(poidsInput.value);
+    const taille = parseFloat(tailleInput.value) / 100;
+    if (poids > 0 && taille > 0) {
+      const imc = poids / (taille * taille);
+      imcOutput.value = imc.toFixed(2);
 
+      // Interprétation IMC
+      let interpretation = '';
+      if (imc < 18.5) interpretation = "Insuffisance pondérale (maigreur)";
+      else if (imc < 25) interpretation = "Corpulence normale";
+      else if (imc < 30) interpretation = "Surpoids";
+      else if (imc < 35) interpretation = "Obésité modérée";
+      else if (imc < 40) interpretation = "Obésité sévère";
+      else interpretation = "Obésité morbide";
+
+      imcInterpretation.textContent = `💡 ${interpretation}`;
+    } else {
+      imcOutput.value = '';
+      imcInterpretation.textContent = '';
+    }
+  };
+
+  poidsInput.addEventListener('input', calculIMC);
+  tailleInput.addEventListener('input', calculIMC);
+}
   // 🔐 Firebase Auth
   let uid;
   try {
@@ -140,40 +211,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, delay);
   });
 
-  // PDF liste
-  document.getElementById('open-pdf-library')?.addEventListener('click', () => {
-    document.getElementById('pdf-list').innerHTML = `
-      <ul>
-        <li><a href="pdfs/anatomie.pdf" target="_blank">📄 Anatomie</a></li>
-        <li><a href="pdfs/physiologie.pdf" target="_blank">📄 Physiologie</a></li>
-        <li><a href="pdfs/pharmacologie.pdf" target="_blank">📄 Pharmacologie</a></li>
-      </ul>`;
+  // Habiba Studies
+  const pdfInput = document.getElementById('study-pdf');
+  const pdfNameDisplay = document.getElementById('study-pdf-name');
+  const tableBody = document.getElementById('studies-table-body');
+  const addRowBtn = document.getElementById('add-study-row');
+
+  pdfInput?.addEventListener('change', () => {
+    const file = pdfInput.files[0];
+    pdfNameDisplay.textContent = file ? `✅ Fichier sélectionné : ${file.name}` : '';
   });
 
-  // PDF résumé (simulé)
-  document.getElementById('summarize-pdf')?.addEventListener('click', () => {
-    const input = document.getElementById('pdf-upload');
-    if (!input || !input.files.length) return showNotif('⚠️ Aucun PDF', 'error');
-    const file = input.files[0];
-    if (!file.type.includes('pdf')) return showNotif('⚠️ Pas un PDF', 'error');
-    showNotif('📡 Envoi en cours...', 'info');
-    setTimeout(() => {
-      document.getElementById('pdf-summary').innerHTML = `
-        <h4>Résumé du cours :</h4>
-        <p><strong>Sujet :</strong> Système nerveux humain</p>
-        <p>Le système nerveux central régule les fonctions vitales...</p>`;
-      showNotif('✅ Résumé prêt !', 'success');
-    }, 3000);
+  addRowBtn?.addEventListener('click', () => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><input type="text" placeholder="Ex : Anatomie" class="input-field" /></td>
+      <td><input type="text" placeholder="Description du cours" class="input-field" /></td>
+      <td>
+        <select class="input-field">
+          <option value="pdf">PDF</option>
+          <option value="image">Image</option>
+          <option value="autre">Autre</option>
+        </select>
+      </td>
+      <td><button class="btn-red remove-study">❌</button></td>
+    `;
+    tableBody.appendChild(row);
   });
 
-  // Animation boutons
-  document.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.add('animate-pulse');
-      setTimeout(() => btn.classList.remove('animate-pulse'), 600);
-    });
+  tableBody?.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-study')) {
+      e.target.closest('tr').remove();
+    }
   });
-
   // 📲 PWA install
   let deferredPrompt;
   const installTrigger = document.getElementById('install-trigger');
