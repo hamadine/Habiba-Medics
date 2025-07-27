@@ -44,7 +44,6 @@
 <nav class="main-nav" role="navigation">
   <ul class="nav-grid">
     <li><button data-target="habiba-studies" class="nav-btn">📚 Habiba Studies</button></li>
-    <li><button data-target="accueil" class="nav-btn active">🏠 Accueil</button></li>
     <li><button data-target="patients" class="nav-btn">👥 Patients</button></li>
     <li><button data-target="soins" class="nav-btn">💉 Soins</button></li>
     <li><button data-target="planning" class="nav-btn">🗓️ Planning</button></li>
@@ -72,21 +71,12 @@
     <input type="file" id="study-pdf" accept="application/pdf" />
     <div id="study-pdf-name" class="italic text-sm mt-1"></div>
   </div>
+  <div style="text-align: center; margin-top: 1rem;">
+  <a href="resumeur.html" target="_blank" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 1rem; display: inline-block;">
+    🧠 Résumer ce cours PDF
+  </a>
+  </div>
 
-  <table class="styled-table">
-    <thead>
-      <tr>
-        <th>Sujet</th>
-        <th>Description</th>
-        <th>Type</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="studies-table-body">
-      <!-- Lignes dynamiques -->
-    </tbody>
-  </table>
-  <button id="add-study-row" class="btn-primary mt-2">➕ Ajouter une ligne</button>
 </section>
 
 <!-- SECTION RÉVEIL -->
