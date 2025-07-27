@@ -233,13 +233,23 @@ button {
 /* =======================
    PIED DE PAGE
 ========================== */
-.site-footer {
+
+}
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.header-icons img {
+  height: 26px;
+}
+site-footer {
   text-align: center;
   padding: 1rem;
   background-color: #005fa3;
   color: white;
   margin-top: 2rem;
-}
 
 /* =======================
    ANIMATIONS UTILITAIRES
