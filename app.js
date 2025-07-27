@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     poidsInput.addEventListener('input', calculIMC);
     tailleInput.addEventListener('input', calculIMC);
   }
-
   // 🔐 Firebase Auth
   let uid;
   try {
@@ -140,40 +139,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, delay);
   });
 
-  // PDF liste
-  document.getElementById('open-pdf-library')?.addEventListener('click', () => {
-    document.getElementById('pdf-list').innerHTML = `
-      <ul>
-        <li><a href="pdfs/anatomie.pdf" target="_blank">📄 Anatomie</a></li>
-        <li><a href="pdfs/physiologie.pdf" target="_blank">📄 Physiologie</a></li>
-        <li><a href="pdfs/pharmacologie.pdf" target="_blank">📄 Pharmacologie</a></li>
-      </ul>`;
+  // Habiba Studies
+  const pdfInput = document.getElementById('study-pdf');
+  const pdfNameDisplay = document.getElementById('study-pdf-name');
+  const tableBody = document.getElementById('studies-table-body');
+  const addRowBtn = document.getElementById('add-study-row');
+
+  pdfInput?.addEventListener('change', () => {
+    const file = pdfInput.files[0];
+    pdfNameDisplay.textContent = file ? `✅ Fichier sélectionné : ${file.name}` : '';
   });
 
-  // PDF résumé (simulé)
-  document.getElementById('summarize-pdf')?.addEventListener('click', () => {
-    const input = document.getElementById('pdf-upload');
-    if (!input || !input.files.length) return showNotif('⚠️ Aucun PDF', 'error');
-    const file = input.files[0];
-    if (!file.type.includes('pdf')) return showNotif('⚠️ Pas un PDF', 'error');
-    showNotif('📡 Envoi en cours...', 'info');
-    setTimeout(() => {
-      document.getElementById('pdf-summary').innerHTML = `
-        <h4>Résumé du cours :</h4>
-        <p><strong>Sujet :</strong> Système nerveux humain</p>
-        <p>Le système nerveux central régule les fonctions vitales...</p>`;
-      showNotif('✅ Résumé prêt !', 'success');
-    }, 3000);
+  addRowBtn?.addEventListener('click', () => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><input type="text" placeholder="Ex : Anatomie" class="input-field" /></td>
+      <td><input type="text" placeholder="Description du cours" class="input-field" /></td>
+      <td>
+        <select class="input-field">
+          <option value="pdf">PDF</option>
+          <option value="image">Image</option>
+          <option value="autre">Autre</option>
+        </select>
+      </td>
+      <td><button class="btn-red remove-study">❌</button></td>
+    `;
+    tableBody.appendChild(row);
   });
 
-  // Animation boutons
-  document.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.add('animate-pulse');
-      setTimeout(() => btn.classList.remove('animate-pulse'), 600);
-    });
+  tableBody?.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-study')) {
+      e.target.closest('tr').remove();
+    }
   });
-
   // 📲 PWA install
   let deferredPrompt;
   const installTrigger = document.getElementById('install-trigger');
