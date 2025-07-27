@@ -22,6 +22,30 @@
 
   <!-- Script principal -->
   <script type="module" src="js/app.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ DOM entièrement chargé.");
+    
+    const buttons = document.querySelectorAll("button");
+    console.log(`🔘 ${buttons.length} boutons trouvés :`);
+    buttons.forEach((btn, i) => {
+      console.log(`- Bouton ${i + 1}:`, btn.textContent.trim());
+    });
+
+    const sections = document.querySelectorAll(".tab-content");
+    if (sections.length === 0) {
+      console.warn("⚠️ Aucune section '.tab-content' détectée.");
+    } else {
+      console.log(`📦 ${sections.length} sections '.tab-content' détectées.`);
+    }
+
+    if (typeof import === "undefined") {
+      console.error("❌ Les modules ES6 ne sont pas pris en charge ici.");
+    } else {
+      console.log("📦 Modules ES6 supportés.");
+    }
+  });
+  </script>
 </head>
 <body>
 
